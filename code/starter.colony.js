@@ -1,0 +1,125 @@
+const worker = require('starter.worker');
+const defender = require('starter.defender');
+const planner = require('starter.planner');
+
+const roleModules = { worker, defender };
+
+module.exports.run = function () {
+  if (!Memory.creeps) Memory.creeps = {};
+  for (const name in Memory.creeps) if (!Game.creeps[name]) delete Memory.creeps[name];
+
+  const counts = {};
+  for (const creep of Object.values(Game.creeps)) {
+    if (!creep.memory.home) creep.memory.home = creep.room.name;
+    const roomName = creep.memory.home;
+    if (!counts[roomName]) counts[roomName] = emptyCounts();
+    const role = normalizeRole(creep);
+    // Broken legacy creeps (for example a single CARRY part) must not block replacements.
+    if (isUseful(creep, role)) counts[roomName][role]++;
+    const mod = roleModules[role];
+    if (mod) {
+      try { mod.run(creep); }
+      catch (error) { console.log(`Role error ${creep.name} (${role}): ${error}`); }
+    }
+  }
+
+  const rooms = {};
+  for (const spawn of Object.values(Game.spawns)) {
+    const room = spawn.room;
+    if (!room || !room.controller || !room.controller.my) continue;
+    rooms[room.name] = room;
+  }
+  for (const room of Object.values(rooms)) {
+    try { planner.run(room); runDefense(room); }
+    catch (error) { console.log(`Colony error ${room.name}: ${error}`); }
+  }
+
+  for (const spawn of Object.values(Game.spawns)) {
+    const room = spawn.room;
+    if (!room || !rooms[room.name] || spawn.spawning) continue;
+    const c = counts[room.name] || (counts[room.name] = emptyCounts());
+    const hostiles = room.find(FIND_HOSTILE_CREEPS);
+    const siteCount = room.find(FIND_MY_CONSTRUCTION_SITES).length;
+    const targets = {
+      // Unified workers harvest, fuel the room, build, repair and upgrade.
+      worker: Math.min(10, 6 + (siteCount >= 3 ? 2 : 0) + Math.max(0, room.controller.level - 3)),
+      defender: hostiles.length ? 2 : (room.controller.level >= 3 ? 1 : 0),
+    };
+    const total = c.worker + c.defender;
+    const cap = Math.min(18, 5 + room.controller.level * 2);
+    if (total >= cap) continue;
+
+    const priority = hostiles.length ? ['defender', 'worker'] : ['worker', 'defender'];
+    const role = priority.find(r => c[r] < targets[r]);
+    if (!role) continue;
+    // Wait for a useful worker body instead of spending energy on weak partial bodies.
+    if (role !== 'defender' && room.energyAvailable < 250) continue;
+    const body = role === 'defender' ? defender.body(room.energyAvailable) : workerBody(room.energyAvailable);
+    if (!body.length) continue;
+    const name = `${role}-${room.name}-${Game.time}`;
+    const result = spawn.spawnCreep(body, name, { memory: { role, home: room.name } });
+    if (result === OK) { c[role]++; console.log(`Spawning ${role} (${body.length} parts) in ${room.name}`); }
+    else if (result !== ERR_NOT_ENOUGH_ENERGY && result !== ERR_BUSY) console.log(`Spawn error ${spawn.name}: ${result}`);
+  }
+};
+
+function emptyCounts() { return { worker: 0, defender: 0 }; }
+function normalizeRole(creep) {
+  let role = String(creep.memory.role || '').toLowerCase();
+  if (roleModules[role]) return role;
+  if (role.includes('defend') || role.includes('guard') || creep.getActiveBodyparts(ATTACK) + creep.getActiveBodyparts(RANGED_ATTACK) > 0) role = 'defender';
+  else role = 'worker';
+  creep.memory.role = role;
+  return role;
+}
+function isUseful(creep, role) {
+  if (role === 'defender') return creep.getActiveBodyparts(ATTACK) + creep.getActiveBodyparts(RANGED_ATTACK) > 0;
+  return creep.getActiveBodyparts(WORK) > 0 && creep.getActiveBodyparts(CARRY) > 0 && creep.getActiveBodyparts(MOVE) > 0;
+}
+function workerBody(energy) {
+  const pattern = [WORK, WORK, CARRY, MOVE];
+  const basic = [WORK, CARRY, MOVE];
+  if (energy < 200) return [];
+  const patternCost = pattern.reduce((sum, part) => sum + BODYPART_COST[part], 0);
+  const body = energy >= patternCost ? pattern.slice() : basic.slice();
+  let cost = body.reduce((sum, part) => sum + BODYPART_COST[part], 0);
+  while (body.length + pattern.length <= 50) {
+    if (cost + patternCost > energy) break;
+    body.push(...pattern); cost += patternCost;
+  }
+  const fillers = [MOVE, WORK, CARRY];
+  for (const part of fillers) {
+    const partCost = BODYPART_COST[part];
+    if (body.length < 50 && cost + partCost <= energy) { body.push(part); cost += partCost; }
+  }
+  return body;
+}
+function runDefense(room) {
+  const hostiles = room.find(FIND_HOSTILE_CREEPS);
+  const towers = room.find(FIND_MY_STRUCTURES, { filter: s => s.structureType === STRUCTURE_TOWER });
+  const critical = room.find(FIND_MY_STRUCTURES, { filter: s => [STRUCTURE_SPAWN, STRUCTURE_TOWER, STRUCTURE_STORAGE, STRUCTURE_TERMINAL].includes(s.structureType) });
+  if (hostiles.length && room.controller.safeModeAvailable && !room.controller.safeMode && !room.controller.safeModeCooldown) {
+    const danger = hostiles.some(h => critical.some(s => h.pos.getRangeTo(s) <= 4) || h.getActiveBodyparts(ATTACK) + h.getActiveBodyparts(RANGED_ATTACK) + h.getActiveBodyparts(WORK) > 0);
+    if (danger) room.controller.activateSafeMode();
+  }
+  for (const tower of towers) {
+    if (tower.store.getUsedCapacity(RESOURCE_ENERGY) < 10) continue;
+    const target = hostiles.length ? tower.pos.findClosestByRange(hostiles) : null;
+    if (target) { tower.attack(target); continue; }
+    // Roads are neutral structures, so include all room roads explicitly;
+    // other repair targets must belong to us. Towers attack first above.
+    const damaged = room.find(FIND_STRUCTURES, {
+      filter: s => (s.structureType === STRUCTURE_ROAD || s.my) &&
+        s.structureType !== STRUCTURE_WALL && s.structureType !== STRUCTURE_RAMPART &&
+        s.hits < s.hitsMax * (s.structureType === STRUCTURE_ROAD ? 0.8 : 0.7),
+    }).sort((a, b) => repairPriority(a) - repairPriority(b) ||
+      (a.hits / a.hitsMax) - (b.hits / b.hitsMax) || tower.pos.getRangeTo(a) - tower.pos.getRangeTo(b))[0];
+    const rampart = room.find(FIND_MY_STRUCTURES, {
+      filter: s => s.structureType === STRUCTURE_RAMPART && s.hits < rampartTarget(room),
+    }).sort((a, b) => a.hits - b.hits)[0];
+    if (damaged) tower.repair(damaged);
+    else if (rampart) tower.repair(rampart);
+  }
+}
+function rampartTarget(room) { return room.controller.level >= 6 ? 100000 : 10000; }
+function repairPriority(s) { return s.structureType === STRUCTURE_ROAD ? 0 : 1; }
