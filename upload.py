@@ -12,7 +12,7 @@ BRANCH = os.environ.get(
 
 modules = {}
 
-for file in sorted(Path("bot").glob("*.js")):
+for file in sorted(Path("code").glob("*.js")):
     modules[file.stem] = file.read_text(
         encoding="utf-8"
     )
