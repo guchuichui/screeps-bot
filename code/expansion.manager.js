@@ -9,22 +9,31 @@ module.exports.run = function () {
   for (const task of Object.values(memory.tasks)) {
     if (!configured(task)) continue;
     try {
+      recoverBinding(task);
       if (observe(task)) {
         if (task.status === 'complete') recycleCompleted(task);
         continue;
       }
-      if (task.status === 'blocked' || task.status === 'failed') continue;
+      if (task.status === 'blocked' || task.status === 'failed') {
+        const live = task.creepName && Game.creeps[task.creepName];
+        const oldGclWait = task.failureReason === 'CLAIM_REJECTED' && task.lastResult && task.lastResult.apiCode === ERR_GCL_NOT_ENOUGH;
+        if (live && task.recoveryExhaustedFor !== live.name && (recoverable(task.failureReason) || oldGclWait)) {
+          task.status = 'running'; task.lastProgressAt = Game.time;
+        } else { if (live) diagnose(task, live); continue; }
+      }
       const creep = task.creepName && Game.creeps[task.creepName];
       if (!creep) {
         if (task.creepName && !isSpawning(task.creepName)) fail(task, 'CLAIMER_LOST');
         continue;
       }
-      if (!hasCpu()) { report(task, 'CPU_WAIT'); continue; }
-      if (!hasGcl()) { task.status = 'waiting'; report(task, 'GCL_WAIT'); continue; }
+      if (task.paused) { task.lastProgressAt = Game.time; report(task, 'TASK_PAUSED'); continue; }
+      if (!hasCpu()) { task.lastProgressAt = Game.time; report(task, 'CPU_WAIT'); diagnose(task, creep); continue; }
+      if (Game.time < (task.nextPathRetryAt || 0)) { diagnose(task, creep); continue; }
       const route = getRoute(task, creep.room.name);
       if (!route) continue;
-      const result = claimer.run(creep, task, config, route);
+      const result = claimer.run(creep, task, config, route, hasGcl());
       report(task, result.code, result.apiCode);
+      diagnose(task, creep);
       if (result.blocked) block(task, result.code);
       else if (result.failed) fail(task, result.code);
       else if (result.claimed) markClaimed(task);
@@ -165,11 +174,60 @@ function block(task, reason) {
 }
 function fail(task, reason) {
   task.failureReason = reason;
-  // A failed living unit is quarantined by its tag until it dies; it is never reassigned as worker.
+  const live = task.creepName && Game.creeps[task.creepName];
+  if (live) {
+    if (recoverable(reason)) {
+      task.pathRetries = (task.pathRetries || 0) + 1;
+      delete task.route;
+      delete live.memory._move;
+      task.lastProgressAt = Game.time;
+      task.nextPathRetryAt = Game.time + config.pathRetryCooldown * Math.min(task.pathRetries, 5);
+      task.status = task.pathRetries <= config.maxPathRetries ? 'waiting' : 'blocked';
+      if (task.status === 'blocked') task.recoveryExhaustedFor = live.name;
+    } else task.status = 'blocked';
+    report(task, reason);
+    diagnose(task, live);
+    return;
+  }
   delete task.creepName;
   task.status = task.attempts >= config.maxAttempts ? 'failed' : 'waiting';
   task.nextRetryAt = Game.time + config.retryCooldown;
   report(task, reason);
+}
+function recoverable(reason) {
+  return /^(EXIT_UNREACHABLE|NO_PATH|NO_PROGRESS|MISSION_TIMEOUT|MOVE_REJECTED|NO_SAFE_SHORT_ROUTE|EXCEPTION)/.test(reason || '');
+}
+function recoverBinding(task) {
+  if (task.creepName && (Game.creeps[task.creepName] || isSpawning(task.creepName))) return;
+  const candidates = Object.values(Game.creeps).filter(c => c.memory.expansionTask === task.id &&
+    c.memory.role === 'expansionClaimer' && c.memory.home === task.homeRoom && c.memory.targetRoom === task.targetRoom &&
+    c.getActiveBodyparts(CLAIM) && c.getActiveBodyparts(MOVE))
+    .sort((a, b) => (b.ticksToLive || 0) - (a.ticksToLive || 0) || a.name.localeCompare(b.name));
+  if (!candidates.length) return;
+  const creep = candidates[0];
+  task.creepName = creep.name;
+  task.attempts = Math.max(1, task.attempts || 0);
+  task.launchedAt = task.launchedAt || Game.time;
+  if (recoverable(task.failureReason) && task.recoveryExhaustedFor !== creep.name || !task.failureReason) {
+    task.status = 'running';
+    task.lastProgressAt = Game.time;
+    task.pathRetries = 0;
+    delete task.nextRetryAt;
+    delete task.route;
+    delete creep.memory._move;
+  }
+  report(task, 'RECOVERED_BINDING');
+  diagnose(task, creep);
+}
+function diagnose(task, creep) {
+  task.diagnostic = { tick: Game.time, task: task.id, state: task.state, status: task.status,
+    creep: creep.name, room: creep.room.name, x: creep.pos.x, y: creep.pos.y,
+    ttl: creep.ticksToLive, moveResult: task.lastResult && task.lastResult.apiCode,
+    reason: task.lastResult && task.lastResult.code, pathRetries: task.pathRetries || 0 };
+  if (!task.lastDiagnosticAt || Game.time - task.lastDiagnosticAt >= config.diagnosticInterval) {
+    console.log(`[expansion diagnostic] ${JSON.stringify(task.diagnostic)}`);
+    task.lastDiagnosticAt = Game.time;
+  }
 }
 function report(task, code, apiCode) {
   const previous = task.lastResult;
@@ -193,7 +251,9 @@ function getRoute(task, from) {
     return 1;
   } });
   if (!Array.isArray(steps) || !steps.length || steps.length > config.maxRouteRooms) {
-    block(task, 'NO_SAFE_SHORT_ROUTE'); return null;
+    if (task.creepName && Game.creeps[task.creepName]) fail(task, 'NO_SAFE_SHORT_ROUTE');
+    else { task.nextRetryAt = Game.time + config.retryCooldown; report(task, 'NO_SAFE_SHORT_ROUTE'); }
+    return null;
   }
   task.route = { from, expires: Game.time + config.routeCacheTicks, steps };
   return steps;
