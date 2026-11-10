@@ -1,14 +1,8 @@
 // Offline tests only: no Screeps API, network, credentials or upload script.
-const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
 
-let passed = 0;
-function test(name, fn) {
-  fn(); passed++;
-  console.log(`PASS ${name}`);
-}
 function world(overrides = {}) {
   const constants = {
     OK: 0, ERR_NOT_OWNER: -1, ERR_NO_PATH: -2, ERR_NAME_EXISTS: -3, ERR_BUSY: -4,
@@ -26,7 +20,8 @@ function world(overrides = {}) {
     STRUCTURE_TERMINAL: 'terminal', STRUCTURE_ROAD: 'road', STRUCTURE_WALL: 'wall', STRUCTURE_RAMPART: 'rampart',
     BODYPART_COST: { claim: 600, move: 50, work: 100, carry: 50 }, CREEP_CLAIM_LIFE_TIME: 600
   };
-  const config = Object.assign({}, require('../code/expansion.config'), overrides);
+  // Unit fixtures opt into each stage independently; production defaults enable all stages.
+  const config = Object.assign({}, require('../code/expansion.config'), { autoBuildSpawn: false, autoBootstrap: false }, overrides);
   const Memory = { creeps: {} };
   const home = { name: config.homeRoom, energyAvailable: 2000, controller: { my: true, level: 3 },
     getTerrain: () => ({ get: () => 0 }),
@@ -94,7 +89,8 @@ function world(overrides = {}) {
   }
   const counts = { worker: 6, defender: 1 }, targets = { worker: 6, defender: 1 };
   const spawnNext = () => manager.trySpawn(spawn, counts, targets);
-  return { config, Memory, Game, home, spawn, calls, load, manager, task, target, unit, spawnNext, counts, targets, constants };
+  function resetModules() { for (const name of Object.keys(modules)) if (!name.startsWith('starter.') && name !== 'expansion.config') delete modules[name]; }
+  return { config, Memory, Game, home, spawn, calls, load, manager, task, target, unit, spawnNext, counts, targets, constants, resetModules };
 }
 
 

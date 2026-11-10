@@ -10,6 +10,11 @@ exports.register = function (room, task) {
   if (!Memory.colonies[room.name]) Memory.colonies[room.name] = {
     roomName: room.name, originTask: task.id, state: 'BOOTSTRAP', createdAt: Game.time, localSpawns: 0
   };
+  for (const creep of Object.values(Game.creeps)) if (creep.memory.home === room.name &&
+      creep.memory.role === 'worker' && !creep.memory.expansionTask && !creep.memory.colony) {
+    creep.memory.colony = room.name;
+    creep.memory.role = 'colonyHarvester';
+  }
   return Memory.colonies[room.name];
 };
 exports.manages = roomName => Boolean(Memory.colonies && Memory.colonies[roomName]) ||
@@ -63,6 +68,10 @@ exports.trySpawn = function (spawn) {
   const task = Memory.expansion && Memory.expansion.tasks[colony.originTask];
   if (task && task.paused) return true;
   if (!spawn.room.controller || !spawn.room.controller.my) return true;
+  const pendingPopulation = (colony.spawnIntents || []).filter(i => i.tick === Game.time && !Game.creeps[i.name]).length;
+  if (members(spawn.room.name).length + pendingPopulation >= config.maxLocalPopulation) {
+    colony.waitReason = 'LOCAL_POPULATION_CAP'; return true;
+  }
   if (Game.time < (colony.nextSpawnAt || 0) || (colony.spawnErrors || 0) >= config.maxSpawnErrors) return true;
   const count = counts(members(spawn.room.name), config.localReplacementTtl);
   colony.spawnIntents = (colony.spawnIntents || []).filter(intent => intent.tick === Game.time);

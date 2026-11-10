@@ -16,7 +16,8 @@ module.exports.run = function (creep, task, config, route, canClaim = true) {
   // Wall-clock mission age includes spawning, CPU waits and pauses. TTL, actual
   // movement progress and bounded repathing are the authoritative liveness checks.
   if (creep.room.find(FIND_HOSTILE_CREEPS).length) {
-    return { blocked: true, code: 'HOSTILES_ON_ROUTE' };
+    task.lastProgressAt = Game.time;
+    return { code: 'HOSTILE_WAIT' };
   }
   const controller = creep.room.name === task.targetRoom && creep.room.controller;
   if (controller) {

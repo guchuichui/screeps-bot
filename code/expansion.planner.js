@@ -11,6 +11,7 @@ const neighbors = (x, y, fn) => {
 
 exports.run = function (room, task) {
   if (control.stopped() || task.paused || !room.controller || !room.controller.my) return { code: 'PLANNING_PAUSED' };
+  if (room.find(FIND_HOSTILE_CREEPS).length) return { code: 'HOSTILE_PLANNING_WAIT' };
   const spawn = room.find(FIND_MY_SPAWNS)[0];
   if (spawn) return { state: task.state === 'STABLE' ? 'STABLE' : 'BOOTSTRAP', code: 'SPAWN_PRESENT' };
   const sites = room.find(FIND_MY_CONSTRUCTION_SITES);
@@ -47,6 +48,7 @@ exports.run = function (room, task) {
     }
     if (scan.cursor < 2500) return { state: 'SPAWN_PLANNING', code: 'SCANNING_TERRAIN' };
     if (!scan.best) return { blocked: true, code: `NO_LEGAL_SPAWN_POSITION: hostileStructures=${data.hostileCount}` };
+    if (!legal(scan.best, room, data)) { task.planning = { cursor: 0, best: null }; return { code: 'REPLAN_CHANGED_TERRAIN' }; }
     if (!connected(scan.best, room, data)) {
       // Exclude a cut vertex and continue a bounded rescan instead of sealing a corridor.
       if (!task.rejectedPositions) task.rejectedPositions = [];

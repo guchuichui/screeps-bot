@@ -43,12 +43,17 @@ exports.run = function (creep, task) {
 
 exports.trySpawn = function (spawn, tasks) {
   if (!control.flag('autoBootstrap')) return false;
+  const pendingSupport = Object.values(Memory.expansion.tasks).filter(t => t.pioneerIntentAt === Game.time &&
+    t.pioneerIntentName && !Game.creeps[t.pioneerIntentName]).length;
+  if (Object.values(Game.creeps).filter(c => c.memory.role === 'expansionPioneer').length + pendingSupport >= config.maxTotalPioneers) return false;
   for (const task of tasks) {
     const room = Game.rooms[task.targetRoom];
     if (task.paused || task.status === 'blocked' || !room || !room.controller || !room.controller.my) continue;
+    if ((task.supportErrors || 0) >= config.maxSpawnErrors) { task.supportResult = 'SUPPORT_SPAWN_ERRORS_EXHAUSTED'; continue; }
     const localSpawns = room.find(FIND_MY_SPAWNS);
     const locals = Object.values(Game.creeps).filter(c => c.memory.colony === room.name);
-    if (localSpawns.length && (locals.some(c => c.getActiveBodyparts(WORK) && c.ticksToLive > 100) || room.energyAvailable >= 200)) continue;
+    if (localSpawns.length && (locals.some(c => c.getActiveBodyparts(WORK) && c.getActiveBodyparts(CARRY) &&
+      c.getActiveBodyparts(MOVE) && (c.spawning || c.ticksToLive > 100)) || room.energyAvailable >= 200)) continue;
     const site = room.find(FIND_MY_CONSTRUCTION_SITES).find(s => s.structureType === STRUCTURE_SPAWN);
     const desired = Math.min(config.maxPioneers, room.find(FIND_SOURCES).length + 1, site && site.progressTotal - site.progress > 10000 ? 3 : 1);
     const support = Object.values(Game.creeps).filter(c => c.memory.role === 'expansionPioneer' && c.memory.expansionTask === task.id);
@@ -85,8 +90,12 @@ exports.trySpawn = function (spawn, tasks) {
       task.supportLaunches = (task.supportLaunches || 0) + 1;
       task.supportEnergySpent = (task.supportEnergySpent || 0) + units * unitCost;
       task.pioneerIntentAt = Game.time;
+      task.pioneerIntentName = name;
+      task.supportErrors = 0;
+      task.lastSupportAt = Game.time;
       return true;
     }
+    if (![ERR_BUSY, ERR_NOT_ENOUGH_ENERGY].includes(result)) task.supportErrors = (task.supportErrors || 0) + 1;
     return false;
   }
   return false;

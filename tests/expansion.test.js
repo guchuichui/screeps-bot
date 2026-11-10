@@ -55,12 +55,19 @@ test('moving old mission is not terminated by wall clock age', () => {
 });
 test('no progress performs bounded repathing without deleting binding', () => {
   const w = world(); w.spawnNext(); const c = w.unit(); w.manager.run();
-  w.Game.time += 76; w.manager.run(); assert.equal(w.task().failureReason, 'NO_PROGRESS');
+  for (let n = 0; n < 76; n++) { w.Game.time++; w.manager.run(); }
+  assert.equal(w.task().failureReason, 'NO_PROGRESS');
   assert.equal(w.task().creepName, c.name);
 });
 test('enemy ownership stops all claim intents', () => {
   const w = world(); w.spawnNext(); const c = w.unit(w.target(0, { owner: { username: 'enemy' } }));
   c.claimController = () => { throw Error('must not claim'); }; w.manager.run(); assert.equal(w.task().status, 'blocked');
+});
+test('temporary hostile contact waits then resumes the same living unit', () => {
+  const w = world(); w.spawnNext(); const c = w.unit(); w.home.hostiles = [{}]; w.Game.time++; w.manager.run();
+  assert.equal(w.task().lastResult.code, 'HOSTILE_WAIT'); assert.equal(w.task().creepName, c.name);
+  w.home.hostiles = []; w.Game.time++; w.manager.run(); assert.equal(w.task().status, 'running');
+  assert.equal(w.calls.length, 1);
 });
 test('claim intent is confirmed only by later ownership observation', () => {
   const w = world(); w.spawnNext(); const r = w.target(); w.unit(r); w.manager.run();
@@ -215,5 +222,121 @@ test('distinct harvesting stations avoid Pioneer and local worker overlap', () =
   const b = { ...a, name: 'second', memory: { colony: r.name }, pos: { ...a.pos } };
   w.Game.creeps[b.name] = b; w.load('colony.work').harvest(b);
   assert.notDeepEqual(a.memory.sourceSlot, b.memory.sourceSlot);
+});
+test('global reset reloads managers without replacing a live Claimer', () => {
+  const w = world(); w.spawnNext(); const c = w.unit(); w.Game.time++; w.manager.run();
+  const name = w.task().creepName; w.resetModules(); w.Game.time++; w.load('expansion.manager').run();
+  assert.equal(w.task().creepName, name); assert.equal(w.task().attempts, 1); assert.equal(w.calls.length, 1);
+  assert.equal(w.task().diagnostic.ttl, c.ticksToLive);
+});
+test('global reset preserves partial terrain scan and site attempt budget', () => {
+  const w = world(); w.manager.run(); const r = w.target(0, { my: true }); w.manager.run();
+  const cursor = w.task().planning.cursor; w.task().siteAttempts = 2; w.resetModules(); w.Game.time++;
+  w.load('expansion.manager').run(); assert(w.task().planning.cursor > cursor); assert.equal(w.task().siteAttempts, 2);
+});
+test('paused task resumes same Claimer without a no-progress failure', () => {
+  const w = world(); w.spawnNext(); const c = w.unit(); w.manager.run(); w.task().paused = true;
+  w.Game.time += 100; w.manager.run(); w.task().paused = false; w.Game.time++; w.manager.run();
+  assert.equal(w.task().creepName, c.name); assert.equal(w.task().status, 'running');
+});
+test('runtime enabled and autoClaim switches stop then resume existing unit', () => {
+  for (const key of ['enabled', 'autoClaim']) {
+    const w = world(); w.spawnNext(); const c = w.unit(); let moves = 0; c.moveTo = () => { moves++; return 0; };
+    w.manager.run(); const before = moves; w.Memory.expansion[key] = false;
+    for (let i = 0; i < 100; i++) { w.Game.time++; w.manager.run(); }
+    assert.equal(moves, before); w.Memory.expansion[key] = true; w.Game.time++; w.manager.run();
+    assert(moves > before); assert.equal(w.task().attempts, 1);
+  }
+});
+test('bounded repath exhaustion does not remain stuck after the unit actually dies', () => {
+  const w = world({ maxPathRetries: 1 }); w.spawnNext(); const c = w.unit(); c.pos.findClosestByPath = () => null;
+  w.Game.time++; w.manager.run(); w.Game.time += 10; w.manager.run(); assert.equal(w.task().state, 'BLOCKED');
+  delete w.Game.creeps[c.name]; w.Game.time++; w.manager.run(); assert.equal(w.task().status, 'waiting');
+  w.Game.time += 200; w.spawnNext(); assert.equal(w.calls.length, 2);
+});
+test('damage blocks live unit and death allows budgeted replacement', () => {
+  const w = world(); w.spawnNext(); const c = w.unit(); c.getActiveBodyparts = () => 0;
+  w.Game.time++; w.manager.run(); assert.equal(w.task().state, 'BLOCKED'); assert.equal(w.task().creepName, c.name);
+  delete w.Game.creeps[c.name]; w.Game.time++; w.manager.run(); assert.equal(w.task().status, 'waiting');
+});
+test('one target exception does not stop other owned-room planning', () => {
+  const w = world(); w.manager.run(); const a = w.target(0, { my: true }); w.target(1, { my: true });
+  a.getTerrain = () => { throw Error('bad snapshot'); }; w.manager.run();
+  assert.equal(w.task().state, 'BLOCKED'); assert.equal(w.task(1).state, 'SPAWN_PLANNING');
+});
+test('low CPU defers construction and local economy without unsafe calls', () => {
+  const w = world({ autoBootstrap: true, autoBuildSpawn: true }); w.manager.run(); const r = w.target(0, { my: true });
+  const s = economicSpawn(w, r); w.Game.cpu.bucket = 0; w.manager.run(); w.load('colony.manager').run();
+  w.load('colony.manager').trySpawn(s); assert.equal(w.calls.length, 0); assert.equal(w.Memory.colonies[r.name].waitReason, 'CPU_WAIT');
+});
+test('post-bootstrap ownership loss blocks instead of claiming again', () => {
+  const w = world(); w.manager.run(); const r = w.target(0, { my: true }); economicSpawn(w, r); w.manager.run();
+  r.controller.my = false; w.Game.time++; w.manager.run(); assert.equal(w.task().failureReason, 'OWNERSHIP_LOST');
+});
+test('three local Spawns account for all same-tick pending roles', () => {
+  const w = world({ autoBootstrap: true }); w.manager.run(); const r = w.target(0, { my: true });
+  const s = economicSpawn(w, r); w.manager.run();
+  for (let n = 0; n < 4; n++) w.load('colony.manager').trySpawn({ ...s, name: `local-${n}` });
+  assert.equal(w.calls.length, 3); assert.equal(new Set(w.calls.map(c => c.name)).size, 3);
+  assert.deepEqual(w.calls.map(c => c.options.memory.role), ['colonyHarvester', 'colonyHarvester', 'colonyUpgrader']);
+});
+test('RCL2 core planning uses legal unlocked Extensions and obeys cooldown', () => {
+  const w = world({ autoBootstrap: true }); w.manager.run(); const r = w.target(0, { my: true, level: 2 });
+  economicSpawn(w, r); w.manager.run(); const cm = w.Memory.colonies[r.name];
+  w.load('colony.planner').run(r, cm); w.load('colony.planner').run(r, cm);
+  assert.equal(w.calls.filter(c => c.site).length, 1); assert.equal(w.calls[0].site, 'extension');
+});
+test('invalid configuration fails closed and default feature flags are explicit', () => {
+  const w = world({ maxPathRetries: NaN }); w.manager.run(); assert.equal(w.Memory.expansion.configError, 'INVALID_CONFIG');
+  const cfg = require('../code/expansion.config');
+  assert(cfg.enabled && cfg.autoClaim && cfg.autoBuildSpawn && cfg.autoBootstrap); assert.equal(cfg.emergencyStop, false);
+});
+test('Spawn plan preserves resource buffers and future expansion space', () => {
+  const w = world({ planningBatchSize: 2500 }); w.manager.run(); const r = w.target(0, { my: true });
+  plan(w, r, w.task()); const p = w.task().spawnPlan;
+  assert(Math.max(Math.abs(p.x - 10), Math.abs(p.y - 10)) > 3);
+  assert(Math.max(Math.abs(p.x - 40), Math.abs(p.y - 40)) > 4);
+  assert(p.reserved.extensions.length > 10 && p.reserved.futureCore.length === 3);
+});
+test('room snapshot requires vision and captures terrain explicitly', () => {
+  const w = world(); assert.equal(w.load('expansion.planner').snapshot('E22S37').error, 'NO_VISION');
+  w.target(); const snapshot = w.load('expansion.planner').snapshot('E22S37');
+  assert.equal(snapshot.terrain.length, 2500); assert.equal(snapshot.sources.length, 1);
+});
+test('Pioneer entry step moves inward instead of bouncing back across border', () => {
+  const w = world({ autoBootstrap: true }); w.spawnNext(); const c = w.unit(w.target(0, { my: true }));
+  c.memory.role = 'expansionPioneer'; c.pos.y = 0; let direction;
+  c.move = d => { direction = d; return 0; }; w.load('expansion.pioneer').run(c, w.task()); assert.equal(direction, 5);
+});
+test('support permanent spawn errors are bounded independently of launch budget', () => {
+  const w = world({ autoBootstrap: true }); w.manager.run(); w.target(0, { my: true }); let attempts = 0;
+  w.spawn.spawnCreep = () => { attempts++; return -10; };
+  for (let i = 0; i < 8; i++) { w.spawnNext(); w.Game.time += 100; }
+  assert.equal(attempts, 3); assert.equal(w.task().supportResult, 'SUPPORT_SPAWN_ERRORS_EXHAUSTED');
+});
+test('runtime autoBootstrap flag pauses local production without native takeover', () => {
+  const w = world({ autoBootstrap: true }); w.manager.run(); const r = w.target(0, { my: true });
+  const s = economicSpawn(w, r); w.manager.run(); w.Memory.expansion.autoBootstrap = false;
+  w.load('colony.manager').trySpawn(s); assert.equal(w.calls.length, 0);
+  w.Memory.expansion.autoBootstrap = true; w.load('colony.manager').trySpawn(s); assert.equal(w.calls.length, 1);
+});
+test('local raw population cap bounds repeated replacement of damaged units', () => {
+  const w = world({ autoBootstrap: true, maxLocalPopulation: 2 }); w.manager.run(); const r = w.target(0, { my: true });
+  const s = economicSpawn(w, r); w.manager.run();
+  for (let i = 0; i < 2; i++) w.Game.creeps[`broken${i}`] = { memory: { colony: r.name, home: r.name, role: 'colonyHarvester' },
+    ticksToLive: 10, getActiveBodyparts: () => 0 };
+  w.load('colony.manager').trySpawn(s); assert.equal(w.calls.length, 0);
+  assert.equal(w.Memory.colonies[r.name].waitReason, 'LOCAL_POPULATION_CAP');
+});
+test('bootstrap registration adopts only destination workers and preserves mother', () => {
+  const w = world(); w.manager.run(); const r = w.target(0, { my: true });
+  w.Game.creeps.existingLocal = { memory: { home: r.name, role: 'worker' } }; w.manager.run();
+  assert.equal(w.Game.creeps.existingLocal.memory.colony, r.name);
+  assert.equal(w.Game.creeps.worker0.memory.role, 'worker'); assert.equal(w.Game.creeps.worker0.memory.colony, undefined);
+});
+test('scenario: claim to stable local economy survives global reset with bounded aid', () => {
+  const result = require('./scenario')();
+  assert(result.trace.includes('BUILD_SPAWN') && result.trace.includes('BOOTSTRAP') && result.trace.includes('STABLE'));
+  console.log(`SCENARIO ${JSON.stringify(result)}`);
 });
 console.log(`${passed} tests passed`);

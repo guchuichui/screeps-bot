@@ -34,6 +34,8 @@ exports.to = function (creep, target, range = 1) {
 };
 function perform(creep, action) {
   const nav = creep.memory.navigation || (creep.memory.navigation = {});
+  if (nav.lastCalledAt && Game.time - nav.lastCalledAt > 1) nav.progressAt = Game.time;
+  nav.lastCalledAt = Game.time;
   const position = `${creep.room.name}:${creep.pos.x}:${creep.pos.y}`;
   if (nav.position !== position) { nav.position = position; nav.progressAt = Game.time; nav.retries = 0; }
   if (Game.time < (nav.nextAt || 0)) return record(creep, 'REPATH_COOLDOWN');

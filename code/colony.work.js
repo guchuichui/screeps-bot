@@ -23,6 +23,8 @@ exports.harvest = function (creep) {
   const data = exports.sources(room).filter(s => s.slots.length);
   let assigned = data.find(s => s.source.id === creep.memory.sourceId && s.slots.some(p =>
     creep.memory.sourceSlot && p.x === creep.memory.sourceSlot.x && p.y === creep.memory.sourceSlot.y));
+  if (assigned && peers.some(c => c.name < creep.name && c.memory.sourceId === creep.memory.sourceId &&
+    c.memory.sourceSlot && c.memory.sourceSlot.x === creep.memory.sourceSlot.x && c.memory.sourceSlot.y === creep.memory.sourceSlot.y)) assigned = null;
   if (!assigned || !creep.memory.sourceSlot) {
     const choices = [];
     for (const s of data) {

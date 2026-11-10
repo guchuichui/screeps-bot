@@ -1,4 +1,4 @@
-// Switching the game to this code branch enables claim-only expansion.
+// Not deployed automatically: review and activate this code branch manually.
 // Runtime kill switch: Memory.expansion.emergencyStop = true
 module.exports = {
   enabled: true,
@@ -7,9 +7,10 @@ module.exports = {
   targetRooms: ['E22S37', 'E22S38'],
   mode: 'emergency',
   autoClaim: true,
-  autoBuildSpawn: false,
-  autoBootstrap: false,
+  autoBuildSpawn: true,
+  autoBootstrap: true,
   maxPioneers: 2,
+  maxTotalPioneers: 3,
   maxPioneerBodyCost: 1000,
   pioneerReplaceTtl: 250,
   homeSupportStorageReserve: 10000,
@@ -17,6 +18,7 @@ module.exports = {
   maxSupportEnergy: 10000,
   supportSpawnCooldown: 50,
   maxLocalBodyCost: 1000,
+  maxLocalPopulation: 12,
   localReplacementTtl: 150,
   localPlanningInterval: 25,
   stableWindow: 300,

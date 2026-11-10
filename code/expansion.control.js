@@ -14,5 +14,8 @@ exports.transition = function (task, state, reason) {
     task.previousState = task.state;
     task.state = state;
     task.stateChangedAt = Game.time;
+    if (!task.stateHistory) task.stateHistory = [];
+    task.stateHistory.push({ tick: Game.time, state, reason });
+    if (task.stateHistory.length > 16) task.stateHistory.shift();
   }
 };
