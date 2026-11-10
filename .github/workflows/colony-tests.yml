@@ -3,7 +3,7 @@ on:
   pull_request:
     paths: ['code/**', 'tests/**', 'tools/**', '.github/workflows/colony-tests.yml']
   push:
-    branches: ['feature/colony-bootstrap', 'fix/pioneer-support-observability']
+    branches: ['feature/colony-bootstrap', 'fix/pioneer-support-observability', 'codex/optimize-*']
     paths: ['code/**', 'tests/**', 'tools/**', '.github/workflows/colony-tests.yml']
 permissions:
   contents: read

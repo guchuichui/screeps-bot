@@ -10,6 +10,7 @@ module.exports = {
   autoBuildSpawn: true,
   autoBootstrap: true,
   observabilityEnabled: true,
+  telemetryEnabled: true,
   observationInterval: 25,
   minEmergencyHomeWorkers: 2,
   minEmergencyWorkParts: 6,

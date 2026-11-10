@@ -101,6 +101,7 @@ exports.trySpawn = function (spawn, tasks, bodyCostLimit = config.maxPioneerBody
       role: 'expansionPioneer', home: task.homeRoom, targetRoom: task.targetRoom, expansionTask: task.id
     } });
     check(task, `SPAWN_${result}`, { bodyCost: units * unitCost, recoveringVision: !room });
+    try { require('telemetry.metrics').spawn(spawn, result, 'expansionPioneer', body); } catch (error) { task.telemetryError = String(error); }
     task.nextSupportAt = Game.time + config.supportSpawnCooldown;
     if (result === OK) {
       task.supportLaunches = (task.supportLaunches || 0) + 1;

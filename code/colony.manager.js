@@ -97,6 +97,7 @@ exports.trySpawn = function (spawn) {
     role, colony: spawn.room.name, home: spawn.room.name
   } });
   colony.lastSpawn = { tick: Game.time, role, code: result, bodyCost: body.reduce((n, p) => n + BODYPART_COST[p], 0) };
+  try { require('telemetry.metrics').spawn(spawn, result, role, body); } catch (error) { colony.telemetryError = String(error); }
   if (result === OK) {
     colony.localSpawns++;
     colony.spawnIntents.push({ tick: Game.time, role, name });

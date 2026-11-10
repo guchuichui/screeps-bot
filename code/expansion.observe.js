@@ -32,7 +32,9 @@ exports.snapshot = function () {
     supportEnergySpent: task.supportEnergySpent || 0, supportErrors: task.supportErrors || 0,
     nextSupportAt: task.nextSupportAt, visionRecoveryLaunches: task.visionRecoveryLaunches || 0, lastError: task.lastError
   };
+  const detail = config.telemetryEnabled && Game.cpu.getUsed() < Game.cpu.limit * 0.85 ? require('telemetry.detail').snapshot() : null;
   return { schema: 1, buildId: version.buildId, tick: Game.time, shard: Game.shard && Game.shard.name,
+    details: detail ? detail.dynamic : { available: false, reason: config.telemetryEnabled ? 'CPU_BUDGET' : 'DISABLED' }, staticUpdates: detail ? detail.updates : {},
     homeRoom: config.homeRoom, targetRooms: config.targetRooms,
     flags: Object.fromEntries(['enabled', 'emergencyStop', 'autoClaim', 'autoBuildSpawn', 'autoBootstrap'].map(k => [k, control.flag(k)])),
     cpu: { bucket: Game.cpu.bucket, used: Game.cpu.getUsed(), limit: Game.cpu.limit, tickLimit: Game.cpu.tickLimit },
@@ -49,5 +51,8 @@ exports.run = function () {
   const root = Memory.expansion || (Memory.expansion = { tasks: {} });
   const previous = root.observation;
   if (previous && previous.buildId === version.buildId && Game.time - previous.tick < config.observationInterval) return;
-  root.observation = exports.snapshot();
+  const snapshot = exports.snapshot();
+  if (Object.keys(snapshot.staticUpdates).length) root.telemetryStatic = { ...(root.telemetryStatic || {}), ...snapshot.staticUpdates };
+  delete snapshot.staticUpdates;
+  root.observation = snapshot;
 };

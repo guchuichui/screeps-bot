@@ -116,6 +116,7 @@ module.exports.trySpawn = function (spawn, counts, targets) {
       role: 'expansionClaimer', home: room.name, targetRoom, expansionTask: task.id
     } });
     report(task, 'SPAWN_RESULT', result);
+    try { require('telemetry.metrics').spawn(spawn, result, 'expansionClaimer', body); } catch (error) { task.telemetryError = String(error); }
     if (result === OK) {
       task.creepName = name;
       task.attempts++;

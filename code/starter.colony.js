@@ -71,6 +71,7 @@ module.exports.run = function () {
     if (!body.length) continue;
     const name = `${role}-${room.name}-${Game.time}`;
     const result = spawn.spawnCreep(body, name, { memory: { role, home: room.name } });
+    try { require('telemetry.metrics').spawn(spawn, result, role, body); } catch (error) { if (Game.time % 25 === 0) console.log(`Spawn telemetry error: ${error}`); }
     if (result === OK) { c[role]++; console.log(`Spawning ${role} (${body.length} parts) in ${room.name}`); }
     else if (result !== ERR_NOT_ENOUGH_ENERGY && result !== ERR_BUSY) console.log(`Spawn error ${spawn.name}: ${result}`);
   }

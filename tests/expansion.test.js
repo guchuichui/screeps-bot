@@ -404,4 +404,5 @@ test('scenario: claim to stable local economy survives global reset with bounded
   assert(result.trace.includes('BUILD_SPAWN') && result.trace.includes('BOOTSTRAP') && result.trace.includes('STABLE'));
   console.log(`SCENARIO ${JSON.stringify(result)}`);
 });
+passed += require('./telemetry.test')();
 console.log(`${passed} tests passed`);
