@@ -1,0 +1,17 @@
+{
+  "source": "user-console-subset",
+  "tick": 84190469,
+  "shard": "shard3",
+  "home": {"rcl": 6, "energy": 104, "sites": 0, "hostiles": 0},
+  "spawns": [{"name": "initial", "spawning": {"name": "worker-E22S36-84190459", "needTime": 21, "remainingTime": 11}}],
+  "population": [
+    {"name": "worker-E22S36-84188960", "role": "worker", "ttl": 5, "spawning": false, "work": 2, "carry": 1, "move": 2},
+    {"name": "worker-E22S36-84188975", "role": "worker", "ttl": 20, "spawning": false, "work": 2, "carry": 1, "move": 2},
+    {"name": "worker-E22S36-84189011", "role": "worker", "ttl": 53, "spawning": false, "work": 1, "carry": 1, "move": 2},
+    {"name": "worker-E22S36-84189023", "role": "worker", "ttl": 65, "spawning": false, "work": 1, "carry": 1, "move": 2},
+    {"name": "worker-E22S36-84189040", "role": "worker", "ttl": 82, "spawning": false, "work": 1, "carry": 1, "move": 2},
+    {"name": "defender-E22S36-84189052", "role": "defender", "ttl": 91, "spawning": false, "work": 0, "carry": 0, "move": 1},
+    {"name": "worker-E22S36-84190387", "role": "worker", "ttl": 1489, "spawning": false, "work": 12, "carry": 6, "move": 6},
+    {"name": "worker-E22S36-84190459", "role": "worker", "spawning": true, "work": 3, "carry": 2, "move": 2}
+  ]
+}

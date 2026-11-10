@@ -1,0 +1,17 @@
+{
+  "source": "user-console-subset",
+  "tick": 84190457,
+  "shard": "shard3",
+  "cpu": {"bucket": 10000, "used": 2.8834750999994867, "limit": 20},
+  "expansion": {
+    "emergencyStop": false,
+    "lastRunAt": 84190457,
+    "supportWait": {"tick": 84190386, "reason": "HOME_WORKFORCE_WAIT"},
+    "tasks": {
+      "E22S36:E22S37": {"id": "E22S36:E22S37", "homeRoom": "E22S36", "targetRoom": "E22S37", "state": "BUILD_SPAWN", "status": "running", "attempts": 2, "claimedAt": 84190282, "siteAttempts": 1, "lastSeenAt": 84190457, "lastResult": {"tick": 84190457, "code": "SPAWN_SITE_PRESENT"}}
+    }
+  },
+  "home": {"energy": 494, "capacity": 1800},
+  "target": {"owned": true, "spawns": 0, "sites": [{"type": "spawn", "progress": 0, "total": 15000}]},
+  "pioneers": []
+}

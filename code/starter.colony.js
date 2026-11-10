@@ -58,6 +58,8 @@ module.exports.run = function () {
     };
     const total = c.worker + c.defender;
     const cap = Math.min(18, 5 + room.controller.level * 2);
+    // Necessary support gets a separate safety gate, before optional full staffing.
+    if (runExpansion('trySupport', spawn, c, targets)) continue;
     if (total >= cap) continue;
 
     const priority = hostiles.length ? ['defender', 'worker'] : ['worker', 'defender'];
@@ -79,6 +81,8 @@ function runExpansion(method, ...args) {
   catch (error) {
     // Module loading and expansion execution must not stop the established colony.
     if (Game.time % 25 === 0) console.log(`Expansion error: ${error}`);
+    if (!Memory.expansion) Memory.expansion = { tasks: {} };
+    Memory.expansion.lastError = { tick: Game.time, scope: `expansion.${method}`, reason: String(error.stack || error) };
   }
 }
 function runColony(method, ...args) {

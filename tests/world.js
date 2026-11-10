@@ -88,7 +88,7 @@ function world(overrides = {}) {
     return c;
   }
   const counts = { worker: 6, defender: 1 }, targets = { worker: 6, defender: 1 };
-  const spawnNext = () => manager.trySpawn(spawn, counts, targets);
+  const spawnNext = () => manager.trySupport(spawn, counts, targets) || manager.trySpawn(spawn, counts, targets);
   function resetModules() { for (const name of Object.keys(modules)) if (!name.startsWith('starter.') && name !== 'expansion.config') delete modules[name]; }
   return { config, Memory, Game, home, spawn, calls, load, manager, task, target, unit, spawnNext, counts, targets, constants, resetModules };
 }

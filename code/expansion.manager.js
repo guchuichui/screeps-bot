@@ -76,7 +76,8 @@ module.exports.run = function () {
   }
 };
 
-// Called only when colony's existing population policy has no pending local role.
+// Claimer production still waits for full native staffing. Necessary Pioneer aid
+// uses the independent, stricter-on-critical-resources trySupport gate below.
 module.exports.trySpawn = function (spawn, counts, targets) {
   const memory = initialize();
   if (!memory || stopped(memory) || !hasCpu() || spawn.spawning) return;
@@ -92,8 +93,6 @@ module.exports.trySpawn = function (spawn, counts, targets) {
   if (healthyWorkers < targets.worker) {
     memory.supportWait = { tick: Game.time, reason: 'HOME_WORKFORCE_WAIT' }; return;
   }
-  const orderedTasks = config.targetRooms.map(r => memory.tasks[taskId(r)]).filter(eligible);
-  if (pioneer.trySpawn(spawn, orderedTasks)) return;
   if (!control.flag('autoClaim')) return;
   // Count Claimers independently of Pioneers and adopted local economy units.
   const names = new Set(Object.values(Game.creeps).filter(c => c.memory.expansionTask && c.memory.role === 'expansionClaimer').map(c => c.name));
@@ -140,6 +139,48 @@ module.exports.trySpawn = function (spawn, counts, targets) {
   }
 };
 
+module.exports.trySupport = function (spawn, counts, targets) {
+  const memory = initialize();
+  if (!memory || spawn.room.name !== config.homeRoom) return false;
+  const wait = reason => {
+    memory.supportWait = { tick: Game.time, spawn: spawn.name, reason, counts: { ...counts }, targets: { ...targets } };
+    return false;
+  };
+  if (stopped() || !control.flag('autoBootstrap')) return wait('SUPPORT_DISABLED');
+  if (!hasCpu()) return wait('CPU_WAIT');
+  if (spawn.spawning) return wait('HOME_SPAWN_BUSY');
+  if (!spawn.room.controller || !spawn.room.controller.my) return wait('HOME_NOT_OWNED');
+  if (spawn.room.find(FIND_HOSTILE_CREEPS).length) return wait('HOME_HOSTILES');
+  const workers = Object.values(Game.creeps).filter(c => c.memory.home === config.homeRoom &&
+    c.memory.role === 'worker' && !c.memory.expansionTask && !c.memory.colony && !c.spawning &&
+    c.ticksToLive >= config.minHomeWorkerTtl && c.getActiveBodyparts(WORK) && c.getActiveBodyparts(CARRY) && c.getActiveBodyparts(MOVE));
+  const workParts = workers.reduce((sum, c) => sum + c.getActiveBodyparts(WORK), 0);
+  if (counts.worker < config.minEmergencyHomeWorkers || workers.length < config.minEmergencyHomeWorkers || workParts < config.minEmergencyWorkParts) {
+    delete memory.supportEnergyWindow;
+    return wait('HOME_CRITICAL_WORKFORCE_WAIT');
+  }
+  const tasks = config.targetRooms.map(r => memory.tasks[taskId(r)]).filter(eligible);
+  const spawned = pioneer.trySpawn(spawn, tasks, config.maxEmergencyPioneerBodyCost);
+  if (spawned) {
+    delete memory.supportEnergyWindow;
+    memory.supportWait = { tick: Game.time, spawn: spawn.name, reason: 'SUPPORT_SPAWNED' };
+    return true;
+  }
+  const energyWait = tasks.some(t => t.supportCheck && t.supportCheck.tick === Game.time && t.supportCheck.reason === 'HOME_SUPPORT_ENERGY_WAIT');
+  if (energyWait) {
+    let window = memory.supportEnergyWindow;
+    if (!window || Game.time >= window.retryAt) window = memory.supportEnergyWindow = {
+      startedAt: Game.time, retryAt: Game.time + config.supportEnergyWaitTicks + config.supportEnergyWaitCooldown
+    };
+    if (Game.time - window.startedAt < config.supportEnergyWaitTicks) {
+      memory.supportWait = { tick: Game.time, spawn: spawn.name, reason: 'RESERVING_SUPPORT_ENERGY', until: window.startedAt + config.supportEnergyWaitTicks };
+      return true; // Bounded hold of noncritical production; critical gates run every tick.
+    }
+    return wait('SUPPORT_ENERGY_WINDOW_EXPIRED');
+  }
+  return wait('NO_ELIGIBLE_SUPPORT_REQUEST');
+};
+
 function initialize() {
   // Disabled-by-config must not mutate unrelated Memory or revive old missions.
   if (!control.flag('enabled')) return null;
@@ -178,6 +219,9 @@ function validConfig() {
       'siteRetryCooldown', 'maxPlanRejections', 'maxPioneers', 'maxTotalPioneers', 'maxPioneerBodyCost', 'pioneerReplaceTtl',
       'homeSupportStorageReserve', 'maxSupportLaunches', 'maxSupportEnergy', 'supportSpawnCooldown',
       'maxLocalBodyCost', 'maxLocalPopulation', 'localReplacementTtl', 'localPlanningInterval', 'stableWindow']
+      .every(key => Number.isFinite(config[key]) && config[key] > 0) &&
+    ['observationInterval', 'minEmergencyHomeWorkers', 'minEmergencyWorkParts', 'maxEmergencyPioneerBodyCost',
+      'supportEnergyWaitTicks', 'supportEnergyWaitCooldown', 'maxVisionRecoveryLaunches', 'visionRecoveryCooldown']
       .every(key => Number.isFinite(config[key]) && config[key] > 0);
 }
 function stopped() { return control.stopped(); }
@@ -197,6 +241,8 @@ function observe(task) {
   if (!room) return Boolean(task.claimedAt);
   task.lastSeenAt = Game.time;
   const controller = room.controller;
+  task.lastKnownHasSpawn = room.find(FIND_MY_SPAWNS).length > 0;
+  task.lastKnownSourceCount = room.find(FIND_SOURCES).length;
   if (!controller) { block(task, 'NO_CONTROLLER'); return true; }
   if (controller.my) { markClaimed(task); return true; }
   if (controller.owner) { block(task, `TARGET_OWNED_BY_OTHER: ${controller.owner.username}`); return true; }

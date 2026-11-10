@@ -334,6 +334,71 @@ test('bootstrap registration adopts only destination workers and preserves mothe
   assert.equal(w.Game.creeps.existingLocal.memory.colony, r.name);
   assert.equal(w.Game.creeps.worker0.memory.role, 'worker'); assert.equal(w.Game.creeps.worker0.memory.colony, undefined);
 });
+test('PR1 live snapshot: critical mother recovery remains protected', () => {
+  const captured = require('./fixtures/pioneer-console-84190469.json');
+  const w = world({ autoBootstrap: true }); w.manager.run(); w.target(0, { my: true });
+  w.Game.time = captured.tick; w.home.controller.level = captured.home.rcl; w.home.energyAvailable = captured.home.energy;
+  w.Game.creeps = {};
+  for (const row of captured.population) w.Game.creeps[row.name] = {
+    name: row.name, memory: { role: row.role, home: 'E22S36' }, ticksToLive: row.ttl, spawning: row.spawning,
+    getActiveBodyparts: part => row[part] || 0
+  };
+  w.spawn.spawning = captured.spawns[0].spawning;
+  w.load('main').loop(); assert.equal(w.calls.length, 0);
+  const snapshot = w.load('expansion.observe').snapshot();
+  assert.equal(snapshot.spawns[0].spawning.remainingTime, 11); assert.equal(snapshot.rooms.E22S36.energy, 104);
+  w.spawn.spawning = null; w.Game.time++;
+  assert.equal(w.load('expansion.manager').trySupport(w.spawn, { worker: 7, defender: 1 }, { worker: 9, defender: 1 }), false);
+  assert.equal(w.Memory.expansion.supportWait.reason, 'HOME_CRITICAL_WORKFORCE_WAIT');
+});
+test('Pioneer gets priority below optional RCL6 worker target once core is safe', () => {
+  const w = world({ autoBootstrap: true }); w.manager.run(); w.target(0, { my: true });
+  w.home.controller.level = 6; w.home.energyAvailable = 800;
+  for (let i = 0; i < 6; i++) w.Game.creeps[`worker${i}`].getActiveBodyparts = part => part === 'work' ? 3 : ['carry', 'move'].includes(part) ? 1 : 0;
+  w.load('starter.colony').run();
+  assert.equal(w.calls[0].options.memory.role, 'expansionPioneer');
+  const cost = w.calls[0].body.reduce((n, p) => n + w.constants.BODYPART_COST[p], 0);
+  assert(cost <= 500 && w.home.energyAvailable - cost >= 300);
+});
+test('noncritical idle defender deficit does not veto necessary Pioneer', () => {
+  const w = world({ autoBootstrap: true }); w.manager.run(); w.target(0, { my: true });
+  w.counts.defender = 0; w.spawnNext(); assert.equal(w.calls[0].options.memory.role, 'expansionPioneer');
+});
+test('energy reservation yields to home production after its finite window', () => {
+  const w = world({ autoBootstrap: true }); w.manager.run(); w.target(0, { my: true }); w.home.energyAvailable = 494;
+  assert(w.manager.trySupport(w.spawn, w.counts, w.targets)); assert.equal(w.calls.length, 0);
+  assert.equal(w.Memory.expansion.supportWait.reason, 'RESERVING_SUPPORT_ENERGY');
+  w.Game.time += 51;
+  assert.equal(w.manager.trySupport(w.spawn, w.counts, w.targets), false);
+  assert.equal(w.Memory.expansion.supportWait.reason, 'SUPPORT_ENERGY_WINDOW_EXPIRED');
+  w.resetModules(); w.Game.time++; assert.equal(w.load('expansion.manager').trySupport(w.spawn, w.counts, w.targets), false);
+});
+test('support energy reservation releases immediately when home is attacked', () => {
+  const w = world({ autoBootstrap: true }); w.manager.run(); w.target(0, { my: true }); w.home.energyAvailable = 494;
+  assert(w.manager.trySupport(w.spawn, w.counts, w.targets)); w.home.hostiles = [{}]; w.Game.time++;
+  assert.equal(w.manager.trySupport(w.spawn, w.counts, w.targets), false); assert.equal(w.Memory.expansion.supportWait.reason, 'HOME_HOSTILES');
+});
+test('confirmed claimed room without vision gets finite Pioneer recovery dispatch', () => {
+  const w = world({ autoBootstrap: true }); w.manager.run(); w.task().claimedAt = 1; w.task().state = 'BUILD_SPAWN';
+  for (let i = 0; i < 5; i++) { w.spawnNext(); w.Game.time += 501; }
+  assert.equal(w.calls.length, 2); assert.equal(w.task().visionRecoveryLaunches, 2);
+  assert(w.calls.every(c => c.options.memory.role === 'expansionPioneer'));
+});
+test('unconfirmed unseen target cannot consume a Pioneer recovery budget', () => {
+  const w = world({ autoBootstrap: true, autoClaim: false }); w.manager.run(); w.spawnNext();
+  assert.equal(w.calls.length, 0); assert.equal(w.task().supportResult, 'NO_CONFIRMED_BOOTSTRAP_TARGET');
+});
+test('live Pioneer movement diagnostics and observer do not execute game operations', () => {
+  const w = world({ autoBootstrap: true }); w.manager.run(); w.target(0, { my: true }); w.spawnNext();
+  const c = { name: 'pioneer', memory: { ...w.calls[0].options.memory, lastAction: { code: 'NO_PATH', tick: w.Game.time } },
+    getActiveBodyparts: () => 1, room: w.home, pos: { x: 34, y: 21 }, ticksToLive: 1400 };
+  w.Game.creeps.pioneer = c; const before = JSON.stringify(w.Memory); const callCount = w.calls.length;
+  const snapshot = w.load('expansion.observe').snapshot();
+  assert.equal(JSON.stringify(w.Memory), before); assert.equal(w.calls.length, callCount);
+  assert.equal(snapshot.creeps.find(row => row.name === 'pioneer').lastAction.code, 'NO_PATH');
+  w.load('expansion.observe').run(); const observedAt = w.Memory.expansion.observation.tick;
+  w.Game.time++; w.load('expansion.observe').run(); assert.equal(w.Memory.expansion.observation.tick, observedAt);
+});
 test('scenario: claim to stable local economy survives global reset with bounded aid', () => {
   const result = require('./scenario')();
   assert(result.trace.includes('BUILD_SPAWN') && result.trace.includes('BOOTSTRAP') && result.trace.includes('STABLE'));
