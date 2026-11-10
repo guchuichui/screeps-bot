@@ -1,10 +1,10 @@
 name: Colony offline tests
 on:
   pull_request:
-    paths: ['code/**', 'tests/**', '.github/workflows/colony-tests.yml']
+    paths: ['code/**', 'tests/**', 'tools/**', '.github/workflows/colony-tests.yml']
   push:
-    branches: ['feature/colony-bootstrap']
-    paths: ['code/**', 'tests/**', '.github/workflows/colony-tests.yml']
+    branches: ['feature/colony-bootstrap', 'fix/pioneer-support-observability']
+    paths: ['code/**', 'tests/**', 'tools/**', '.github/workflows/colony-tests.yml']
 permissions:
   contents: read
 jobs:
@@ -17,3 +17,7 @@ jobs:
           node-version: '20'
       - run: node tests/check-syntax.js
       - run: node tests/expansion.test.js
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s tests -p 'test_*.py' -v
