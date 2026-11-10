@@ -10,6 +10,8 @@ module.exports.run = function () {
 
   const counts = {};
   for (const creep of Object.values(Game.creeps)) {
+    // Preserve expansion roles even while disabled, stopped, completed or quarantined.
+    if (creep.memory.expansionTask) continue;
     if (!creep.memory.home) creep.memory.home = creep.room.name;
     const roomName = creep.memory.home;
     if (!counts[roomName]) counts[roomName] = emptyCounts();
@@ -34,6 +36,8 @@ module.exports.run = function () {
     catch (error) { console.log(`Colony error ${room.name}: ${error}`); }
   }
 
+  runExpansion('run');
+
   for (const spawn of Object.values(Game.spawns)) {
     const room = spawn.room;
     if (!room || !rooms[room.name] || spawn.spawning) continue;
@@ -51,7 +55,7 @@ module.exports.run = function () {
 
     const priority = hostiles.length ? ['defender', 'worker'] : ['worker', 'defender'];
     const role = priority.find(r => c[r] < targets[r]);
-    if (!role) continue;
+    if (!role) { runExpansion('trySpawn', spawn, c, targets); continue; }
     // Wait for a useful worker body instead of spending energy on weak partial bodies.
     if (role !== 'defender' && room.energyAvailable < 250) continue;
     const body = role === 'defender' ? defender.body(room.energyAvailable) : workerBody(room.energyAvailable);
@@ -62,6 +66,14 @@ module.exports.run = function () {
     else if (result !== ERR_NOT_ENOUGH_ENERGY && result !== ERR_BUSY) console.log(`Spawn error ${spawn.name}: ${result}`);
   }
 };
+
+function runExpansion(method, ...args) {
+  try { return require('expansion.manager')[method](...args); }
+  catch (error) {
+    // Module loading and expansion execution must not stop the established colony.
+    if (Game.time % 25 === 0) console.log(`Expansion error: ${error}`);
+  }
+}
 
 function emptyCounts() { return { worker: 0, defender: 0 }; }
 function normalizeRole(creep) {
