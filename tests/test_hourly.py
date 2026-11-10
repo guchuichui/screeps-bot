@@ -30,6 +30,19 @@ def sample(hours=0, code='same'):
 
 
 class HourlyTests(unittest.TestCase):
+    def test_latest_failed_sample_cannot_be_hidden_by_previous_success(self):
+        failed = sample(1); failed['errors'] = [{'code': 'NETWORK_ERROR'}]
+        result = analyze([sample(0), failed])
+        self.assertEqual(result['latestTick'], 0)
+        self.assertEqual(result['latestAttemptAt'], failed['collectedAt'])
+        self.assertTrue(any(f['kind'] == 'observation_failure' for f in result['findings']))
+
+    def test_runtime_build_mismatch_is_reported_without_rich_telemetry(self):
+        row = sample(); row.pop('telemetry')
+        row['checks'] = [{'code': 'ACTIVE_BUILD_NOT_OBSERVED_IN_RUNTIME'}]
+        result = analyze([row])
+        self.assertTrue(any(f['rule'] == 'runtime' and f['kind'] == 'instantaneous' for f in result['findings']))
+
     def test_null_counter_and_unreachable_static_path_remain_missing(self):
         rows = [sample(0), sample(1), sample(2)]
         for row in rows:

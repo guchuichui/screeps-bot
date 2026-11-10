@@ -27,6 +27,7 @@ def counter_delta(before, after, name):
 
 
 def analyze(samples):
+    attempts = sorted((s for s in samples if time_of(s) is not None), key=time_of)
     good = [s for s in samples if not s.get('errors') and isinstance(s.get('facts'), dict) and
             s['facts'].get('observationAgeTicks', 0) <= 100 and time_of(s) is not None]
     good.sort(key=time_of)
@@ -153,9 +154,19 @@ def analyze(samples):
             identities = [[p.get('id') for p in r.get('spawnSites', [])] for r in rows]
             if all(identities) and identities[0] == identities[1] == identities[2] and values[0] == values[1] == values[2]:
                 add('pioneer', name, {'progress': values, 'siteIds': identities[0]}, message='Same Spawn site has no net progress across two hours')
+    attempt = attempts[-1] if attempts else latest
+    if attempt.get('errors') or (attempt.get('facts') or {}).get('observationAgeTicks', 0) > 100:
+        add('runtime', None, {'collectedAt': attempt.get('collectedAt'), 'errors': attempt.get('errors'),
+            'ageTicks': (attempt.get('facts') or {}).get('observationAgeTicks')},
+            'observation_failure', 'Latest collection failed or is stale; prior successful data is retained, not current health proof')
+        findings[-1]['priority'] = 'P1'
+    for check in attempt.get('checks', []):
+        if check.get('code') in ['UNEXPECTED_ACTIVE_CODE_BRANCH', 'ACTIVE_BUILD_NOT_OBSERVED_IN_RUNTIME']:
+            add('runtime', None, check, 'instantaneous', 'Observed branch or runtime build mismatch')
     missing = [] if telemetry.get('available') else ['sources', 'cargo', 'storage/container/terminal', 'controller', 'links', 'terrain/layout', 'per-tick counters']
     return {'schema': 1, 'status': 'analyzed' if trend else 'insufficient_history', 'sampleCount': len(good),
             'comparableSamples': len(window), 'trendReady': trend, 'latestTick': latest['facts'].get('runtimeSnapshotTick'),
+            'latestAttemptAt': attempt.get('collectedAt'), 'analysisSampleAt': latest.get('collectedAt'),
             'rules': statuses, 'findings': findings, 'unavailable': missing,
             'limits': 'Sparse hourly snapshots do not establish per-tick throughput. Counter gaps/epoch changes are not bridged.'}
 
