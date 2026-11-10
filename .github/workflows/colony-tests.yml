@@ -1,0 +1,19 @@
+name: Colony offline tests
+on:
+  pull_request:
+    paths: ['code/**', 'tests/**', '.github/workflows/colony-tests.yml']
+  push:
+    branches: ['feature/colony-bootstrap']
+    paths: ['code/**', 'tests/**', '.github/workflows/colony-tests.yml']
+permissions:
+  contents: read
+jobs:
+  offline-tests:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: node tests/check-syntax.js
+      - run: node tests/expansion.test.js

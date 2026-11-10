@@ -1,35 +1,78 @@
 const config = require('expansion.config');
 const claimer = require('expansion.claimer');
+const control = require('expansion.control');
+const spawnPlanner = require('expansion.planner');
+const pioneer = require('expansion.pioneer');
 
-// Reserved later phases: BUILD_SPAWN -> BOOTSTRAP -> STABLE.
-// This release stops at CLAIMED and never creates or destroys structures.
+// Expansion missions and independently running colonies have separate Memory.
 module.exports.run = function () {
   const memory = initialize();
   if (!memory || stopped(memory)) return;
+  if (memory.lastRunAt && Game.time - memory.lastRunAt > 1) {
+    for (const task of Object.values(memory.tasks)) task.lastProgressAt = Game.time;
+  }
+  memory.lastRunAt = Game.time;
+  for (const creep of Object.values(Game.creeps)) {
+    const task = memory.tasks[creep.memory.expansionTask];
+    if (creep.memory.role === 'expansionPioneer' && task && configured(task)) {
+      try { pioneer.run(creep, task); }
+      catch (error) {
+        task.lastError = { tick: Game.time, creep: creep.name, reason: String(error.stack || error) };
+        creep.memory.lastAction = { tick: Game.time, code: 'PIONEER_EXCEPTION' };
+        if (Game.time % config.diagnosticInterval === 0) console.log(`[expansion] ${JSON.stringify(task.lastError)}`);
+      }
+    }
+  }
   for (const task of Object.values(memory.tasks)) {
     if (!configured(task)) continue;
     try {
+      recoverBinding(task);
+      if (task.paused) { task.lastProgressAt = Game.time; report(task, 'TASK_PAUSED'); continue; }
       if (observe(task)) {
-        if (task.status === 'complete') recycleCompleted(task);
+        const owned = Game.rooms[task.targetRoom];
+        if (owned && owned.controller && owned.controller.my && task.status !== 'blocked') {
+          require('colony.manager').register(owned, task);
+          if (control.flag('autoClaim')) recycleCompleted(task);
+          const result = spawnPlanner.run(owned, task);
+          if (result.state) control.transition(task, result.state, result.code);
+          if (result.blocked) block(task, result.code);
+          else report(task, result.code);
+        }
         continue;
       }
-      if (task.status === 'blocked' || task.status === 'failed') continue;
+      if (task.creepName && !Game.creeps[task.creepName] && !isSpawning(task.creepName) &&
+          (task.status !== 'blocked' || recoverable(task.failureReason) || ['BODY_DAMAGED', 'INSUFFICIENT_LIFETIME'].includes(task.failureReason))) {
+        fail(task, 'CLAIMER_LOST'); continue;
+      }
+      if (task.status === 'blocked' || task.status === 'failed') {
+        const live = task.creepName && Game.creeps[task.creepName];
+        const oldGclWait = task.failureReason === 'CLAIM_REJECTED' && task.lastResult && task.lastResult.apiCode === ERR_GCL_NOT_ENOUGH;
+        if (live && task.recoveryExhaustedFor !== live.name && (recoverable(task.failureReason) || oldGclWait)) {
+          task.status = 'running'; task.lastProgressAt = Game.time;
+        } else { if (live) diagnose(task, live); continue; }
+      }
       const creep = task.creepName && Game.creeps[task.creepName];
       if (!creep) {
         if (task.creepName && !isSpawning(task.creepName)) fail(task, 'CLAIMER_LOST');
         continue;
       }
-      if (!hasCpu()) { report(task, 'CPU_WAIT'); continue; }
-      if (!hasGcl()) { task.status = 'waiting'; report(task, 'GCL_WAIT'); continue; }
+      if (!control.flag('autoClaim')) { task.lastProgressAt = Game.time; report(task, 'CLAIM_PAUSED'); continue; }
+      if (!hasCpu()) { task.lastProgressAt = Game.time; report(task, 'CPU_WAIT'); diagnose(task, creep); continue; }
+      if (Game.time < (task.nextPathRetryAt || 0)) { diagnose(task, creep); continue; }
       const route = getRoute(task, creep.room.name);
       if (!route) continue;
-      const result = claimer.run(creep, task, config, route);
+      const result = claimer.run(creep, task, config, route, hasGcl());
       report(task, result.code, result.apiCode);
       if (result.blocked) block(task, result.code);
       else if (result.failed) fail(task, result.code);
       else if (result.claimed) markClaimed(task);
-      else task.status = 'running';
-    } catch (error) { block(task, `EXCEPTION: ${error.message || error}`); }
+      else task.status = ['GCL_WAIT', 'HOSTILE_WAIT'].includes(result.code) ? 'waiting' : 'running';
+      diagnose(task, creep);
+    } catch (error) {
+      task.lastError = { tick: Game.time, reason: String(error.stack || error) };
+      if (task.creepName && Game.creeps[task.creepName]) fail(task, `EXCEPTION: ${error.message || error}`);
+      else block(task, `EXCEPTION: ${error.message || error}`);
+    }
   }
 };
 
@@ -39,20 +82,28 @@ module.exports.trySpawn = function (spawn, counts, targets) {
   if (!memory || stopped(memory) || !hasCpu() || spawn.spawning) return;
   const room = spawn.room;
   if (room.name !== config.homeRoom || !room.controller || !room.controller.my) return;
-  if (room.find(FIND_HOSTILE_CREEPS).length || counts.worker < targets.worker || counts.defender < targets.defender) return;
+  if (room.find(FIND_HOSTILE_CREEPS).length || counts.worker < targets.worker || counts.defender < targets.defender) {
+    memory.supportWait = { tick: Game.time, reason: 'HOME_DEFENSE_OR_POPULATION_WAIT' }; return;
+  }
   const healthyWorkers = Object.values(Game.creeps).filter(c => c.memory.home === room.name &&
     c.memory.role === 'worker' && !c.memory.expansionTask && !c.spawning &&
     c.ticksToLive >= config.minHomeWorkerTtl && c.getActiveBodyparts(WORK) &&
     c.getActiveBodyparts(CARRY) && c.getActiveBodyparts(MOVE)).length;
-  if (healthyWorkers < targets.worker) return;
-  // Count all expansion units, including retired/disabled missions and in-flight spawn intents.
-  const names = new Set(Object.values(Game.creeps).filter(c => c.memory.expansionTask).map(c => c.name));
+  if (healthyWorkers < targets.worker) {
+    memory.supportWait = { tick: Game.time, reason: 'HOME_WORKFORCE_WAIT' }; return;
+  }
+  const orderedTasks = config.targetRooms.map(r => memory.tasks[taskId(r)]).filter(eligible);
+  if (pioneer.trySpawn(spawn, orderedTasks)) return;
+  if (!control.flag('autoClaim')) return;
+  // Count Claimers independently of Pioneers and adopted local economy units.
+  const names = new Set(Object.values(Game.creeps).filter(c => c.memory.expansionTask && c.memory.role === 'expansionClaimer').map(c => c.name));
   for (const s of Object.values(Game.spawns)) if (s.spawning && isManagedName(s.spawning.name, memory)) names.add(s.spawning.name);
   for (const task of Object.values(memory.tasks)) if (task.spawnIntentAt === Game.time) names.add(task.creepName);
   if (names.size >= config.maxConcurrentClaimers) return;
 
   for (const targetRoom of config.targetRooms) {
     const task = memory.tasks[taskId(targetRoom)];
+    if (task.paused || !eligible(task)) continue;
     if (observe(task) || task.status === 'blocked' || task.status === 'failed' || task.creepName) continue;
     if (Game.time < (task.nextRetryAt || 0)) continue;
     if (task.attempts >= config.maxAttempts) { task.status = 'failed'; report(task, 'ATTEMPTS_EXHAUSTED'); continue; }
@@ -73,6 +124,9 @@ module.exports.trySpawn = function (spawn, counts, targets) {
       task.lastProgressAt = Game.time;
       task.spawnIntentAt = Game.time;
       task.status = 'running';
+      task.pathRetries = 0;
+      delete task.recoveryExhaustedFor;
+      delete task.nextPathRetryAt;
       delete task.lastPosition;
       task.spawnErrors = 0;
     } else {
@@ -88,7 +142,7 @@ module.exports.trySpawn = function (spawn, counts, targets) {
 
 function initialize() {
   // Disabled-by-config must not mutate unrelated Memory or revive old missions.
-  if (!config.enabled) return null;
+  if (!control.flag('enabled')) return null;
   if (!Memory.expansion) Memory.expansion = { emergencyStop: false, tasks: {} };
   const memory = Memory.expansion;
   if (!memory.tasks) memory.tasks = {};
@@ -119,9 +173,14 @@ function validConfig() {
       'minCpuBucket', 'routeCacheTicks', 'noProgressTimeout', 'missionTimeout', 'lifetimeMargin', 'maxRouteRooms']
       .every(key => Number.isFinite(config[key]) && config[key] >= 0) &&
     config.maxSpawnErrors > 0 && config.maxRouteRooms > 0 && config.maxCpuFraction > 0 && config.maxCpuFraction < 1 &&
-    Array.isArray(config.avoidRooms);
+    Array.isArray(config.avoidRooms) && config.avoidRooms.every(r => roomPattern.test(r)) &&
+    ['maxPathRetries', 'pathRetryCooldown', 'diagnosticInterval', 'planningBatchSize', 'maxSiteAttempts',
+      'siteRetryCooldown', 'maxPlanRejections', 'maxPioneers', 'maxTotalPioneers', 'maxPioneerBodyCost', 'pioneerReplaceTtl',
+      'homeSupportStorageReserve', 'maxSupportLaunches', 'maxSupportEnergy', 'supportSpawnCooldown',
+      'maxLocalBodyCost', 'maxLocalPopulation', 'localReplacementTtl', 'localPlanningInterval', 'stableWindow']
+      .every(key => Number.isFinite(config[key]) && config[key] > 0);
 }
-function stopped(memory) { return config.emergencyStop || memory.emergencyStop || !config.autoClaim; }
+function stopped() { return control.stopped(); }
 function taskId(target) { return `${config.homeRoom}:${target}`; }
 function configured(task) { return task.homeRoom === config.homeRoom && config.targetRooms.includes(task.targetRoom); }
 function hasCpu() {
@@ -130,46 +189,108 @@ function hasCpu() {
 function hasGcl() { return Object.values(Game.rooms).filter(r => r.controller && r.controller.my).length < Game.gcl.level; }
 function isSpawning(name) { return Object.values(Game.spawns).some(s => s.spawning && s.spawning.name === name); }
 function isManagedName(name, memory) {
-  return Boolean(Memory.creeps && Memory.creeps[name] && Memory.creeps[name].expansionTask) ||
+  return Boolean(Memory.creeps && Memory.creeps[name] && Memory.creeps[name].role === 'expansionClaimer') ||
     Object.values(memory.tasks).some(t => t.creepName === name);
 }
 function observe(task) {
   const room = Game.rooms[task.targetRoom];
-  if (!room) return task.state === 'CLAIMED';
+  if (!room) return Boolean(task.claimedAt);
   task.lastSeenAt = Game.time;
   const controller = room.controller;
   if (!controller) { block(task, 'NO_CONTROLLER'); return true; }
   if (controller.my) { markClaimed(task); return true; }
   if (controller.owner) { block(task, `TARGET_OWNED_BY_OTHER: ${controller.owner.username}`); return true; }
-  if (task.state === 'CLAIMED') { block(task, 'OWNERSHIP_LOST'); return true; }
+  if (task.claimedAt) { block(task, 'OWNERSHIP_LOST'); return true; }
   const home = Object.values(Game.spawns).find(s => s.room.name === config.homeRoom);
   const username = home && home.owner && home.owner.username;
   if (controller.reservation && (!username || controller.reservation.username !== username)) {
     block(task, `FOREIGN_RESERVATION: ${controller.reservation.username}`); return true;
   }
-  if (room.find(FIND_HOSTILE_CREEPS).length) { block(task, 'TARGET_HOSTILES'); return true; }
-  task.state = 'CLAIM';
+  if (room.find(FIND_HOSTILE_CREEPS).length) {
+    task.status = 'waiting'; task.lastProgressAt = Game.time; report(task, 'TARGET_HOSTILES_WAIT'); return true;
+  }
+  if (!['blocked', 'failed'].includes(task.status)) control.transition(task, 'CLAIM', 'TARGET_NEUTRAL');
   return false;
 }
 function markClaimed(task) {
+  if (task.status === 'blocked' && !recoverable(task.failureReason) && !['BODY_DAMAGED', 'INSUFFICIENT_LIFETIME'].includes(task.failureReason)) return;
+  const firstConfirmation = !task.claimedAt;
   if (!task.claimedAt) task.claimedAt = Game.time;
-  task.state = 'CLAIMED';
-  task.status = 'complete';
+  if (['SCOUT', 'CLAIM', 'BLOCKED'].includes(task.state)) control.transition(task, 'CLAIMED', 'CLAIM_CONFIRMED');
+  task.status = 'running';
   delete task.failureReason;
-  report(task, 'CLAIM_CONFIRMED');
+  if (firstConfirmation) report(task, 'CLAIM_CONFIRMED');
 }
 function block(task, reason) {
   task.status = 'blocked';
   task.failureReason = reason;
+  task.lastFailure = { tick: Game.time, reason };
+  control.transition(task, 'BLOCKED', reason);
   report(task, reason);
+}
+function eligible(task) {
+  const i = config.targetRooms.indexOf(task.targetRoom);
+  return i <= 0 || config.targetRooms.slice(0, i).every(r => Memory.expansion.tasks[taskId(r)].state === 'STABLE');
 }
 function fail(task, reason) {
   task.failureReason = reason;
-  // A failed living unit is quarantined by its tag until it dies; it is never reassigned as worker.
+  task.lastFailure = { tick: Game.time, reason };
+  const live = task.creepName && Game.creeps[task.creepName];
+  if (live) {
+    if (recoverable(reason)) {
+      task.pathRetries = (task.pathRetries || 0) + 1;
+      delete task.route;
+      delete live.memory._move;
+      task.lastProgressAt = Game.time;
+      task.nextPathRetryAt = Game.time + config.pathRetryCooldown * Math.min(task.pathRetries, 5);
+      task.status = task.pathRetries <= config.maxPathRetries ? 'waiting' : 'blocked';
+      if (task.status === 'blocked') task.recoveryExhaustedFor = live.name;
+    } else task.status = 'blocked';
+    if (task.status === 'blocked') control.transition(task, 'BLOCKED', reason);
+    report(task, reason);
+    diagnose(task, live);
+    return;
+  }
   delete task.creepName;
   task.status = task.attempts >= config.maxAttempts ? 'failed' : 'waiting';
+  control.transition(task, task.status === 'failed' ? 'BLOCKED' : Game.rooms[task.targetRoom] ? 'CLAIM' : 'SCOUT', reason);
   task.nextRetryAt = Game.time + config.retryCooldown;
   report(task, reason);
+}
+function recoverable(reason) {
+  return /^(EXIT_UNREACHABLE|NO_PATH|NO_PROGRESS|MISSION_TIMEOUT|MOVE_REJECTED|NO_SAFE_SHORT_ROUTE|EXCEPTION)/.test(reason || '');
+}
+function recoverBinding(task) {
+  if (task.creepName && (Game.creeps[task.creepName] || isSpawning(task.creepName))) return;
+  const candidates = Object.values(Game.creeps).filter(c => c.memory.expansionTask === task.id &&
+    c.memory.role === 'expansionClaimer' && c.memory.home === task.homeRoom && c.memory.targetRoom === task.targetRoom &&
+    c.getActiveBodyparts(CLAIM) && c.getActiveBodyparts(MOVE))
+    .sort((a, b) => (b.ticksToLive || 0) - (a.ticksToLive || 0) || a.name.localeCompare(b.name));
+  if (!candidates.length) return;
+  const creep = candidates[0];
+  task.creepName = creep.name;
+  task.attempts = Math.max(1, task.attempts || 0);
+  task.launchedAt = task.launchedAt || Game.time;
+  if ((recoverable(task.failureReason) && task.recoveryExhaustedFor !== creep.name) || !task.failureReason) {
+    task.status = 'running';
+    task.lastProgressAt = Game.time;
+    task.pathRetries = 0;
+    delete task.nextRetryAt;
+    delete task.route;
+    delete creep.memory._move;
+  }
+  report(task, 'RECOVERED_BINDING');
+  diagnose(task, creep);
+}
+function diagnose(task, creep) {
+  task.diagnostic = { tick: Game.time, task: task.id, state: task.state, status: task.status,
+    creep: creep.name, room: creep.room.name, x: creep.pos.x, y: creep.pos.y,
+    ttl: creep.ticksToLive, moveResult: task.lastResult && task.lastResult.apiCode,
+    reason: task.lastResult && task.lastResult.code, pathRetries: task.pathRetries || 0 };
+  if (!task.lastDiagnosticAt || Game.time - task.lastDiagnosticAt >= config.diagnosticInterval) {
+    console.log(`[expansion diagnostic] ${JSON.stringify(task.diagnostic)}`);
+    task.lastDiagnosticAt = Game.time;
+  }
 }
 function report(task, code, apiCode) {
   const previous = task.lastResult;
@@ -193,7 +314,9 @@ function getRoute(task, from) {
     return 1;
   } });
   if (!Array.isArray(steps) || !steps.length || steps.length > config.maxRouteRooms) {
-    block(task, 'NO_SAFE_SHORT_ROUTE'); return null;
+    if (task.creepName && Game.creeps[task.creepName]) fail(task, 'NO_SAFE_SHORT_ROUTE');
+    else { task.nextRetryAt = Game.time + config.retryCooldown; report(task, 'NO_SAFE_SHORT_ROUTE'); }
+    return null;
   }
   task.route = { from, expires: Game.time + config.routeCacheTicks, steps };
   return steps;

@@ -6,7 +6,11 @@ The planner follows the official RCL building limits. It constructs the five Ext
 
 Towers attack hostiles first and otherwise repair damaged structures or reinforce Ramparts. Safe Mode activates when an available charge detects a hostile threat. Defenders spawn when needed. Layout placement adapts to terrain and room occupancy, but does not claim neighboring rooms or calculate a sealed perimeter.
 
-## Emergency claim-only expansion
+## Emergency expansion and colony bootstrap
+
+The bootstrap implementation supersedes the original claim-only behavior described below. See [the current operator guide](../docs/colony-bootstrap.md) for recovery, all runtime switches, the full state machine, safety budgets, offline test results and game acceptance steps. The enabled code supports automatic first-Spawn construction and an independent local economy; it has not been verified in the live game. The old deployment target and game branch selection are unchanged. The historical section below describes commit `1182990`, not current default behavior.
+
+### Historical claim-only implementation (1182990)
 
 `expansion.config.js` enables a separate, bounded expansion manager. It is configured for home `E22S36`, with targets `E22S37`, then `E22S38`. Room names are specified only in configuration. The current release stops at `CLAIMED`: it does not create construction sites, dismantle buildings, deploy Pioneers, or maintain the new controllers. Arrange builders and controller maintenance promptly after claiming; claiming alone does not establish a sustainable colony.
 
