@@ -16,6 +16,9 @@ function world(overrides = {}) {
     ERR_TIRED: -11, ERR_NO_BODYPART: -12, ERR_GCL_NOT_ENOUGH: -15,
     CLAIM: 'claim', MOVE: 'move', WORK: 'work', CARRY: 'carry', ATTACK: 'attack', RANGED_ATTACK: 'ranged_attack',
     FIND_HOSTILE_CREEPS: 103, FIND_MY_CONSTRUCTION_SITES: 114, FIND_MY_STRUCTURES: 108,
+    FIND_MY_SPAWNS: 112, FIND_SOURCES: 105, FIND_SOURCES_ACTIVE: 104, FIND_MINERALS: 116,
+    FIND_CONSTRUCTION_SITES: 111, LOOK_STRUCTURES: 'structures', LOOK_CONSTRUCTION_SITES: 'sites',
+    TERRAIN_MASK_WALL: 1, TERRAIN_MASK_SWAMP: 2, STRUCTURE_CONTAINER: 'container', STRUCTURE_EXTENSION: 'extension',
     FIND_STRUCTURES: 107, STRUCTURE_SPAWN: 'spawn', STRUCTURE_TOWER: 'tower', STRUCTURE_STORAGE: 'storage',
     STRUCTURE_TERMINAL: 'terminal', STRUCTURE_ROAD: 'road', STRUCTURE_WALL: 'wall', STRUCTURE_RAMPART: 'rampart',
     BODYPART_COST: { claim: 600, move: 50, work: 100, carry: 50 }, CREEP_CLAIM_LIFE_TIME: 600
@@ -24,7 +27,7 @@ function world(overrides = {}) {
   const Memory = { creeps: {} };
   const home = { name: config.homeRoom, energyAvailable: 2000, controller: { my: true, level: 3 },
     hostiles: [], find(kind) { return kind === 103 ? this.hostiles : []; } };
-  const Game = { time: 100, rooms: { [home.name]: home }, creeps: {}, spawns: {}, gcl: { level: 3 },
+  const Game = { time: 100, rooms: { [home.name]: home }, creeps: {}, spawns: {}, constructionSites: {}, gcl: { level: 3 },
     cpu: { bucket: 10000, limit: 100, tickLimit: 500, getUsed: () => 0 },
     map: { findRoute: () => [{ exit: 5, room: config.targetRooms[0] }], getRoomStatus: () => ({ status: 'normal' }) } };
   const calls = [];
@@ -49,7 +52,22 @@ function world(overrides = {}) {
   const manager = load('expansion.manager');
   const task = (index = 0) => Memory.expansion.tasks[`${home.name}:${config.targetRooms[index]}`];
   function target(index = 0, controller = {}) {
-    const room = { name: config.targetRooms[index], controller, find: () => [] };
+    const name = config.targetRooms[index];
+    if (controller && !controller.pos) controller.pos = { x: 40, y: 40, roomName: name };
+    const source = { id: `${name}-source`, pos: { x: 10, y: 10, roomName: name }, energy: 3000 };
+    const room = { name, controller, memory: {}, sources: [source], structures: [], sites: [], hostiles: [],
+      getTerrain: () => ({ get: () => 0 }),
+      find(kind) {
+        if (kind === 105 || kind === 104) return this.sources;
+        if (kind === 107) return this.structures;
+        if (kind === 108) return this.structures.filter(s => s.my);
+        if (kind === 112) return this.structures.filter(s => s.my && s.structureType === 'spawn');
+        if (kind === 111 || kind === 114) return this.sites;
+        if (kind === 103) return this.hostiles;
+        return [];
+      },
+      createConstructionSite(x, y, type) { calls.push({ site: type, x, y }); return 0; }
+    };
     Game.rooms[room.name] = room;
     return room;
   }

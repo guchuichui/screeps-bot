@@ -1,5 +1,7 @@
 const config = require('expansion.config');
 const claimer = require('expansion.claimer');
+const control = require('expansion.control');
+const spawnPlanner = require('expansion.planner');
 
 // Reserved later phases: BUILD_SPAWN -> BOOTSTRAP -> STABLE.
 // This release stops at CLAIMED and never creates or destroys structures.
@@ -10,8 +12,15 @@ module.exports.run = function () {
     if (!configured(task)) continue;
     try {
       recoverBinding(task);
+      if (task.paused) { task.lastProgressAt = Game.time; report(task, 'TASK_PAUSED'); continue; }
       if (observe(task)) {
-        if (task.status === 'complete') recycleCompleted(task);
+        const owned = Game.rooms[task.targetRoom];
+        if (owned && owned.controller && owned.controller.my && task.status !== 'blocked') {
+          const result = spawnPlanner.run(owned, task);
+          if (result.state) control.transition(task, result.state, result.code);
+          if (result.blocked) block(task, result.code);
+          else report(task, result.code);
+        }
         continue;
       }
       if (task.status === 'blocked' || task.status === 'failed') {
@@ -26,6 +35,7 @@ module.exports.run = function () {
         if (task.creepName && !isSpawning(task.creepName)) fail(task, 'CLAIMER_LOST');
         continue;
       }
+      if (!control.flag('autoClaim')) { task.lastProgressAt = Game.time; report(task, 'CLAIM_PAUSED'); continue; }
       if (task.paused) { task.lastProgressAt = Game.time; report(task, 'TASK_PAUSED'); continue; }
       if (!hasCpu()) { task.lastProgressAt = Game.time; report(task, 'CPU_WAIT'); diagnose(task, creep); continue; }
       if (Game.time < (task.nextPathRetryAt || 0)) { diagnose(task, creep); continue; }
@@ -45,7 +55,7 @@ module.exports.run = function () {
 // Called only when colony's existing population policy has no pending local role.
 module.exports.trySpawn = function (spawn, counts, targets) {
   const memory = initialize();
-  if (!memory || stopped(memory) || !hasCpu() || spawn.spawning) return;
+  if (!memory || stopped(memory) || !control.flag('autoClaim') || !hasCpu() || spawn.spawning) return;
   const room = spawn.room;
   if (room.name !== config.homeRoom || !room.controller || !room.controller.my) return;
   if (room.find(FIND_HOSTILE_CREEPS).length || counts.worker < targets.worker || counts.defender < targets.defender) return;
@@ -62,6 +72,7 @@ module.exports.trySpawn = function (spawn, counts, targets) {
 
   for (const targetRoom of config.targetRooms) {
     const task = memory.tasks[taskId(targetRoom)];
+    if (task.paused || !eligible(task)) continue;
     if (observe(task) || task.status === 'blocked' || task.status === 'failed' || task.creepName) continue;
     if (Game.time < (task.nextRetryAt || 0)) continue;
     if (task.attempts >= config.maxAttempts) { task.status = 'failed'; report(task, 'ATTEMPTS_EXHAUSTED'); continue; }
@@ -97,7 +108,7 @@ module.exports.trySpawn = function (spawn, counts, targets) {
 
 function initialize() {
   // Disabled-by-config must not mutate unrelated Memory or revive old missions.
-  if (!config.enabled) return null;
+  if (!control.flag('enabled')) return null;
   if (!Memory.expansion) Memory.expansion = { emergencyStop: false, tasks: {} };
   const memory = Memory.expansion;
   if (!memory.tasks) memory.tasks = {};
@@ -130,7 +141,7 @@ function validConfig() {
     config.maxSpawnErrors > 0 && config.maxRouteRooms > 0 && config.maxCpuFraction > 0 && config.maxCpuFraction < 1 &&
     Array.isArray(config.avoidRooms);
 }
-function stopped(memory) { return config.emergencyStop || memory.emergencyStop || !config.autoClaim; }
+function stopped() { return control.stopped(); }
 function taskId(target) { return `${config.homeRoom}:${target}`; }
 function configured(task) { return task.homeRoom === config.homeRoom && config.targetRooms.includes(task.targetRoom); }
 function hasCpu() {
@@ -161,16 +172,22 @@ function observe(task) {
   return false;
 }
 function markClaimed(task) {
+  if (task.status === 'blocked') return;
   if (!task.claimedAt) task.claimedAt = Game.time;
-  task.state = 'CLAIMED';
-  task.status = 'complete';
+  if (['SCOUT', 'CLAIM', 'BLOCKED'].includes(task.state)) control.transition(task, 'CLAIMED', 'CLAIM_CONFIRMED');
+  task.status = 'running';
   delete task.failureReason;
   report(task, 'CLAIM_CONFIRMED');
 }
 function block(task, reason) {
   task.status = 'blocked';
   task.failureReason = reason;
+  control.transition(task, 'BLOCKED', reason);
   report(task, reason);
+}
+function eligible(task) {
+  const i = config.targetRooms.indexOf(task.targetRoom);
+  return i <= 0 || config.targetRooms.slice(0, i).every(r => Memory.expansion.tasks[taskId(r)].state === 'STABLE');
 }
 function fail(task, reason) {
   task.failureReason = reason;

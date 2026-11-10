@@ -65,7 +65,7 @@ test('enemy ownership stops all claim intents', () => {
 test('claim intent is confirmed only by later ownership observation', () => {
   const w = world(); w.spawnNext(); const r = w.target(); w.unit(r); w.manager.run();
   assert.equal(w.task().lastResult.code, 'CLAIM_SCHEDULED'); r.controller.my = true; w.Game.time++; w.manager.run();
-  assert.equal(w.task().state, 'CLAIMED');
+  assert(['CLAIMED', 'SPAWN_PLANNING'].includes(w.task().state));
 });
 test('death has finite replacement budget', () => {
   const w = world({ maxAttempts: 1 }); w.spawnNext(); w.Game.time++; w.manager.run();
@@ -75,5 +75,53 @@ test('death has finite replacement budget', () => {
 test('runtime emergency stop freezes live units', () => {
   const w = world(); w.spawnNext(); const c = w.unit(); c.moveTo = () => { throw Error('must stop'); };
   w.Memory.expansion.emergencyStop = true; w.Game.time++; w.manager.run(); w.spawnNext(); assert.equal(w.calls.length, 1);
+});
+function plan(w, room, task) {
+  let result;
+  for (let i = 0; i < 30; i++) {
+    result = w.load('expansion.planner').run(room, task); w.Game.time++;
+    if (task.spawnPlan || result.blocked) break;
+  }
+  return result;
+}
+test('deterministic terrain planning creates a legal Spawn site once', () => {
+  const w = world({ autoBuildSpawn: true }); w.manager.run(); const r = w.target(0, { my: true });
+  const result = plan(w, r, w.task()); assert.equal(result.code, 'SPAWN_SITE_SCHEDULED');
+  assert(w.task().spawnPlan.x >= 5 && w.task().spawnPlan.x <= 44);
+  assert.equal(w.calls.filter(c => c.site === 'spawn').length, 1);
+  w.load('expansion.planner').run(r, w.task()); assert.equal(w.calls.filter(c => c.site).length, 1);
+  const v = world(); v.manager.run(); plan(v, v.target(0, { my: true }), v.task());
+  assert.equal(v.task().spawnPlan.x, w.task().spawnPlan.x); assert.equal(v.task().spawnPlan.y, w.task().spawnPlan.y);
+});
+test('existing Spawn site is reused without new requests', () => {
+  const w = world({ autoBuildSpawn: true }); w.manager.run(); const r = w.target(0, { my: true });
+  r.sites = [{ id: 'site', pos: { x: 20, y: 20 }, structureType: 'spawn', my: true }];
+  assert.equal(w.load('expansion.planner').run(r, w.task()).state, 'BUILD_SPAWN'); assert.equal(w.calls.length, 0);
+});
+test('wall-only terrain blocks instead of selecting random coordinates', () => {
+  const w = world({ planningBatchSize: 2500 }); w.manager.run(); const r = w.target(0, { my: true });
+  r.getTerrain = () => ({ get: () => 1 });
+  assert(w.load('expansion.planner').run(r, w.task()).blocked); assert.equal(w.calls.length, 0);
+});
+test('Spawn construction errors are throttled and bounded', () => {
+  const w = world({ autoBuildSpawn: true, planningBatchSize: 2500 }); w.manager.run();
+  const r = w.target(0, { my: true }); let requests = 0; r.createConstructionSite = () => { requests++; return -8; };
+  for (let i = 0; i < 10; i++) { w.load('expansion.planner').run(r, w.task()); w.Game.time += 100; }
+  assert.equal(requests, 5);
+});
+test('runtime autoBuildSpawn flag prevents site creation but preserves plan', () => {
+  const w = world({ autoBuildSpawn: true, planningBatchSize: 2500 }); w.manager.run();
+  w.Memory.expansion.autoBuildSpawn = false; const r = w.target(0, { my: true });
+  assert.equal(plan(w, r, w.task()).code, 'SPAWN_PLAN_READY'); assert.equal(w.calls.length, 0);
+});
+test('second target waits until first colony is stable', () => {
+  const w = world(); w.target(0, { my: true }); w.spawnNext(); assert.equal(w.calls.length, 0);
+  w.task().state = 'STABLE'; w.spawnNext(); assert.equal(w.calls[0].options.memory.targetRoom, 'E22S38');
+});
+test('owned task enters planning and a completed Spawn enters bootstrap', () => {
+  const w = world(); w.manager.run(); const r = w.target(0, { my: true });
+  w.manager.run(); assert.equal(w.task().state, 'SPAWN_PLANNING');
+  r.structures = [{ my: true, structureType: 'spawn', pos: { x: 20, y: 20 } }];
+  w.manager.run(); assert.equal(w.task().state, 'BOOTSTRAP');
 });
 console.log(`${passed} tests passed`);
