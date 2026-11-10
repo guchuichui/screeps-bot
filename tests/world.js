@@ -18,6 +18,7 @@ function world(overrides = {}) {
     FIND_HOSTILE_CREEPS: 103, FIND_MY_CONSTRUCTION_SITES: 114, FIND_MY_STRUCTURES: 108,
     FIND_MY_SPAWNS: 112, FIND_SOURCES: 105, FIND_SOURCES_ACTIVE: 104, FIND_MINERALS: 116,
     FIND_CONSTRUCTION_SITES: 111, LOOK_STRUCTURES: 'structures', LOOK_CONSTRUCTION_SITES: 'sites',
+    RESOURCE_ENERGY: 'energy',
     TERRAIN_MASK_WALL: 1, TERRAIN_MASK_SWAMP: 2, STRUCTURE_CONTAINER: 'container', STRUCTURE_EXTENSION: 'extension',
     FIND_STRUCTURES: 107, STRUCTURE_SPAWN: 'spawn', STRUCTURE_TOWER: 'tower', STRUCTURE_STORAGE: 'storage',
     STRUCTURE_TERMINAL: 'terminal', STRUCTURE_ROAD: 'road', STRUCTURE_WALL: 'wall', STRUCTURE_RAMPART: 'rampart',
@@ -26,6 +27,7 @@ function world(overrides = {}) {
   const config = Object.assign({}, require('../code/expansion.config'), overrides);
   const Memory = { creeps: {} };
   const home = { name: config.homeRoom, energyAvailable: 2000, controller: { my: true, level: 3 },
+    getTerrain: () => ({ get: () => 0 }),
     hostiles: [], find(kind) { return kind === 103 ? this.hostiles : []; } };
   const Game = { time: 100, rooms: { [home.name]: home }, creeps: {}, spawns: {}, constructionSites: {}, gcl: { level: 3 },
     cpu: { bucket: 10000, limit: 100, tickLimit: 500, getUsed: () => 0 },
@@ -41,7 +43,12 @@ function world(overrides = {}) {
   };
   const modules = { 'expansion.config': config, 'starter.worker': { run() {} },
     'starter.defender': { run() {}, body: () => [] }, 'starter.planner': { run() {} } };
-  const context = vm.createContext({ ...constants, Game, Memory, console: { log() {} }, Set });
+  class RoomPosition {
+    constructor(x, y, roomName) { Object.assign(this, { x, y, roomName }); }
+    getRangeTo(object) { const p = object.pos || object; return Math.max(Math.abs(this.x - p.x), Math.abs(this.y - p.y)); }
+    isEqualTo(object) { const p = object.pos || object; return this.x === p.x && this.y === p.y; }
+  }
+  const context = vm.createContext({ ...constants, Game, Memory, console: { log() {} }, Set, RoomPosition });
   function load(name) {
     if (modules[name]) return modules[name];
     const module = { exports: {} };
@@ -78,6 +85,8 @@ function world(overrides = {}) {
       pos: { roomName: room.name, x: 25, y: 25, isNearTo: () => true, getRangeTo: () => 1,
         findClosestByPath: () => ({ x: 25, y: 49 }), isEqualTo: () => false },
       moveTo: () => 0, move: () => 0, claimController: () => 0 };
+    c.store = { energy: 50, getFreeCapacity: () => 0, getUsedCapacity: () => c.store.energy };
+    c.harvest = () => 0; c.build = () => 0; c.upgradeController = () => 0; c.withdraw = () => 0; c.transfer = () => 0;
     Game.creeps[c.name] = c;
     return c;
   }

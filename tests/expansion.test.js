@@ -124,4 +124,37 @@ test('owned task enters planning and a completed Spawn enters bootstrap', () => 
   r.structures = [{ my: true, structureType: 'spawn', pos: { x: 20, y: 20 } }];
   w.manager.run(); assert.equal(w.task().state, 'BOOTSTRAP');
 });
+test('Pioneer travels across rooms and prioritizes first Spawn construction', () => {
+  const w = world({ autoBootstrap: true, autoBuildSpawn: true }); w.spawnNext(); const c = w.unit();
+  c.memory.role = 'expansionPioneer'; let moved = 0, built = 0;
+  c.moveTo = () => { moved++; return 0; }; w.load('expansion.pioneer').run(c, w.task()); assert.equal(moved, 1);
+  c.room = w.target(0, { my: true, ticksToDowngrade: 10000 }); c.pos.roomName = c.room.name;
+  c.room.sites = [{ structureType: 'spawn', pos: { x: 20, y: 20 } }]; c.build = () => { built++; return 0; };
+  w.load('expansion.pioneer').run(c, w.task()); assert.equal(built, 1);
+});
+test('Pioneer prevents downgrade before building and adopts completed room', () => {
+  const w = world({ autoBootstrap: true, autoBuildSpawn: true }); w.spawnNext();
+  const r = w.target(0, { my: true, ticksToDowngrade: 1000 }); const c = w.unit(r); c.memory.role = 'expansionPioneer';
+  let upgraded = 0; c.upgradeController = () => { upgraded++; return 0; };
+  w.load('expansion.pioneer').run(c, w.task()); assert.equal(upgraded, 1);
+  r.structures = [{ my: true, structureType: 'spawn', pos: { x: 20, y: 20 } }];
+  w.load('expansion.pioneer').run(c, w.task()); assert.equal(c.memory.colony, r.name); assert.equal(c.memory.role, 'colonyHarvester');
+});
+test('support population is dynamic, budgeted and same-tick deduplicated', () => {
+  const w = world({ autoBootstrap: true }); w.manager.run(); const r = w.target(0, { my: true });
+  r.sites = [{ structureType: 'spawn', progress: 0, progressTotal: 15000 }];
+  w.spawnNext(); w.spawnNext(); assert.equal(w.calls.length, 1); assert.equal(w.calls[0].options.memory.role, 'expansionPioneer');
+  w.task().supportLaunches = 12; w.Game.time += 100; w.spawnNext(); assert.equal(w.calls.length, 1);
+});
+test('weak mother base never funds Pioneer', () => {
+  const w = world({ autoBootstrap: true }); w.manager.run(); w.target(0, { my: true });
+  w.counts.worker = 0; w.spawnNext(); assert.equal(w.calls.length, 0);
+  w.counts.worker = 6; w.home.energyAvailable = 400; w.spawnNext();
+  assert.equal(w.calls.length, 0); assert.equal(w.task().supportResult, 'HOME_SUPPORT_ENERGY_WAIT');
+});
+test('autoBootstrap off freezes Pioneer work', () => {
+  const w = world(); w.spawnNext(); const c = w.unit(); c.memory.role = 'expansionPioneer';
+  c.moveTo = () => { throw Error('must stop'); }; w.load('expansion.pioneer').run(c, w.task());
+  assert.equal(c.memory.lastAction, undefined);
+});
 console.log(`${passed} tests passed`);

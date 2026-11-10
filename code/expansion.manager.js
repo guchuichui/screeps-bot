@@ -2,12 +2,20 @@ const config = require('expansion.config');
 const claimer = require('expansion.claimer');
 const control = require('expansion.control');
 const spawnPlanner = require('expansion.planner');
+const pioneer = require('expansion.pioneer');
 
 // Reserved later phases: BUILD_SPAWN -> BOOTSTRAP -> STABLE.
 // This release stops at CLAIMED and never creates or destroys structures.
 module.exports.run = function () {
   const memory = initialize();
   if (!memory || stopped(memory)) return;
+  for (const creep of Object.values(Game.creeps)) {
+    const task = memory.tasks[creep.memory.expansionTask];
+    if (creep.memory.role === 'expansionPioneer' && task && configured(task)) {
+      try { pioneer.run(creep, task); }
+      catch (error) { creep.memory.lastAction = { tick: Game.time, code: `EXCEPTION: ${error.message || error}` }; }
+    }
+  }
   for (const task of Object.values(memory.tasks)) {
     if (!configured(task)) continue;
     try {
@@ -55,7 +63,7 @@ module.exports.run = function () {
 // Called only when colony's existing population policy has no pending local role.
 module.exports.trySpawn = function (spawn, counts, targets) {
   const memory = initialize();
-  if (!memory || stopped(memory) || !control.flag('autoClaim') || !hasCpu() || spawn.spawning) return;
+  if (!memory || stopped(memory) || !hasCpu() || spawn.spawning) return;
   const room = spawn.room;
   if (room.name !== config.homeRoom || !room.controller || !room.controller.my) return;
   if (room.find(FIND_HOSTILE_CREEPS).length || counts.worker < targets.worker || counts.defender < targets.defender) return;
@@ -63,9 +71,14 @@ module.exports.trySpawn = function (spawn, counts, targets) {
     c.memory.role === 'worker' && !c.memory.expansionTask && !c.spawning &&
     c.ticksToLive >= config.minHomeWorkerTtl && c.getActiveBodyparts(WORK) &&
     c.getActiveBodyparts(CARRY) && c.getActiveBodyparts(MOVE)).length;
-  if (healthyWorkers < targets.worker) return;
+  if (healthyWorkers < targets.worker) {
+    memory.supportWait = { tick: Game.time, reason: 'HOME_WORKFORCE_WAIT' }; return;
+  }
+  const orderedTasks = config.targetRooms.map(r => memory.tasks[taskId(r)]).filter(eligible);
+  if (pioneer.trySpawn(spawn, orderedTasks)) return;
+  if (!control.flag('autoClaim')) return;
   // Count all expansion units, including retired/disabled missions and in-flight spawn intents.
-  const names = new Set(Object.values(Game.creeps).filter(c => c.memory.expansionTask).map(c => c.name));
+  const names = new Set(Object.values(Game.creeps).filter(c => c.memory.expansionTask && c.memory.role === 'expansionClaimer').map(c => c.name));
   for (const s of Object.values(Game.spawns)) if (s.spawning && isManagedName(s.spawning.name, memory)) names.add(s.spawning.name);
   for (const task of Object.values(memory.tasks)) if (task.spawnIntentAt === Game.time) names.add(task.creepName);
   if (names.size >= config.maxConcurrentClaimers) return;
