@@ -12,7 +12,7 @@ const neighbors = (x, y, fn) => {
 exports.run = function (room, task) {
   if (control.stopped() || task.paused || !room.controller || !room.controller.my) return { code: 'PLANNING_PAUSED' };
   const spawn = room.find(FIND_MY_SPAWNS)[0];
-  if (spawn) return { state: 'BOOTSTRAP', code: 'SPAWN_PRESENT' };
+  if (spawn) return { state: task.state === 'STABLE' ? 'STABLE' : 'BOOTSTRAP', code: 'SPAWN_PRESENT' };
   const sites = room.find(FIND_MY_CONSTRUCTION_SITES);
   const site = sites.find(s => s.structureType === STRUCTURE_SPAWN);
   if (site) {

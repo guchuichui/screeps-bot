@@ -11,7 +11,7 @@ module.exports.run = function () {
   const counts = {};
   for (const creep of Object.values(Game.creeps)) {
     // Preserve expansion roles even while disabled, stopped, completed or quarantined.
-    if (creep.memory.expansionTask) continue;
+    if (creep.memory.expansionTask || creep.memory.colony) continue;
     if (!creep.memory.home) creep.memory.home = creep.room.name;
     const roomName = creep.memory.home;
     if (!counts[roomName]) counts[roomName] = emptyCounts();
@@ -31,16 +31,23 @@ module.exports.run = function () {
     if (!room || !room.controller || !room.controller.my) continue;
     rooms[room.name] = room;
   }
+  // Include claimed rooms before their first Spawn exists.
+  for (const room of Object.values(Game.rooms)) if (room.controller && room.controller.my) rooms[room.name] = room;
   for (const room of Object.values(rooms)) {
-    try { planner.run(room); runDefense(room); }
+    try {
+      if (!runColony('manages', room.name)) planner.run(room);
+      runDefense(room);
+    }
     catch (error) { console.log(`Colony error ${room.name}: ${error}`); }
   }
 
   runExpansion('run');
+  runColony('run');
 
   for (const spawn of Object.values(Game.spawns)) {
     const room = spawn.room;
     if (!room || !rooms[room.name] || spawn.spawning) continue;
+    if (runColony('manages', room.name)) { runColony('trySpawn', spawn); continue; }
     const c = counts[room.name] || (counts[room.name] = emptyCounts());
     const hostiles = room.find(FIND_HOSTILE_CREEPS);
     const siteCount = room.find(FIND_MY_CONSTRUCTION_SITES).length;
@@ -73,6 +80,10 @@ function runExpansion(method, ...args) {
     // Module loading and expansion execution must not stop the established colony.
     if (Game.time % 25 === 0) console.log(`Expansion error: ${error}`);
   }
+}
+function runColony(method, ...args) {
+  try { return require('colony.manager')[method](...args); }
+  catch (error) { if (Game.time % 25 === 0) console.log(`New colony error: ${error.stack || error}`); }
 }
 
 function emptyCounts() { return { worker: 0, defender: 0 }; }

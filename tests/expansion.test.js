@@ -157,4 +157,63 @@ test('autoBootstrap off freezes Pioneer work', () => {
   c.moveTo = () => { throw Error('must stop'); }; w.load('expansion.pioneer').run(c, w.task());
   assert.equal(c.memory.lastAction, undefined);
 });
+function economicSpawn(w, room) {
+  const s = { ...w.spawn, name: `spawn-${room.name}`, room, pos: { x: 20, y: 20 } };
+  room.energyAvailable = 300; room.energyCapacityAvailable = 300;
+  room.structures = [{ ...s, my: true, structureType: 'spawn' }];
+  w.Game.spawns[s.name] = s;
+  return s;
+}
+test('completed Spawn registers colony and produces a 200-energy recovery worker', () => {
+  const w = world({ autoBootstrap: true }); w.manager.run(); const r = w.target(0, { my: true });
+  const s = economicSpawn(w, r); r.energyAvailable = 200; w.manager.run();
+  w.load('colony.manager').trySpawn(s); const call = w.calls.find(c => c.body);
+  assert.equal(call.options.memory.role, 'colonyHarvester'); assert.equal(call.body.length, 3);
+  assert.equal(call.options.memory.home, r.name); assert.equal(call.options.memory.colony, r.name);
+});
+test('local multiple Spawns deduplicate same-tick last population deficit', () => {
+  const w = world({ autoBootstrap: true }); w.manager.run(); const r = w.target(0, { my: true });
+  const s = economicSpawn(w, r); w.manager.run();
+  // One existing worker for two local harvester slots leaves one deficit.
+  w.Game.creeps.local = { memory: { role: 'colonyHarvester', colony: r.name, home: r.name },
+    ticksToLive: 1000, getActiveBodyparts: () => 1 };
+  w.load('colony.manager').trySpawn(s); w.load('colony.manager').trySpawn(s);
+  assert.equal(w.calls[0].options.memory.role, 'colonyHarvester');
+  assert.equal(w.calls[1].options.memory.role, 'colonyUpgrader');
+});
+test('foreign-room workers are not counted in local economy', () => {
+  const w = world({ autoBootstrap: true }); w.manager.run(); const r = w.target(0, { my: true });
+  const s = economicSpawn(w, r); w.manager.run();
+  w.Game.creeps.foreign = { memory: { role: 'colonyHarvester', colony: 'E22S38', home: 'E22S38' },
+    ticksToLive: 1000, getActiveBodyparts: () => 1 };
+  w.load('colony.manager').trySpawn(s); assert.equal(w.calls[0].options.memory.role, 'colonyHarvester');
+});
+test('local energy starvation requests mother aid rather than an invalid tiny body', () => {
+  const w = world({ autoBootstrap: true }); w.manager.run(); const r = w.target(0, { my: true });
+  const s = economicSpawn(w, r); r.energyAvailable = 0; w.manager.run(); w.load('colony.manager').trySpawn(s);
+  assert.equal(w.calls.length, 0); w.spawnNext(); assert.equal(w.calls[0].options.memory.role, 'expansionPioneer');
+});
+test('local role tags remain isolated when automation is stopped', () => {
+  const w = world({ enabled: false }); w.Game.creeps = {
+    local: { memory: { role: 'colonyHarvester', home: 'E22S37', colony: 'E22S37' } }
+  };
+  w.load('starter.colony').run(); assert.equal(w.Game.creeps.local.memory.role, 'colonyHarvester');
+  assert.equal(w.calls[0].options.memory.role, 'worker');
+});
+test('full cargo harvesters refill Spawn before optional construction', () => {
+  const w = world({ autoBootstrap: true }); w.spawnNext(); const r = w.target(0, { my: true });
+  const c = w.unit(r); c.memory.role = 'colonyHarvester'; c.memory.colony = r.name; c.memory.home = r.name;
+  r.structures = [{ my: true, structureType: 'spawn', store: { getFreeCapacity: () => 300 } }];
+  c.pos.findClosestByPath = values => Array.isArray(values) ? values[0] : null;
+  let transfers = 0; c.transfer = () => { transfers++; return 0; };
+  w.load('colony.worker').run(c); assert.equal(transfers, 1);
+});
+test('distinct harvesting stations avoid Pioneer and local worker overlap', () => {
+  const w = world(); w.spawnNext(); const r = w.target(0, { my: true }); const a = w.unit(r);
+  a.memory.colony = r.name; a.pos.findClosestByPath = list => list[0]; a.pos.getRangeTo = () => 1;
+  w.load('colony.work').harvest(a);
+  const b = { ...a, name: 'second', memory: { colony: r.name }, pos: { ...a.pos } };
+  w.Game.creeps[b.name] = b; w.load('colony.work').harvest(b);
+  assert.notDeepEqual(a.memory.sourceSlot, b.memory.sourceSlot);
+});
 console.log(`${passed} tests passed`);

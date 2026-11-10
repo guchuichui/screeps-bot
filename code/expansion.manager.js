@@ -24,6 +24,8 @@ module.exports.run = function () {
       if (observe(task)) {
         const owned = Game.rooms[task.targetRoom];
         if (owned && owned.controller && owned.controller.my && task.status !== 'blocked') {
+          require('colony.manager').register(owned, task);
+          if (control.flag('autoClaim')) recycleCompleted(task);
           const result = spawnPlanner.run(owned, task);
           if (result.state) control.transition(task, result.state, result.code);
           if (result.blocked) block(task, result.code);

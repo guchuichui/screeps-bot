@@ -54,6 +54,10 @@ function record(creep, code, apiCode) {
   const previous = creep.memory.lastAction;
   creep.memory.lastAction = { tick: Game.time, code, apiCode, room: creep.room.name,
     x: creep.pos.x, y: creep.pos.y, ttl: creep.ticksToLive };
+  if (creep.memory.navigation && (apiCode === OK && code !== 'MOVING' || code === 'SOURCE_REGEN_WAIT')) {
+    creep.memory.navigation.progressAt = Game.time;
+    creep.memory.navigation.retries = 0;
+  }
   if (!previous || previous.code !== code && Game.time - (creep.memory.lastLogAt || 0) >= config.diagnosticInterval) {
     console.log(`[colony ${creep.name}] ${JSON.stringify(creep.memory.lastAction)}`);
     creep.memory.lastLogAt = Game.time;
