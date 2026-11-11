@@ -92,7 +92,8 @@ function world(overrides = {}) {
   const spawnNext = () => manager.trySupport(spawn, counts, targets) || manager.trySpawn(spawn, counts, targets);
   function resetModules() { for (const name of Object.keys(modules)) if (!name.startsWith('starter.') && name !== 'expansion.config') delete modules[name]; }
   const setGlobal = (key, value) => { context[key] = value; };
-  return { config, Memory, Game, home, spawn, calls, load, manager, task, target, unit, spawnNext, counts, targets, constants, resetModules, setGlobal };
+  function loadReal(name) { delete modules[name]; return load(name); }
+  return { config, Memory, Game, home, spawn, calls, load, loadReal, manager, task, target, unit, spawnNext, counts, targets, constants, resetModules, setGlobal };
 }
 
 

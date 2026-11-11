@@ -15,6 +15,9 @@ const LIMITS = {
 const LATE_ORDER = [STRUCTURE_STORAGE, STRUCTURE_LINK, STRUCTURE_TERMINAL, STRUCTURE_LAB, STRUCTURE_FACTORY, STRUCTURE_OBSERVER, STRUCTURE_POWER_SPAWN, STRUCTURE_NUKER];
 
 module.exports.run = function (room) {
+  // E22S36 construction is placed manually from the reviewed layout, so the
+  // ten Extension slots and passing lanes are not consumed by radius planning.
+  if (room.name === 'E22S36') return;
   if (!room.controller || !room.controller.my) return;
   if (Object.keys(Game.constructionSites).length >= 90) return;
   const localSites = room.find(FIND_MY_CONSTRUCTION_SITES);

@@ -1,0 +1,2052 @@
+{
+  "room": "E22S36",
+  "snapshotTick": 84200411,
+  "layoutKey": "70f4d3f4",
+  "freeExtensionSlots": 10,
+  "buildFirst": [
+    {
+      "x": 34,
+      "y": 15,
+      "type": "extension"
+    },
+    {
+      "x": 34,
+      "y": 13,
+      "type": "extension"
+    },
+    {
+      "x": 38,
+      "y": 13,
+      "type": "extension"
+    },
+    {
+      "x": 35,
+      "y": 13,
+      "type": "extension"
+    },
+    {
+      "x": 37,
+      "y": 13,
+      "type": "extension"
+    },
+    {
+      "x": 34,
+      "y": 12,
+      "type": "extension"
+    },
+    {
+      "x": 33,
+      "y": 12,
+      "type": "extension"
+    },
+    {
+      "x": 32,
+      "y": 11,
+      "type": "extension"
+    },
+    {
+      "x": 33,
+      "y": 11,
+      "type": "extension"
+    },
+    {
+      "x": 30,
+      "y": 11,
+      "type": "extension"
+    }
+  ],
+  "batches": [
+    {
+      "zone": "X39 corridor",
+      "requiresAllTenNewBuiltAndApproval": true,
+      "retire": [
+        {
+          "type": "extension",
+          "x": 39,
+          "y": 18
+        }
+      ]
+    },
+    {
+      "zone": "X38 passing bays",
+      "requiresAllTenNewBuiltAndApproval": true,
+      "retire": [
+        {
+          "type": "extension",
+          "x": 38,
+          "y": 17
+        },
+        {
+          "type": "extension",
+          "x": 38,
+          "y": 21
+        }
+      ]
+    },
+    {
+      "zone": "X32 west access",
+      "requiresAllTenNewBuiltAndApproval": true,
+      "retire": [
+        {
+          "type": "extension",
+          "x": 32,
+          "y": 17
+        },
+        {
+          "type": "extension",
+          "x": 32,
+          "y": 18
+        },
+        {
+          "type": "extension",
+          "x": 32,
+          "y": 19
+        }
+      ]
+    }
+  ],
+  "roads": [
+    {
+      "type": "road",
+      "x": 24,
+      "y": 20,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 25,
+      "y": 19,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 25,
+      "y": 21,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 26,
+      "y": 18,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 26,
+      "y": 20,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 26,
+      "y": 22,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 27,
+      "y": 17,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 27,
+      "y": 21,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 27,
+      "y": 23,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 28,
+      "y": 15,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 28,
+      "y": 16,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 28,
+      "y": 22,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 28,
+      "y": 24,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 29,
+      "y": 14,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 29,
+      "y": 25,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 30,
+      "y": 13,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 30,
+      "y": 26,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 31,
+      "y": 12,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 32,
+      "y": 12,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 32,
+      "y": 17,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 32,
+      "y": 18,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 32,
+      "y": 19,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 33,
+      "y": 13,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 34,
+      "y": 14,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 35,
+      "y": 15,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 38,
+      "y": 14,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 38,
+      "y": 17,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 38,
+      "y": 21,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 38,
+      "y": 24,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 39,
+      "y": 13,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 39,
+      "y": 14,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 39,
+      "y": 15,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 39,
+      "y": 16,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 39,
+      "y": 17,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 39,
+      "y": 18,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 39,
+      "y": 19,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 39,
+      "y": 20,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 39,
+      "y": 21,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 39,
+      "y": 22,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 39,
+      "y": 23,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 39,
+      "y": 24,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 39,
+      "y": 25,
+      "my": true
+    },
+    {
+      "type": "road",
+      "x": 39,
+      "y": 26,
+      "my": true
+    }
+  ],
+  "roadCost": 24900,
+  "roadsWaitingForLinkRetirement": [
+    {
+      "type": "road",
+      "x": 39,
+      "y": 19,
+      "my": true
+    }
+  ],
+  "reserved": {
+    "X39": [
+      [
+        39,
+        13
+      ],
+      [
+        39,
+        14
+      ],
+      [
+        39,
+        15
+      ],
+      [
+        39,
+        16
+      ],
+      [
+        39,
+        17
+      ],
+      [
+        39,
+        18
+      ],
+      [
+        39,
+        19
+      ],
+      [
+        39,
+        20
+      ],
+      [
+        39,
+        21
+      ],
+      [
+        39,
+        22
+      ],
+      [
+        39,
+        23
+      ],
+      [
+        39,
+        24
+      ],
+      [
+        39,
+        25
+      ],
+      [
+        39,
+        26
+      ]
+    ],
+    "X38Bays": [
+      [
+        38,
+        14
+      ],
+      [
+        38,
+        17
+      ],
+      [
+        38,
+        21
+      ],
+      [
+        38,
+        24
+      ]
+    ],
+    "X32": [
+      [
+        32,
+        17
+      ],
+      [
+        32,
+        18
+      ],
+      [
+        32,
+        19
+      ]
+    ],
+    "sourceStations": [
+      [
+        29,
+        23
+      ],
+      [
+        37,
+        27
+      ]
+    ]
+  },
+  "constructionEnergyEstimate": 54900,
+  "phases": {
+    "baseline": {
+      "extensions": 30,
+      "spawnCapacityAtRcl6": 1800,
+      "pathCosts": {
+        "S1 → Storage": 43,
+        "S2 → Storage": 58,
+        "Storage → Controller": 67,
+        "Storage → Spawn (35, 19)": 59
+      },
+      "extensionCosts": [
+        {
+          "tile": [
+            32,
+            17
+          ],
+          "cost": 24
+        },
+        {
+          "tile": [
+            32,
+            18
+          ],
+          "cost": 24
+        },
+        {
+          "tile": [
+            32,
+            19
+          ],
+          "cost": 31
+        },
+        {
+          "tile": [
+            33,
+            17
+          ],
+          "cost": 63
+        },
+        {
+          "tile": [
+            33,
+            18
+          ],
+          "cost": 61
+        },
+        {
+          "tile": [
+            33,
+            19
+          ],
+          "cost": 60
+        },
+        {
+          "tile": [
+            33,
+            20
+          ],
+          "cost": 59
+        },
+        {
+          "tile": [
+            34,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            34,
+            17
+          ],
+          "cost": 63
+        },
+        {
+          "tile": [
+            35,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            35,
+            17
+          ],
+          "cost": 63
+        },
+        {
+          "tile": [
+            35,
+            21
+          ],
+          "cost": 58
+        },
+        {
+          "tile": [
+            35,
+            22
+          ],
+          "cost": 57
+        },
+        {
+          "tile": [
+            36,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            36,
+            14
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            36,
+            15
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            36,
+            17
+          ],
+          "cost": 63
+        },
+        {
+          "tile": [
+            36,
+            22
+          ],
+          "cost": 57
+        },
+        {
+          "tile": [
+            37,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            37,
+            17
+          ],
+          "cost": 64
+        },
+        {
+          "tile": [
+            37,
+            18
+          ],
+          "cost": 62
+        },
+        {
+          "tile": [
+            37,
+            19
+          ],
+          "cost": 62
+        },
+        {
+          "tile": [
+            37,
+            20
+          ],
+          "cost": 62
+        },
+        {
+          "tile": [
+            38,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            38,
+            17
+          ],
+          "cost": 4
+        },
+        {
+          "tile": [
+            38,
+            18
+          ],
+          "cost": 6
+        },
+        {
+          "tile": [
+            38,
+            19
+          ],
+          "cost": 66
+        },
+        {
+          "tile": [
+            38,
+            21
+          ],
+          "cost": 61
+        },
+        {
+          "tile": [
+            38,
+            22
+          ],
+          "cost": 60
+        },
+        {
+          "tile": [
+            39,
+            18
+          ],
+          "cost": 6
+        }
+      ]
+    },
+    "allTenBuilt": {
+      "extensions": 40,
+      "spawnCapacityAtRcl6": 2300,
+      "pathCosts": {
+        "S1 → Storage": 43,
+        "S2 → Storage": 58,
+        "Storage → Controller": 67,
+        "Storage → Spawn (35, 19)": 59
+      },
+      "extensionCosts": [
+        {
+          "tile": [
+            30,
+            11
+          ],
+          "cost": 8
+        },
+        {
+          "tile": [
+            32,
+            11
+          ],
+          "cost": 6
+        },
+        {
+          "tile": [
+            32,
+            17
+          ],
+          "cost": 24
+        },
+        {
+          "tile": [
+            32,
+            18
+          ],
+          "cost": 24
+        },
+        {
+          "tile": [
+            32,
+            19
+          ],
+          "cost": 31
+        },
+        {
+          "tile": [
+            33,
+            11
+          ],
+          "cost": 6
+        },
+        {
+          "tile": [
+            33,
+            12
+          ],
+          "cost": 4
+        },
+        {
+          "tile": [
+            33,
+            17
+          ],
+          "cost": 63
+        },
+        {
+          "tile": [
+            33,
+            18
+          ],
+          "cost": 61
+        },
+        {
+          "tile": [
+            33,
+            19
+          ],
+          "cost": 60
+        },
+        {
+          "tile": [
+            33,
+            20
+          ],
+          "cost": 59
+        },
+        {
+          "tile": [
+            34,
+            12
+          ],
+          "cost": 4
+        },
+        {
+          "tile": [
+            34,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            34,
+            15
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            34,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            34,
+            17
+          ],
+          "cost": 63
+        },
+        {
+          "tile": [
+            35,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            35,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            35,
+            17
+          ],
+          "cost": 63
+        },
+        {
+          "tile": [
+            35,
+            21
+          ],
+          "cost": 58
+        },
+        {
+          "tile": [
+            35,
+            22
+          ],
+          "cost": 57
+        },
+        {
+          "tile": [
+            36,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            36,
+            14
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            36,
+            15
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            36,
+            17
+          ],
+          "cost": 63
+        },
+        {
+          "tile": [
+            36,
+            22
+          ],
+          "cost": 57
+        },
+        {
+          "tile": [
+            37,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            37,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            37,
+            17
+          ],
+          "cost": 64
+        },
+        {
+          "tile": [
+            37,
+            18
+          ],
+          "cost": 62
+        },
+        {
+          "tile": [
+            37,
+            19
+          ],
+          "cost": 62
+        },
+        {
+          "tile": [
+            37,
+            20
+          ],
+          "cost": 62
+        },
+        {
+          "tile": [
+            38,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            38,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            38,
+            17
+          ],
+          "cost": 4
+        },
+        {
+          "tile": [
+            38,
+            18
+          ],
+          "cost": 6
+        },
+        {
+          "tile": [
+            38,
+            19
+          ],
+          "cost": 66
+        },
+        {
+          "tile": [
+            38,
+            21
+          ],
+          "cost": 61
+        },
+        {
+          "tile": [
+            38,
+            22
+          ],
+          "cost": 60
+        },
+        {
+          "tile": [
+            39,
+            18
+          ],
+          "cost": 6
+        }
+      ]
+    },
+    "X39 corridor": {
+      "extensions": 39,
+      "spawnCapacityAtRcl6": 2250,
+      "pathCosts": {
+        "S1 → Storage": 43,
+        "S2 → Storage": 58,
+        "Storage → Controller": 67,
+        "Storage → Spawn (35, 19)": 59
+      },
+      "extensionCosts": [
+        {
+          "tile": [
+            30,
+            11
+          ],
+          "cost": 8
+        },
+        {
+          "tile": [
+            32,
+            11
+          ],
+          "cost": 6
+        },
+        {
+          "tile": [
+            32,
+            17
+          ],
+          "cost": 24
+        },
+        {
+          "tile": [
+            32,
+            18
+          ],
+          "cost": 24
+        },
+        {
+          "tile": [
+            32,
+            19
+          ],
+          "cost": 31
+        },
+        {
+          "tile": [
+            33,
+            11
+          ],
+          "cost": 6
+        },
+        {
+          "tile": [
+            33,
+            12
+          ],
+          "cost": 4
+        },
+        {
+          "tile": [
+            33,
+            17
+          ],
+          "cost": 63
+        },
+        {
+          "tile": [
+            33,
+            18
+          ],
+          "cost": 61
+        },
+        {
+          "tile": [
+            33,
+            19
+          ],
+          "cost": 60
+        },
+        {
+          "tile": [
+            33,
+            20
+          ],
+          "cost": 59
+        },
+        {
+          "tile": [
+            34,
+            12
+          ],
+          "cost": 4
+        },
+        {
+          "tile": [
+            34,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            34,
+            15
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            34,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            34,
+            17
+          ],
+          "cost": 63
+        },
+        {
+          "tile": [
+            35,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            35,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            35,
+            17
+          ],
+          "cost": 63
+        },
+        {
+          "tile": [
+            35,
+            21
+          ],
+          "cost": 58
+        },
+        {
+          "tile": [
+            35,
+            22
+          ],
+          "cost": 57
+        },
+        {
+          "tile": [
+            36,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            36,
+            14
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            36,
+            15
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            36,
+            17
+          ],
+          "cost": 63
+        },
+        {
+          "tile": [
+            36,
+            22
+          ],
+          "cost": 57
+        },
+        {
+          "tile": [
+            37,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            37,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            37,
+            17
+          ],
+          "cost": 64
+        },
+        {
+          "tile": [
+            37,
+            18
+          ],
+          "cost": 62
+        },
+        {
+          "tile": [
+            37,
+            19
+          ],
+          "cost": 62
+        },
+        {
+          "tile": [
+            37,
+            20
+          ],
+          "cost": 62
+        },
+        {
+          "tile": [
+            38,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            38,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            38,
+            17
+          ],
+          "cost": 4
+        },
+        {
+          "tile": [
+            38,
+            18
+          ],
+          "cost": 6
+        },
+        {
+          "tile": [
+            38,
+            19
+          ],
+          "cost": 8
+        },
+        {
+          "tile": [
+            38,
+            21
+          ],
+          "cost": 61
+        },
+        {
+          "tile": [
+            38,
+            22
+          ],
+          "cost": 60
+        }
+      ]
+    },
+    "X38 passing bays": {
+      "extensions": 37,
+      "spawnCapacityAtRcl6": 2150,
+      "pathCosts": {
+        "S1 → Storage": 43,
+        "S2 → Storage": 58,
+        "Storage → Controller": 67,
+        "Storage → Spawn (35, 19)": 59
+      },
+      "extensionCosts": [
+        {
+          "tile": [
+            30,
+            11
+          ],
+          "cost": 8
+        },
+        {
+          "tile": [
+            32,
+            11
+          ],
+          "cost": 6
+        },
+        {
+          "tile": [
+            32,
+            17
+          ],
+          "cost": 24
+        },
+        {
+          "tile": [
+            32,
+            18
+          ],
+          "cost": 24
+        },
+        {
+          "tile": [
+            32,
+            19
+          ],
+          "cost": 31
+        },
+        {
+          "tile": [
+            33,
+            11
+          ],
+          "cost": 6
+        },
+        {
+          "tile": [
+            33,
+            12
+          ],
+          "cost": 4
+        },
+        {
+          "tile": [
+            33,
+            17
+          ],
+          "cost": 63
+        },
+        {
+          "tile": [
+            33,
+            18
+          ],
+          "cost": 61
+        },
+        {
+          "tile": [
+            33,
+            19
+          ],
+          "cost": 60
+        },
+        {
+          "tile": [
+            33,
+            20
+          ],
+          "cost": 59
+        },
+        {
+          "tile": [
+            34,
+            12
+          ],
+          "cost": 4
+        },
+        {
+          "tile": [
+            34,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            34,
+            15
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            34,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            34,
+            17
+          ],
+          "cost": 63
+        },
+        {
+          "tile": [
+            35,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            35,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            35,
+            17
+          ],
+          "cost": 63
+        },
+        {
+          "tile": [
+            35,
+            21
+          ],
+          "cost": 58
+        },
+        {
+          "tile": [
+            35,
+            22
+          ],
+          "cost": 57
+        },
+        {
+          "tile": [
+            36,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            36,
+            14
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            36,
+            15
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            36,
+            17
+          ],
+          "cost": 63
+        },
+        {
+          "tile": [
+            36,
+            22
+          ],
+          "cost": 57
+        },
+        {
+          "tile": [
+            37,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            37,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            37,
+            17
+          ],
+          "cost": 6
+        },
+        {
+          "tile": [
+            37,
+            18
+          ],
+          "cost": 6
+        },
+        {
+          "tile": [
+            37,
+            19
+          ],
+          "cost": 62
+        },
+        {
+          "tile": [
+            37,
+            20
+          ],
+          "cost": 62
+        },
+        {
+          "tile": [
+            38,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            38,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            38,
+            18
+          ],
+          "cost": 6
+        },
+        {
+          "tile": [
+            38,
+            19
+          ],
+          "cost": 8
+        },
+        {
+          "tile": [
+            38,
+            22
+          ],
+          "cost": 60
+        }
+      ]
+    },
+    "X32 west access": {
+      "extensions": 34,
+      "spawnCapacityAtRcl6": 2000,
+      "pathCosts": {
+        "S1 → Storage": 43,
+        "S2 → Storage": 58,
+        "Storage → Controller": 67,
+        "Storage → Spawn (35, 19)": 59
+      },
+      "extensionCosts": [
+        {
+          "tile": [
+            30,
+            11
+          ],
+          "cost": 8
+        },
+        {
+          "tile": [
+            32,
+            11
+          ],
+          "cost": 6
+        },
+        {
+          "tile": [
+            33,
+            11
+          ],
+          "cost": 6
+        },
+        {
+          "tile": [
+            33,
+            12
+          ],
+          "cost": 4
+        },
+        {
+          "tile": [
+            33,
+            17
+          ],
+          "cost": 26
+        },
+        {
+          "tile": [
+            33,
+            18
+          ],
+          "cost": 26
+        },
+        {
+          "tile": [
+            33,
+            19
+          ],
+          "cost": 26
+        },
+        {
+          "tile": [
+            33,
+            20
+          ],
+          "cost": 28
+        },
+        {
+          "tile": [
+            34,
+            12
+          ],
+          "cost": 4
+        },
+        {
+          "tile": [
+            34,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            34,
+            15
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            34,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            34,
+            17
+          ],
+          "cost": 63
+        },
+        {
+          "tile": [
+            35,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            35,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            35,
+            17
+          ],
+          "cost": 63
+        },
+        {
+          "tile": [
+            35,
+            21
+          ],
+          "cost": 58
+        },
+        {
+          "tile": [
+            35,
+            22
+          ],
+          "cost": 57
+        },
+        {
+          "tile": [
+            36,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            36,
+            14
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            36,
+            15
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            36,
+            17
+          ],
+          "cost": 63
+        },
+        {
+          "tile": [
+            36,
+            22
+          ],
+          "cost": 57
+        },
+        {
+          "tile": [
+            37,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            37,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            37,
+            17
+          ],
+          "cost": 6
+        },
+        {
+          "tile": [
+            37,
+            18
+          ],
+          "cost": 6
+        },
+        {
+          "tile": [
+            37,
+            19
+          ],
+          "cost": 62
+        },
+        {
+          "tile": [
+            37,
+            20
+          ],
+          "cost": 62
+        },
+        {
+          "tile": [
+            38,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            38,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            38,
+            18
+          ],
+          "cost": 6
+        },
+        {
+          "tile": [
+            38,
+            19
+          ],
+          "cost": 8
+        },
+        {
+          "tile": [
+            38,
+            22
+          ],
+          "cost": 60
+        }
+      ]
+    },
+    "roadsBeforeLinkRetirement": {
+      "extensions": 34,
+      "spawnCapacityAtRcl6": 2000,
+      "pathCosts": {
+        "S1 → Storage": 14,
+        "S2 → Storage": 24,
+        "Storage → Controller": 32,
+        "Storage → Spawn (35, 19)": 26
+      },
+      "extensionCosts": [
+        {
+          "tile": [
+            30,
+            11
+          ],
+          "cost": 4
+        },
+        {
+          "tile": [
+            32,
+            11
+          ],
+          "cost": 3
+        },
+        {
+          "tile": [
+            33,
+            11
+          ],
+          "cost": 3
+        },
+        {
+          "tile": [
+            33,
+            12
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            33,
+            17
+          ],
+          "cost": 19
+        },
+        {
+          "tile": [
+            33,
+            18
+          ],
+          "cost": 19
+        },
+        {
+          "tile": [
+            33,
+            19
+          ],
+          "cost": 19
+        },
+        {
+          "tile": [
+            33,
+            20
+          ],
+          "cost": 20
+        },
+        {
+          "tile": [
+            34,
+            12
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            34,
+            13
+          ],
+          "cost": 1
+        },
+        {
+          "tile": [
+            34,
+            15
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            34,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            34,
+            17
+          ],
+          "cost": 29
+        },
+        {
+          "tile": [
+            35,
+            13
+          ],
+          "cost": 1
+        },
+        {
+          "tile": [
+            35,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            35,
+            17
+          ],
+          "cost": 29
+        },
+        {
+          "tile": [
+            35,
+            21
+          ],
+          "cost": 24
+        },
+        {
+          "tile": [
+            35,
+            22
+          ],
+          "cost": 23
+        },
+        {
+          "tile": [
+            36,
+            13
+          ],
+          "cost": 1
+        },
+        {
+          "tile": [
+            36,
+            14
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            36,
+            15
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            36,
+            17
+          ],
+          "cost": 29
+        },
+        {
+          "tile": [
+            36,
+            22
+          ],
+          "cost": 23
+        },
+        {
+          "tile": [
+            37,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            37,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            37,
+            17
+          ],
+          "cost": 5
+        },
+        {
+          "tile": [
+            37,
+            18
+          ],
+          "cost": 5
+        },
+        {
+          "tile": [
+            37,
+            19
+          ],
+          "cost": 28
+        },
+        {
+          "tile": [
+            37,
+            20
+          ],
+          "cost": 28
+        },
+        {
+          "tile": [
+            38,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            38,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            38,
+            18
+          ],
+          "cost": 5
+        },
+        {
+          "tile": [
+            38,
+            19
+          ],
+          "cost": 6
+        },
+        {
+          "tile": [
+            38,
+            22
+          ],
+          "cost": 26
+        }
+      ]
+    }
+  }
+}
