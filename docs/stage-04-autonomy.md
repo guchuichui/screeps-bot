@@ -1,6 +1,6 @@
 # Stage 04 construction and recovery
 
-The executor runs on shard3 only. GitHub Actions for `codex/stage04-autonomy` runs the offline suites and uploads the branch to the configured Screeps `agent-test` destination. A successful upload and a fresh `stage04-autonomy-v1` runtime observation are independently checked.
+The executor runs on shard3 only. GitHub Actions for `codex/stage04-autonomy` runs the offline suites and uploads the branch to the configured Screeps `agent-test` destination. A successful upload and a fresh `stage04-autonomy-v2` runtime observation are independently checked.
 
 ## E22S36
 
@@ -16,7 +16,7 @@ In the recorded Stage 03 geometry, building (37,13) while all old structures rem
 
 Cancel owned obsolete Container sites. Local units can withdraw remaining energy from a reachable retiring Container. Empty Containers are destroyed in owned safe rooms. A Container holding other resources is recorded as waiting for drain.
 
-E22S38's narrowly scoped recovery verifies the historical `ERR_RCL_NOT_ENOUGH`, known foreign Spawn at (15,31), local ownership, no hostile units, and home energy, population and support budgets. It never destroys an owned Spawn. After the stale quota blocker is observed gone, it resets only the exhausted Spawn-site attempt state once. Native bootstrap and GCL checks remain in place.
+E22S38's narrowly scoped recovery verifies the historical `ERR_RCL_NOT_ENOUGH`, known foreign Spawn at (15,31), local ownership, no hostile units, and home energy, population and support budgets. It never destroys an owned Spawn. After the stale quota blocker is observed gone, it resets only the exhausted Spawn-site attempt state once. If E22S38 remains without an owned Spawn and approaches downgrade, the confirmed recovery is eligible for aid while E22S37 replaces its local workers. The mother-base reserves, support budgets and normal Claimer ordering still apply.
 
 ## Observation and controls
 

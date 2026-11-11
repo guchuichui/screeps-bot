@@ -125,6 +125,26 @@ test('second target waits until first colony is stable', () => {
   const w = world(); w.target(0, { my: true }); w.spawnNext(); assert.equal(w.calls.length, 0);
   w.task().state = 'STABLE'; w.spawnNext(); assert.equal(w.calls[0].options.memory.targetRoom, 'E22S38');
 });
+test('confirmed owned downgrade recovery receives bounded aid before the first colony restabilizes', () => {
+  const w = world({ autoBootstrap: true }); w.manager.run();
+  const first = w.target(0, { my: true });
+  first.structures.push({ structureType: 'spawn', my: true });
+  first.energyAvailable = 300;
+  w.task().state = 'BOOTSTRAP';
+  const second = w.target(1, { my: true, ticksToDowngrade: 1800 });
+  w.task(1).state = 'BUILD_SPAWN';
+  assert.equal(w.manager.trySupport(w.spawn, w.counts), false);
+  w.Memory.expansion.stage04 = { rooms: { [second.name]: { recoveryResetAt: 99 } } };
+  w.home.energyAvailable = 300;
+  assert(w.manager.trySupport(w.spawn, w.counts));
+  assert.equal(w.calls.length, 0);
+  w.home.energyAvailable = 800;
+  w.Game.time++;
+  assert(w.manager.trySupport(w.spawn, w.counts));
+  assert.equal(w.calls[0].options.memory.targetRoom, second.name);
+  const cost = w.calls[0].body.reduce((n, part) => n + w.constants.BODYPART_COST[part], 0);
+  assert(cost <= 500 && w.home.energyAvailable - cost >= 300);
+});
 test('owned task enters planning and a completed Spawn enters bootstrap', () => {
   const w = world(); w.manager.run(); const r = w.target(0, { my: true });
   w.manager.run(); assert.equal(w.task().state, 'SPAWN_PLANNING');
