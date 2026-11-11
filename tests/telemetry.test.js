@@ -64,7 +64,7 @@ module.exports = function () {
     // Constants are exposed to the isolated game fixture explicitly, as in World.
     w.setGlobal('EVENT_HARVEST', 5); w.setGlobal('EVENT_TRANSFER', 12); w.setGlobal('EVENT_UPGRADE_CONTROLLER', 9);
     const link = { id: 'link', my: true, structureType: 'link' };
-    w.Game.getObjectById = id => id === 'link' ? link : null;
+    w.Game.getObjectById = id => id === 'link' || id === 'other' ? link : null;
     room.getEventLog = () => [
       { event: 5, objectId: 'creep', data: { targetId: room.sources[0].id, amount: 4 } },
       { event: 12, objectId: 'link', data: { targetId: 'other', resourceType: 'energy', amount: 100 } },
@@ -75,6 +75,41 @@ module.exports = function () {
     assert.equal(data.sources[room.sources[0].id].harvestAmountEvents, 4);
     assert.equal(data.links.link.eventAmountSent, 100); assert.equal(data.links.link.receivedEnergy, undefined);
     assert.equal(data.rooms[room.name].upgradeEnergyEvents, 1); assert.equal(data.rooms[room.name].eventTicksRead, 1);
+  });
+  test('home telemetry counts delivered energy and excludes Link withdrawals from Link sends', () => {
+    const { w } = fixture();
+    const home = w.Game.rooms.E22S36;
+    w.setGlobal('EVENT_HARVEST', 5); w.setGlobal('EVENT_TRANSFER', 12);
+    w.setGlobal('EVENT_BUILD', 4); w.setGlobal('EVENT_UPGRADE_CONTROLLER', 9);
+    const objects = {
+      miner: { my: true, memory: { role: 'miner' } },
+      worker: { my: true, memory: { role: 'worker' } },
+      link: { my: true, structureType: 'link', id: 'link', cooldown: 0, isActive: () => true, pos: { x: 10, y: 12 } },
+      sink: { my: true, structureType: 'link' },
+      spawn: { my: true, structureType: 'spawn' }
+    };
+    home.sources = [{ id: 'source', energy: 3000, energyCapacity: 3000 }];
+    home.find = kind => kind === 105 ? home.sources : kind === 108 ? [objects.link] : [];
+    w.Game.getObjectById = id => objects[id] || null;
+    home.getEventLog = () => [
+      { event: 5, objectId: 'miner', data: { targetId: home.sources[0].id, amount: 10 } },
+      { event: 12, objectId: 'worker', data: { targetId: 'spawn', resourceType: 'energy', amount: 40 } },
+      { event: 12, objectId: 'link', data: { targetId: 'worker', resourceType: 'energy', amount: 30 } },
+      { event: 12, objectId: 'link', data: { targetId: 'sink', resourceType: 'energy', amount: 200 } },
+      { event: 4, objectId: 'worker', data: { amount: 3 } },
+      { event: 9, objectId: 'worker', data: { amount: 1, energySpent: 1 } }
+    ];
+    w.load('telemetry.metrics').tick();
+    const counters = w.Memory.expansion.telemetryCounters;
+    const roles = counters.rooms.E22S36.economyRoleEvents;
+    assert.equal(roles.worker.deliveredEnergy, 40);
+    assert.equal(roles.worker.spawnRefillEnergy, 40);
+    assert.equal(roles.worker.buildEvents, 1);
+    assert.equal(roles.worker.upgradeEvents, 1);
+    assert.equal(roles.miner.harvestEnergy, 10);
+    assert.equal(counters.links.link.verifiedSentEnergy, 200);
+    assert.equal(counters.links.link.verifiedSendEvents, 1);
+    assert.equal(counters.links.link.cooldownReadyTicks, 1);
   });
   test('counter sampling never reads expensive event logs after CPU guard trips', () => {
     const { w, room } = fixture(); w.Game.cpu.getUsed = () => 95;

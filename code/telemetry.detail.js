@@ -84,8 +84,9 @@ exports.snapshot = function () {
       row.productionDemand = { needed: useful.length < target, workerCount: useful.length, workerTarget: target, source: 'current native worker policy', tick: Game.time };
     } else row.productionDemand = { available: false };
     const geometry = { room: name, sources: sources.map(s => ({ id: s.id, ...pos(s) })), controller: pos(controller),
+      minerals: room.find(FIND_MINERALS).map(mineral => ({ id: mineral.id, ...pos(mineral) })),
       structures: row.structures.map(s => ({ id: s.id, type: s.type, x: s.x, y: s.y })), sites: row.sites.map(s => ({ id: s.id, type: s.type, x: s.x, y: s.y })) };
-    for (const key of ['sources', 'structures', 'sites']) geometry[key].sort((a, b) => String(a.id).localeCompare(String(b.id)) || a.x - b.x || a.y - b.y);
+    for (const key of ['sources', 'structures', 'sites', 'minerals']) geometry[key].sort((a, b) => String(a.id).localeCompare(String(b.id)) || a.x - b.x || a.y - b.y);
     const signature = hash(JSON.stringify(geometry)); row.layoutKey = signature;
     if (!cache[name] || cache[name].layoutKey !== signature) {
       // Static work has a CPU guard. Missing data stays explicit and retries later.

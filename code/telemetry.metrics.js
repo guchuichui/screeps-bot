@@ -15,6 +15,52 @@ function roomCounter(data, name) {
     eventTicksRead: 0, harvestAmountEvents: 0, ownedHarvestAmountEvents: 0, energyMovementEventAmount: 0,
     upgradeControlPointEvents: 0, upgradeEnergyEvents: 0 });
 }
+const economyRoles = ['worker', 'miner', 'hauler', 'other'];
+function linkCounter(data, id) {
+  if (!data.links[id]) data.links[id] = { eventAmountSent: 0, events: 0 };
+  return data.links[id];
+}
+function observeEconomy(data, row, room) {
+  if (room.name !== config.homeRoom || typeof EVENT_BUILD === 'undefined' ||
+      typeof EVENT_TRANSFER === 'undefined' || typeof EVENT_UPGRADE_CONTROLLER === 'undefined') return false;
+  row.economyEventTicks = (row.economyEventTicks || 0) + 1;
+  if (!row.economyRoleEvents) {
+    row.economyRoleEvents = Object.fromEntries(economyRoles.map(role => [role, {
+      harvestEvents: 0, harvestEnergy: 0, deliveryEvents: 0, deliveredEnergy: 0,
+      spawnRefillEnergy: 0, storageDeliveryEnergy: 0, buildEvents: 0, upgradeEvents: 0
+    }]));
+  }
+  for (const link of room.find(FIND_MY_STRUCTURES)) {
+    if (link.structureType !== 'link' || typeof link.isActive !== 'function' || !link.isActive()) continue;
+    const counter = linkCounter(data, link.id);
+    counter.activeObservedTicks = (counter.activeObservedTicks || 0) + 1;
+    counter.cooldownReadyTicks = (counter.cooldownReadyTicks || 0) + (link.cooldown === 0 ? 1 : 0);
+    if (counter.verifiedSendEvents === undefined) {
+      counter.verifiedSendEvents = 0;
+      counter.verifiedSentEnergy = 0;
+    }
+  }
+  return true;
+}
+function countRoleEvent(row, actor, event, value, target, sourceHarvest) {
+  if (!actor || !actor.my || !actor.memory || value.amount <= 0) return;
+  const role = economyRoles.includes(actor.memory.role) ? actor.memory.role : 'other';
+  const counts = row.economyRoleEvents[role];
+  if (sourceHarvest) {
+    counts.harvestEvents++;
+    counts.harvestEnergy += value.amount;
+  } else if (event === EVENT_BUILD) {
+    counts.buildEvents++;
+  } else if (event === EVENT_UPGRADE_CONTROLLER) {
+    counts.upgradeEvents++;
+  } else if (event === EVENT_TRANSFER && value.resourceType === RESOURCE_ENERGY && target && target.my &&
+      ['spawn', 'extension', 'storage'].includes(target.structureType)) {
+    counts.deliveryEvents++;
+    counts.deliveredEnergy += value.amount;
+    if (target.structureType === 'storage') counts.storageDeliveryEnergy += value.amount;
+    else counts.spawnRefillEnergy += value.amount;
+  }
+}
 function eventLog(data, row, room, sources) {
   if (typeof room.getEventLog !== 'function' || typeof EVENT_HARVEST === 'undefined') { row.eventLogStatus = 'unavailable_api'; return; }
   if (Game.cpu.getUsed() >= Game.cpu.limit * 0.85) { row.eventLogStatus = 'unavailable_cpu_budget'; return; }
@@ -22,13 +68,18 @@ function eventLog(data, row, room, sources) {
     const events = room.getEventLog();
     if (!Array.isArray(events)) { row.eventLogStatus = 'unavailable_format'; return; }
     row.eventLogStatus = 'covered'; row.lastEventTick = Game.time - 1;
+    const economyCovered = observeEconomy(data, row, room);
     row.eventTicksRead = (row.eventTicksRead || 0) + 1;
     for (const source of sources) data.sources[source.id].eventTicksRead = (data.sources[source.id].eventTicksRead || 0) + 1;
     for (const event of events) {
       const value = event.data || {};
       if (!Number.isFinite(value.amount) || value.amount < 0) continue;
       const actor = typeof Game.getObjectById === 'function' ? Game.getObjectById(event.objectId) : null;
-      if (event.event === EVENT_HARVEST && sources.some(s => s.id === value.targetId)) {
+      const sourceHarvest = event.event === EVENT_HARVEST && sources.some(s => s.id === value.targetId);
+      const target = typeof EVENT_TRANSFER !== 'undefined' && event.event === EVENT_TRANSFER &&
+        typeof Game.getObjectById === 'function' ? Game.getObjectById(value.targetId) : null;
+      if (economyCovered) countRoleEvent(row, actor, event.event, value, target, sourceHarvest);
+      if (sourceHarvest) {
         const source = data.sources[value.targetId];
         source.harvestAmountEvents = (source.harvestAmountEvents || 0) + value.amount;
         row.harvestAmountEvents = (row.harvestAmountEvents || 0) + value.amount;
@@ -39,8 +90,13 @@ function eventLog(data, row, room, sources) {
           ttl: actor && actor.ticksToLive || null, ownerConfirmed: Boolean(actor && actor.my) };
       } else if (typeof EVENT_TRANSFER !== 'undefined' && event.event === EVENT_TRANSFER && value.resourceType === RESOURCE_ENERGY) {
         row.energyMovementEventAmount = (row.energyMovementEventAmount || 0) + value.amount;
-        if (actor && actor.structureType === 'link') {
-          const link = data.links[event.objectId] || (data.links[event.objectId] = { eventAmountSent: 0, events: 0 });
+        // Withdraw is logged with the structure as sender and creep as recipient.
+        if (actor && actor.structureType === 'link' && target && target.structureType === 'link') {
+          const link = linkCounter(data, event.objectId);
+          if (economyCovered && actor.my) {
+            link.verifiedSendEvents = (link.verifiedSendEvents || 0) + 1;
+            link.verifiedSentEnergy = (link.verifiedSentEnergy || 0) + value.amount;
+          }
           link.eventAmountSent += value.amount; link.events++;
           link.lastEvent = { tick: Game.time - 1, targetId: value.targetId, amount: value.amount };
         }
