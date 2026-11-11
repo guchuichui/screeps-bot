@@ -57,8 +57,8 @@ function component(data, additions = []) {
   return seen;
 }
 
-function connected(data, additions = [], baseline) {
-  if (!data.spawn || !data.storage || data.sources.length !== plan.stations.length) return false;
+function connected(data, additions = [], baseline, storageMigration = false) {
+  if (!data.spawn || (!data.storage && !storageMigration) || data.sources.length !== plan.stations.length) return false;
   const seen = component(data, additions);
   if (baseline && baseline.some((value, i) => value && !seen[i] &&
     (i < 50 || i >= 2450 || i % 50 === 0 || i % 50 === 49))) return false;

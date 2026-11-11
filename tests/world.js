@@ -23,7 +23,7 @@ function world(overrides = {}) {
     BODYPART_COST: { claim: 600, move: 50, work: 100, carry: 50, tough: 10, attack: 80, ranged_attack: 150, heal: 250 }, CREEP_CLAIM_LIFE_TIME: 600
   };
   // Unit fixtures opt into each stage independently; production defaults enable all stages.
-  const config = Object.assign({}, require('../code/expansion.config'), { autoBuildSpawn: false, autoBootstrap: false, e22s37Growth: false }, overrides);
+  const config = Object.assign({}, require('../code/expansion.config'), { autoBuildSpawn: false, autoBootstrap: false, e22s37Growth: false, homePlanB: false }, overrides);
   const Memory = { creeps: {} };
   const home = { name: config.homeRoom, energyAvailable: 2000, controller: { my: true, level: 3 },
     getTerrain: () => ({ get: () => 0 }),

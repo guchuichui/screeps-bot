@@ -1,6 +1,7 @@
 const containerPolicy = require('colony.container-policy');
 const config = require('expansion.config');
 const plan = require('stage04.plan');
+const planB = require('stage04.plan-b');
 // All-purpose colony worker. Old harvester/builder/upgrader creeps are
 // automatically migrated to this role by starter.colony.
 module.exports.run = function (creep) {
@@ -17,6 +18,15 @@ module.exports.run = function (creep) {
 
   // If sources are temporarily empty, wait and retry while in collection mode.
   if (!creep.memory.working) {
+    const state = Memory.expansion?.stage04?.home;
+    const storage = creep.room.storage;
+    if (config.homePlanB && creep.room.name === config.homeRoom && state?.reason === 'DRAIN_OLD_STORAGE' &&
+        storage?.my && storage.pos.x === planB.oldStorage[0] && storage.pos.y === planB.oldStorage[1] &&
+        storage.store[RESOURCE_ENERGY] > 0) {
+      const code = creep.withdraw(storage, RESOURCE_ENERGY);
+      if (code === OK) { creep.memory.working = true; return; }
+      if (code === ERR_NOT_IN_RANGE && moveToTarget(creep, storage) !== ERR_NO_PATH) return;
+    }
     const source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
     if (source) {
       const result = creep.harvest(source);
@@ -44,7 +54,10 @@ module.exports.run = function (creep) {
   }
 
   const sites = containerPolicy.buildSites(creep.room).filter(site => {
-    if (!config.homeConstructionHold || creep.room.name !== config.homeRoom || Game.shard?.name !== 'shard3') return true;
+    if (creep.room.name !== config.homeRoom || Game.shard?.name !== 'shard3') return true;
+    if (config.homePlanB && site.structureType === STRUCTURE_EXTENSION &&
+        planB.obsoleteSites.some(([x, y]) => site.pos.x === x && site.pos.y === y)) return false;
+    if (!config.homeConstructionHold) return true;
     const tiles = site.structureType === STRUCTURE_EXTENSION ? [...plan.extensions, ...(Memory.expansion?.stage04?.home?.infill || [])] :
       site.structureType === STRUCTURE_ROAD ? plan.roads : site.structureType === STRUCTURE_LINK ? plan.links : [];
     return !tiles.some(([x, y]) => site.pos.x === x && site.pos.y === y);
@@ -107,8 +120,8 @@ function energyPriority(s) {
 }
 function sitePriority(s) {
   if (s.structureType === STRUCTURE_TOWER) return 0;
-  if (s.structureType === STRUCTURE_EXTENSION) return 1;
-  if (s.structureType === STRUCTURE_SPAWN) return 2;
+  if (s.structureType === STRUCTURE_SPAWN || s.structureType === STRUCTURE_STORAGE) return 1;
+  if (s.structureType === STRUCTURE_EXTENSION) return 2;
   if (s.structureType === STRUCTURE_ROAD) return 4;
   return 3;
 }

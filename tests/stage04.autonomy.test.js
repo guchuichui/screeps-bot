@@ -1,23 +1,27 @@
 const assert = require('assert/strict');
 const { world } = require('./world');
 const plan = require('../code/stage04.plan');
+const planB = require('../code/stage04.plan-b');
 const fixture = require('../docs/stage-03/snapshot.json');
 
 module.exports = function () {
-  function setup(homeConstructionHold = false) {
-    const w = world({ autoBuildSpawn: true, autoBootstrap: true, homeConstructionHold });
+  function setup(homeConstructionHold = false, homePlanB = false) {
+    const w = world({ autoBuildSpawn: true, autoBootstrap: true, homeConstructionHold, homePlanB });
     w.Game.shard = { name: 'shard3' };
     w.setGlobal('STRUCTURE_LINK', 'link');
     w.setGlobal('FIND_HOSTILE_POWER_CREEPS', 120);
     w.constants.CONTROLLER_STRUCTURES.link = [0, 0, 0, 0, 0, 2, 3, 4, 6];
     w.constants.CONTROLLER_STRUCTURES.road = Array(9).fill(2500);
+    w.constants.CONTROLLER_STRUCTURES.spawn = [0, 1, 1, 1, 1, 1, 1, 2, 3];
+    w.constants.CONTROLLER_STRUCTURES.storage = [0, 0, 0, 0, 1, 1, 1, 1, 1];
     w.Memory.expansion = { tasks: {}, telemetryCounters: { rooms: {} } };
     const home = w.home;
     const log = [];
     const position = (x, y, roomName = home.name) => ({ x, y, roomName });
     let counter = 0;
     const asset = (structureType, x, y, room = home, my = true, energy = 0) => {
-      const capacity = structureType === 'extension' ? 50 : 800;
+      const capacity = structureType === 'extension' ? (room.controller.level >= 8 ? 200 : room.controller.level >= 7 ? 100 : 50) :
+        structureType === 'spawn' ? 300 : 800;
       const id = `asset-${++counter}`;
       return { id, structureType, pos: position(x, y, room.name), my, cooldown: 0,
         store: { energy, getUsedCapacity() { return this.energy; }, getFreeCapacity() { return capacity - this.energy; },
@@ -189,5 +193,74 @@ module.exports = function () {
     assert.equal(state.home.reason, 'HOME_LAYOUT_CONFIRMATION_WAIT');
     assert.equal(f.log.length, 0);
   }
-  return 6;
+  {
+    const f = setup(false, true);
+    const home = f.home;
+    for (const tile of planB.obsoleteSites) home.sites.push(f.asset('extension', ...tile));
+    let time = 100;
+    let actions = 0;
+    let limit = Infinity;
+    let charge = 0;
+    function advance() {
+      const level = home.controller.level;
+      const structures = home.structures;
+      const extensions = structures.filter(o => o.structureType === 'extension');
+      const spawns = structures.filter(o => o.structureType === 'spawn');
+      home.energyCapacityAvailable = spawns.length * 300 + extensions.length * (level === 6 ? 50 : level === 7 ? 100 : 200);
+      home.energyAvailable = Math.min(home.energyCapacityAvailable, limit);
+      for (const spawn of spawns) spawn.store.energy = 300;
+      for (const extension of extensions) extension.store.energy = charge;
+      const state = f.feed(time).home;
+      time += 5;
+      for (const { action, type, x, y } of f.log.slice(actions)) {
+        if (action === 'create') home.structures.push(f.asset(type, x, y));
+        else if (action === 'remove') home.sites = home.sites.filter(o => o !== f.at(home.sites, [x, y], type));
+        else home.structures = home.structures.filter(o => o !== f.at(home.structures, [x, y], type));
+      }
+      home.storage = home.structures.find(o => o.structureType === 'storage');
+      actions = f.log.length;
+      return state;
+    }
+    function until(reason) {
+      let state;
+      for (let i = 0; i < 600; i++) {
+        state = advance();
+        if (state.reason === reason) return state;
+      }
+      assert.fail(`never reached ${reason}: ${JSON.stringify(state)}`);
+    }
+    until('RCL7_REQUIRED_FOR_RETIREMENT');
+    assert.equal(home.structures.filter(s => s.structureType === 'extension').length, 40);
+    assert.equal(f.log.filter(o => o.action === 'destroy').length, 0);
+    assert.equal(f.log.filter(o => o.action === 'remove').length, 2);
+    assert.equal(f.log[0].type, 'extension');
+    assert.equal(f.log[0].action, 'create');
+    home.controller.level = 7;
+    limit = 3750;
+    charge = 50;
+    const energyWait = until('MAX_WORKER_ENERGY_WAIT');
+    assert.equal(energyWait.productionReserve.floor, 3750);
+    assert.equal(f.log.filter(o => o.action === 'destroy').length, 0);
+    limit = Infinity;
+    f.at(home.structures, planB.originalSpawn, 'spawn').spawning = { name: 'busy' };
+    until('PRODUCTION_IN_PROGRESS');
+    assert.equal(f.log.filter(o => o.action === 'destroy').length, 0);
+    delete f.at(home.structures, planB.originalSpawn, 'spawn').spawning;
+    until('LINK_NETWORK_READY_RCL8_WAIT');
+    assert.equal(home.structures.filter(s => s.structureType === 'extension').length, 50);
+    assert.equal(home.structures.filter(s => s.structureType === 'link').length, 4);
+    assert(f.at(home.structures, planB.storage, 'storage'));
+    const order = f.log.filter(o => o.type === 'extension' && ['create', 'destroy'].includes(o.action));
+    for (let i = 1; i < order.length; i++) {
+      if (order[i].action === 'destroy') assert.equal(order[i-1].action, 'create');
+    }
+    home.controller.level = 8;
+    until('LINK_NETWORK_READY');
+    assert.equal(home.structures.filter(s => s.structureType === 'extension').length, 58);
+    assert.equal(home.structures.filter(s => s.structureType === 'spawn').length, 3);
+    assert(!f.at(home.structures, [27, 34], 'extension') && !f.at(home.structures, [28, 33], 'extension'));
+    assert(f.at(home.structures, [34, 27], 'extension'));
+    console.log('PASS approved plan B builds before retirement, protects max Worker energy and reaches the 58/3/4 layout');
+  }
+  return 7;
 };

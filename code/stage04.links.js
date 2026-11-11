@@ -1,4 +1,5 @@
 const plan = require('stage04.plan');
+const planB = require('stage04.plan-b');
 const layout = require('stage04.layout');
 const control = require('expansion.control');
 const config = require('expansion.config');
@@ -8,22 +9,32 @@ function objects(room) {
   if (cacheTick === Game.time) return cached;
   cacheTick = Game.time;
   const links = room.find(FIND_MY_STRUCTURES).filter(o => o.structureType === STRUCTURE_LINK && layout.active(o));
-  const endpoints = plan.links.map(tile => layout.at(links, tile, STRUCTURE_LINK));
-  cached = endpoints.every(Boolean) && layout.active(room.storage) && layout.same(room.storage.pos, [36, 16]) ? { senders: endpoints.slice(0, 2), hub: endpoints[2] } : null;
+  const coordinates = config.homePlanB ? planB.links : plan.links;
+  const endpoints = coordinates.map(tile => layout.at(links, tile, STRUCTURE_LINK));
+  const storageTile = config.homePlanB ? planB.storage : [36, 16];
+  cached = endpoints.every(Boolean) && layout.active(room.storage) && layout.same(room.storage.pos, storageTile) ?
+    { senders: endpoints.slice(0, 2), hub: endpoints[2], controller: endpoints[3] } : null;
   return cached;
 }
 
 exports.run = function (room, state) {
   const network = objects(room);
   if (!network) return;
-  let free = network.hub.store.getFreeCapacity(RESOURCE_ENERGY);
+  const receivers = [network.hub, network.controller].filter(Boolean);
+  const free = new Map(receivers.map(link => [link.id, link.store.getFreeCapacity(RESOURCE_ENERGY)]));
+  const urgent = room.controller?.ticksToDowngrade < 3000;
+  if (urgent) receivers.reverse();
   for (const source of network.senders) {
-    const amount = Math.min(source.store[RESOURCE_ENERGY], free);
-    if (source.cooldown !== 0 || amount < 200) continue;
-    const code = source.transferEnergy(network.hub, amount);
-    if (code === OK) free -= amount;
-    state.lastLinkIntent = { tick: Game.time, from: source.id, to: network.hub.id, amount, code };
-    if (code !== OK) state.lastLinkError = state.lastLinkIntent;
+    if (source.cooldown !== 0) continue;
+    for (const target of receivers) {
+      const amount = Math.min(source.store[RESOURCE_ENERGY], free.get(target.id));
+      if (amount < 200) continue;
+      const code = source.transferEnergy(target, amount);
+      if (code === OK) free.set(target.id, free.get(target.id) - amount);
+      state.lastLinkIntent = { tick: Game.time, from: source.id, to: target.id, amount, code };
+      if (code !== OK) state.lastLinkError = state.lastLinkIntent;
+      break;
+    }
   }
 };
 
@@ -37,7 +48,7 @@ exports.work = function (creep) {
   if (config.homeConstructionHold || creep.room.name !== 'E22S36' || Game.shard?.name !== 'shard3' || control.stopped() ||
       Memory.expansion?.stage04Paused === true) return false;
   const state = Memory.expansion?.stage04?.home;
-  if (state?.phase !== 'OPERATING' || state.reason !== 'LINK_NETWORK_READY') return false;
+  if (!state || (!config.homePlanB && (state.phase !== 'OPERATING' || state.reason !== 'LINK_NETWORK_READY'))) return false;
   const room = creep.room;
   if (!room.controller?.my || room.find(FIND_HOSTILE_CREEPS).length || room.find(FIND_HOSTILE_POWER_CREEPS).length) return false;
   const network = objects(room);
@@ -46,6 +57,12 @@ exports.work = function (creep) {
     const sender = network.senders.find((link, i) => layout.same(creep.pos, plan.stations[i]) &&
       link.store.getFreeCapacity(RESOURCE_ENERGY) > 0);
     if (sender && use(creep, 'transfer', sender)) return true;
+  }
+  if (!creep.memory.working && !creep.store[RESOURCE_ENERGY] &&
+      network.controller?.store[RESOURCE_ENERGY] >= 50 &&
+      creep.pos.getRangeTo(room.controller) <= 3 && use(creep, 'withdraw', network.controller)) {
+    creep.memory.working = true;
+    return true;
   }
   const assigned = Game.creeps[state.hubWorker];
   if (!assigned || assigned.room?.name !== room.name || assigned.ticksToLive < 25) {
