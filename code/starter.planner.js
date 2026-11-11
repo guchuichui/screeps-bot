@@ -1,3 +1,4 @@
+const containerPolicy = require('colony.container-policy');
 const IMPORTANT = [STRUCTURE_SPAWN, STRUCTURE_TOWER, STRUCTURE_STORAGE, STRUCTURE_TERMINAL, STRUCTURE_LAB, STRUCTURE_NUKER, STRUCTURE_POWER_SPAWN];
 // Official RCL structure limits. Array index is controller level.
 const LIMITS = {
@@ -19,7 +20,7 @@ module.exports.run = function (room) {
   if (room.name === 'E22S36') return;
   if (!room.controller || !room.controller.my) return;
   if (Object.keys(Game.constructionSites).length >= 90) return;
-  const localSites = room.find(FIND_MY_CONSTRUCTION_SITES);
+  const localSites = containerPolicy.buildSites(room);
   // Limit active sites so the available builders finish them quickly.
   if (localSites.length < 4 && planNextStructure(room, localSites)) return;
   // Do not dilute builder effort with roads while a Tower/Extension wave is incomplete.

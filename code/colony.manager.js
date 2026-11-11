@@ -1,3 +1,4 @@
+const containerPolicy = require('colony.container-policy');
 const config = require('expansion.config');
 const control = require('expansion.control');
 const worker = require('colony.worker');
@@ -127,7 +128,7 @@ function population(room) {
   const sources = require('colony.work').sources(room);
   return {
     colonyHarvester: Math.max(1, Math.min(4, sources.reduce((n, s) => n + Math.min(2, s.slots.length), 0))),
-    colonyBuilder: room.find(FIND_MY_CONSTRUCTION_SITES).length ? 1 : 0,
+    colonyBuilder: containerPolicy.buildSites(room).length ? 1 : 0,
     colonyUpgrader: 1,
     colonyDefender: defender.needsDefense(room.find(FIND_HOSTILE_CREEPS)) ? 1 : 0
   };
