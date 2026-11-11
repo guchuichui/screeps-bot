@@ -139,13 +139,13 @@ test('Pioneer travels across rooms and prioritizes first Spawn construction', ()
   c.room.sites = [{ structureType: 'spawn', pos: { x: 20, y: 20 } }]; c.build = () => { built++; return 0; };
   w.load('expansion.pioneer').run(c, w.task()); assert.equal(built, 1);
 });
-test('Pioneer prevents downgrade before building and adopts completed room', () => {
+test('Pioneer in the other target prevents downgrade and adopts completed room', () => {
   const w = world({ autoBootstrap: true, autoBuildSpawn: true }); w.spawnNext();
-  const r = w.target(0, { my: true, ticksToDowngrade: 1000 }); const c = w.unit(r); c.memory.role = 'expansionPioneer';
+  const r = w.target(1, { my: true, ticksToDowngrade: 1000 }); const c = w.unit(r); c.memory.role = 'expansionPioneer';
   let upgraded = 0; c.upgradeController = () => { upgraded++; return 0; };
-  w.load('expansion.pioneer').run(c, w.task()); assert.equal(upgraded, 1);
+  w.load('expansion.pioneer').run(c, w.task(1)); assert.equal(upgraded, 1);
   r.structures = [{ my: true, structureType: 'spawn', pos: { x: 20, y: 20 } }];
-  w.load('expansion.pioneer').run(c, w.task()); assert.equal(c.memory.colony, r.name); assert.equal(c.memory.role, 'colonyHarvester');
+  w.load('expansion.pioneer').run(c, w.task(1)); assert.equal(c.memory.colony, r.name); assert.equal(c.memory.role, 'colonyHarvester');
 });
 test('support population is dynamic, budgeted and same-tick deduplicated', () => {
   const w = world({ autoBootstrap: true }); w.manager.run(); const r = w.target(0, { my: true });
@@ -405,4 +405,5 @@ test('scenario: claim to stable local economy survives global reset with bounded
   console.log(`SCENARIO ${JSON.stringify(result)}`);
 });
 passed += require('./telemetry.test')();
+passed += require('./pioneer.salvage.test')();
 console.log(`${passed} tests passed`);

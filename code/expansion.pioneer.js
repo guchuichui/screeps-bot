@@ -2,6 +2,7 @@ const config = require('expansion.config');
 const control = require('expansion.control');
 const travel = require('expansion.travel');
 const work = require('colony.work');
+const salvage = require('expansion.salvage');
 
 exports.run = function (creep, task) {
   if (control.stopped() || !control.flag('autoBootstrap') || task.paused || creep.spawning) return;
@@ -24,15 +25,20 @@ exports.run = function (creep, task) {
   if (travel.go(creep, task.targetRoom).code !== 'ARRIVED') return;
   if (!creep.room.controller || !creep.room.controller.my) { travel.record(creep, 'TARGET_NOT_OWNED'); return; }
   const spawn = creep.room.find(FIND_MY_SPAWNS)[0];
-  if (spawn) {
+  const development = salvage.applies(creep.room);
+  const energy = creep.store[RESOURCE_ENERGY];
+  // A stalled local economy still needs a harvester to restart Spawn production.
+  if (spawn && (!development || energy > 0 && !localEconomyCanRecover(creep.room))) {
     creep.memory.colony = task.targetRoom;
     creep.memory.home = task.targetRoom;
     creep.memory.role = 'colonyHarvester';
     delete creep.memory.sourceId; delete creep.memory.sourceSlot;
+    delete creep.memory.pioneerSalvage;
     travel.record(creep, 'ADOPTED_LOCAL_ECONOMY');
     return;
   }
-  if (!creep.store[RESOURCE_ENERGY]) { creep.memory.working = false; work.collect(creep); return; }
+  if (development) { develop(creep); return; }
+  if (!energy) { creep.memory.working = false; work.collect(creep); return; }
   if (work.urgentUpgrade(creep)) return;
   if (!creep.memory.working && creep.store.getFreeCapacity(RESOURCE_ENERGY) > 0) { work.collect(creep); return; }
   creep.memory.working = true;
@@ -40,6 +46,37 @@ exports.run = function (creep, task) {
   if (site && control.flag('autoBuildSpawn')) work.action(creep, 'build', site, 3);
   else work.action(creep, 'upgradeController', creep.room.controller, 3);
 };
+
+function develop(creep) {
+  const energy = creep.store[RESOURCE_ENERGY];
+  const memory = creep.memory;
+  if (!energy) memory.working = false;
+  else if (memory.pioneerSalvageTakenAt === Game.time - 1) memory.working = true;
+  if (!memory.working && creep.store.getFreeCapacity(RESOURCE_ENERGY) > 0) {
+    if (salvage.collect(creep)) return;
+    work.collect(creep);
+    return;
+  }
+  if (!energy) return;
+  delete memory.pioneerSalvage;
+  memory.working = true;
+  const sites = creep.room.find(FIND_MY_CONSTRUCTION_SITES).filter(site =>
+    (site.structureType !== STRUCTURE_SPAWN || control.flag('autoBuildSpawn')) &&
+    !(site.progress >= site.progressTotal));
+  const usable = sites.filter(site => creep.pos.getRangeTo(site) <= 3 ||
+    creep.pos.findPathTo(site.pos, { range: 3, maxRooms: 1, ignoreCreeps: true, maxOps: 1500 }).some((pos, i, path) =>
+      i === path.length - 1 && Math.max(Math.abs(pos.x - site.pos.x), Math.abs(pos.y - site.pos.y)) <= 3));
+  usable.sort((a, b) => Number(b.structureType === STRUCTURE_SPAWN) - Number(a.structureType === STRUCTURE_SPAWN) ||
+    creep.pos.getRangeTo(a) - creep.pos.getRangeTo(b));
+  if (usable.length) work.action(creep, 'build', usable[0], 3);
+  else work.action(creep, 'upgradeController', creep.room.controller, 3);
+}
+
+function localEconomyCanRecover(room) {
+  return room.energyAvailable >= 200 || Object.values(Game.creeps).some(c => c.memory.colony === room.name &&
+    c.getActiveBodyparts(WORK) && c.getActiveBodyparts(CARRY) && c.getActiveBodyparts(MOVE) &&
+    (c.spawning || c.ticksToLive > 100));
+}
 
 exports.trySpawn = function (spawn, tasks, bodyCostLimit = config.maxPioneerBodyCost) {
   const check = (task, reason, details = {}) => {
@@ -61,9 +98,7 @@ exports.trySpawn = function (spawn, tasks, bodyCostLimit = config.maxPioneerBody
     if (room && room.find(FIND_HOSTILE_CREEPS).length) { check(task, 'TARGET_HOSTILES'); continue; }
     if ((task.supportErrors || 0) >= config.maxSpawnErrors) { check(task, 'SUPPORT_SPAWN_ERRORS_EXHAUSTED'); continue; }
     const localSpawns = room ? room.find(FIND_MY_SPAWNS) : [];
-    const locals = Object.values(Game.creeps).filter(c => c.memory.colony === task.targetRoom);
-    if (localSpawns.length && (locals.some(c => c.getActiveBodyparts(WORK) && c.getActiveBodyparts(CARRY) &&
-      c.getActiveBodyparts(MOVE) && (c.spawning || c.ticksToLive > 100)) || room.energyAvailable >= 200)) { check(task, 'LOCAL_ECONOMY_CAN_RECOVER'); continue; }
+    if (localSpawns.length && localEconomyCanRecover(room)) { check(task, 'LOCAL_ECONOMY_CAN_RECOVER'); continue; }
     const site = room && room.find(FIND_MY_CONSTRUCTION_SITES).find(s => s.structureType === STRUCTURE_SPAWN);
     const desired = room ? Math.min(config.maxPioneers, room.find(FIND_SOURCES).length + 1, site && site.progressTotal - site.progress > 10000 ? 3 : 1) : 1;
     const support = Object.values(Game.creeps).filter(c => c.memory.role === 'expansionPioneer' && c.memory.expansionTask === task.id);

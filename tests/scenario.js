@@ -20,6 +20,7 @@ module.exports = function () {
     getRangeTo(target) { const p = target.pos || target; return Math.max(Math.abs(this.x - p.x), Math.abs(this.y - p.y)); }
     isNearTo(target) { return this.getRangeTo(target) <= 1; }
     isEqualTo(target) { return this.getRangeTo(target) === 0; }
+    findPathTo(target, options) { return this.getRangeTo(target) <= options.range ? [] : [target]; }
     findClosestByPath(targets) {
       if (typeof targets === 'number') return new Position(Math.max(1, Math.min(48, this.x)), targets === 1 ? 0 : 49, this.roomName);
       return targets.slice().sort((a, b) => this.getRangeTo(a) - this.getRangeTo(b))[0] || null;
