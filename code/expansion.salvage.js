@@ -32,19 +32,19 @@ function reachable(creep, target) {
 
 exports.applies = room => room.name === 'E22S37';
 
-exports.collect = function (creep) {
+exports.collect = function (creep, { withdrawOnly = false } = {}) {
   const memory = creep.memory;
   if (!exports.applies(creep.room) || memory.pioneerSalvageRetryAt > Game.time) return false;
   const free = creep.store.getFreeCapacity(RESOURCE_ENERGY);
   if (free <= 0) return false;
   const claims = new Map();
   for (const peer of Object.values(Game.creeps)) {
-    if (peer.name === creep.name || peer.room?.name !== creep.room.name || peer.memory.role !== 'expansionPioneer') continue;
+    if (peer.name === creep.name || peer.room?.name !== creep.room.name) continue;
     const claim = peer.memory.pioneerSalvage;
     if (claim && claim.until > Game.time) claims.set(claim.id, (claims.get(claim.id) || 0) + claim.amount);
   }
   const previous = memory.pioneerSalvage;
-  const options = scan(creep.room).slice().sort((a, b) =>
+  const options = scan(creep.room).filter(entry => !withdrawOnly || entry.method === 'withdraw').sort((a, b) =>
     Number(b.obj.id === previous?.id) - Number(a.obj.id === previous?.id) ||
     Math.min(free, b.energy) - Math.min(free, a.energy) ||
     creep.pos.getRangeTo(a.obj) - creep.pos.getRangeTo(b.obj) || a.obj.id.localeCompare(b.obj.id));
@@ -52,7 +52,11 @@ exports.collect = function (creep) {
     const reserved = claims.get(obj.id) || 0;
     const remaining = energy - reserved;
     if (remaining <= 0 || reserved > 0 && (method === 'pickup' || remaining < free)) continue;
-    if (previous?.id !== obj.id && !reachable(creep, obj)) continue;
+    if (previous?.id !== obj.id) {
+      if (!reachable(creep, obj)) continue;
+      delete memory.navigation;
+      delete memory._move;
+    }
     const amount = Math.min(free, remaining);
     memory.pioneerSalvage = { id: obj.id, amount, until: Game.time + 5 };
     if (creep.pos.getRangeTo(obj) > 1) {

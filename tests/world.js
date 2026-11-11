@@ -82,7 +82,7 @@ function world(overrides = {}) {
     const c = { name: t.creepName, room, memory: Memory.creeps[t.creepName], owner: { username: 'me' },
       ticksToLive: 550, getActiveBodyparts: () => 1,
       pos: { roomName: room.name, x: 25, y: 25, isNearTo: () => true, getRangeTo: () => 1,
-        findClosestByPath: () => ({ x: 25, y: 49 }), isEqualTo: () => false },
+        findClosestByPath: () => ({ x: 25, y: 49 }), findPathTo: target => [target], isEqualTo: () => false },
       moveTo: () => 0, move: () => 0, claimController: () => 0 };
     c.store = { energy: 50, getFreeCapacity: () => 0, getUsedCapacity: () => c.store.energy };
     c.harvest = () => 0; c.build = () => 0; c.upgradeController = () => 0; c.withdraw = () => 0; c.transfer = () => 0;

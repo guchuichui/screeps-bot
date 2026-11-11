@@ -16,55 +16,78 @@ exports.sources = function (room) {
     return { source, slots };
   });
 };
+const SLOT_LEASE = 3;
+const sameTile = (a, b) => a && b && a.x === b.x && a.y === b.y;
+
+exports.releaseHarvest = function (creep) {
+  // Keep the last station as a preference, but stop reserving it.
+  if (creep.memory.harvestSlotUntil === undefined) return;
+  delete creep.memory.harvestSlotUntil;
+  delete creep.memory.navigation;
+  delete creep.memory._move;
+};
+
+function reachableStation(creep, position) {
+  if (sameTile(creep.pos, position)) return true;
+  const path = creep.pos.findPathTo(position, { range: 0, ignoreCreeps: false, maxRooms: 1, maxOps: 1500 });
+  return sameTile(path[path.length - 1], position);
+}
+
 exports.harvest = function (creep) {
-  const room = creep.room;
-  const peers = Object.values(Game.creeps).filter(c => c.name !== creep.name &&
-    (c.memory.colony === room.name || c.memory.targetRoom === room.name));
-  const data = exports.sources(room).filter(s => s.slots.length);
-  let assigned = data.find(s => s.source.id === creep.memory.sourceId && s.slots.some(p =>
-    creep.memory.sourceSlot && p.x === creep.memory.sourceSlot.x && p.y === creep.memory.sourceSlot.y));
-  if (assigned && peers.some(c => c.name < creep.name && c.memory.sourceId === creep.memory.sourceId &&
-    c.memory.sourceSlot && c.memory.sourceSlot.x === creep.memory.sourceSlot.x && c.memory.sourceSlot.y === creep.memory.sourceSlot.y)) assigned = null;
-  if (!assigned || !creep.memory.sourceSlot) {
-    const choices = [];
-    for (const s of data) {
-      const used = peers.filter(c => c.memory.sourceId === s.source.id);
-      for (const p of s.slots) {
-        if (used.some(c => c.memory.sourceSlot && c.memory.sourceSlot.x === p.x && c.memory.sourceSlot.y === p.y)) continue;
-        const position = new RoomPosition(p.x, p.y, room.name);
-        choices.push({ source: s.source, slot: p, pos: position, load: used.reduce((n, c) => n + c.getActiveBodyparts(WORK), 0) });
-      }
-    }
-    choices.sort((a, b) => a.load - b.load || creep.pos.getRangeTo(a.pos) - creep.pos.getRangeTo(b.pos) || a.source.id.localeCompare(b.source.id));
-    for (const choice of choices) {
-      if (creep.memory.sourceAvoid && creep.memory.sourceAvoid.until > Game.time &&
-          creep.memory.sourceAvoid.x === choice.slot.x && creep.memory.sourceAvoid.y === choice.slot.y) continue;
-      // Resolve reachability before reserving a station; ignore temporary creep occupancy.
-      if (!creep.pos.isEqualTo(choice.pos) && !creep.pos.findClosestByPath([choice.pos], { ignoreCreeps: true, maxRooms: 1 })) continue;
-      creep.memory.sourceId = choice.source.id;
-      creep.memory.sourceSlot = choice.slot;
-      assigned = { source: choice.source, slots: [choice.slot] };
-      break;
+  const { room, memory } = creep;
+  const peers = Object.values(Game.creeps).filter(c => c.name !== creep.name && c.room?.name === room.name);
+  const leases = peers.filter(peer => !peer.memory.working && peer.memory.harvestSlotUntil > Game.time &&
+    peer.memory.sourceSlot?.roomName === room.name);
+  const available = slot => sameTile(creep.pos, slot) ||
+    !peers.some(peer => sameTile(peer.pos, slot)) && !leases.some(peer => sameTile(peer.memory.sourceSlot, slot));
+  const choices = [];
+  for (const { source, slots } of exports.sources(room)) {
+    const load = leases.filter(peer => peer.memory.sourceId === source.id)
+      .reduce((count, peer) => count + peer.getActiveBodyparts(WORK), 0);
+    for (const slot of slots) {
+      if (!available(slot)) continue;
+      if (!sameTile(creep.pos, slot) && memory.harvestRetry?.until > Game.time && sameTile(memory.harvestRetry, slot)) continue;
+      const position = new RoomPosition(slot.x, slot.y, room.name);
+      choices.push({ source, slot, position, preferred: source.id === memory.sourceId && sameTile(slot, memory.sourceSlot),
+        atStation: sameTile(creep.pos, slot), load, distance: creep.pos.getRangeTo(position) });
     }
   }
-  if (!assigned) return travel.record(creep, 'NO_REACHABLE_HARVEST_SLOT');
-  const p = creep.memory.sourceSlot;
-  const pos = new RoomPosition(p.x, p.y, room.name);
-  if (!creep.pos.isEqualTo(pos)) {
-    const result = travel.to(creep, pos, 0);
-    if (['NO_PATH', 'REPATH_EXHAUSTED'].includes(result.code)) {
-      creep.memory.sourceAvoid = { ...p, until: Game.time + 50 };
-      delete creep.memory.sourceId; delete creep.memory.sourceSlot;
+  choices.sort((a, b) => Number(b.atStation) - Number(a.atStation) ||
+    Number(b.preferred) - Number(a.preferred) || a.load - b.load || a.distance - b.distance ||
+    a.source.id.localeCompare(b.source.id));
+  const continuing = choice => choice.preferred && memory.harvestSlotUntil > Game.time;
+  const choice = choices.find(candidate => continuing(candidate) || reachableStation(creep, candidate.position));
+  if (!choice) {
+    exports.releaseHarvest(creep);
+    return travel.record(creep, 'NO_REACHABLE_HARVEST_SLOT');
+  }
+  if (!continuing(choice)) {
+    // A failed navigation from a previous target must not poison a new route.
+    delete memory.navigation;
+    delete memory._move;
+  }
+  memory.sourceId = choice.source.id;
+  memory.sourceSlot = choice.slot;
+  memory.harvestSlotUntil = Game.time + SLOT_LEASE;
+  if (!choice.atStation) {
+    const result = travel.to(creep, choice.position, 0);
+    if (['NO_PATH', 'NO_PROGRESS', 'REPATH_EXHAUSTED'].includes(result.code)) {
+      memory.harvestRetry = { ...choice.slot, until: Game.time + SLOT_LEASE };
+      exports.releaseHarvest(creep);
     }
     return result;
   }
-  return travel.record(creep, assigned.source.energy ? 'HARVEST' : 'SOURCE_REGEN_WAIT', creep.harvest(assigned.source));
+  delete memory.harvestRetry;
+  return travel.record(creep, choice.source.energy ? 'HARVEST' : 'SOURCE_REGEN_WAIT', creep.harvest(choice.source));
 };
 exports.collect = function (creep) {
   const structures = creep.room.find(FIND_STRUCTURES).filter(s =>
     (s.structureType === STRUCTURE_CONTAINER || s.my && s.structureType === STRUCTURE_STORAGE) && s.store && s.store[RESOURCE_ENERGY] > 0);
   const target = creep.pos.findClosestByPath(structures);
-  if (target) return exports.action(creep, 'withdraw', target, 1, RESOURCE_ENERGY);
+  if (target) {
+    exports.releaseHarvest(creep);
+    return exports.action(creep, 'withdraw', target, 1, RESOURCE_ENERGY);
+  }
   return exports.harvest(creep);
 };
 exports.action = function (creep, method, target, range, argument) {

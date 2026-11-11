@@ -1,6 +1,7 @@
 const containerPolicy = require('colony.container-policy');
 const work = require('colony.work');
 const travel = require('expansion.travel');
+const salvage = require('expansion.salvage');
 exports.run = function (creep) {
   const home = creep.memory.colony;
   if (creep.spawning) return;
@@ -9,9 +10,16 @@ exports.run = function (creep) {
   if (!creep.room.controller || !creep.room.controller.my) { travel.record(creep, 'OWNERSHIP_WAIT'); return; }
   if (creep.store[RESOURCE_ENERGY] === 0) creep.memory.working = false;
   if (creep.store.getFreeCapacity(RESOURCE_ENERGY) === 0) creep.memory.working = true;
-  if (work.urgentUpgrade(creep)) return;
-  // Save stored energy for economic recovery; harvesters always collect at their stations.
+  if (creep.memory.working) work.releaseHarvest(creep);
+  if (work.urgentUpgrade(creep)) {
+    delete creep.memory.harvestSlotUntil;
+    return;
+  }
   if (!creep.memory.working) {
+    if (salvage.collect(creep, { withdrawOnly: true })) {
+      delete creep.memory.harvestSlotUntil;
+      return;
+    }
     if (creep.memory.role === 'colonyHarvester') work.harvest(creep);
     else work.collect(creep);
     return;
