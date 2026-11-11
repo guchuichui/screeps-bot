@@ -9,7 +9,11 @@ module.exports.body = function (energy) {
   }
   return body.includes(ATTACK) || body.includes(RANGED_ATTACK) ? body : [];
 };
+module.exports.needsDefense = function (hostiles) {
+  return hostiles.some(creep => [ATTACK, RANGED_ATTACK, WORK, HEAL, CLAIM].some(part => creep.getActiveBodyparts(part) > 0));
+};
 module.exports.run = function (creep) {
+  if (creep.spawning) return;
   const enemies = creep.room.find(FIND_HOSTILE_CREEPS);
   const target = creep.pos.findClosestByPath(enemies);
   if (!target) {

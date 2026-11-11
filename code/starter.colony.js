@@ -16,8 +16,9 @@ module.exports.run = function () {
     const roomName = creep.memory.home;
     if (!counts[roomName]) counts[roomName] = emptyCounts();
     const role = normalizeRole(creep);
-    // Broken legacy creeps (for example a single CARRY part) must not block replacements.
-    if (isUseful(creep, role)) counts[roomName][role]++;
+    // Count every living or spawning Defender against the emergency cap.
+    // Broken legacy workers must not block economic replacements.
+    if (role === 'defender' || isUsefulWorker(creep)) counts[roomName][role]++;
     const mod = roleModules[role];
     if (mod) {
       try { mod.run(creep); }
@@ -54,7 +55,7 @@ module.exports.run = function () {
     const targets = {
       // Unified workers harvest, fuel the room, build, repair and upgrade.
       worker: Math.min(10, 6 + (siteCount >= 3 ? 2 : 0) + Math.max(0, room.controller.level - 3)),
-      defender: hostiles.length ? 2 : (room.controller.level >= 3 ? 1 : 0),
+      defender: defender.needsDefense(hostiles) ? 1 : 0,
     };
     const total = c.worker + c.defender;
     const cap = Math.min(18, 5 + room.controller.level * 2);
@@ -62,7 +63,7 @@ module.exports.run = function () {
     if (runExpansion('trySupport', spawn, c, targets)) continue;
     if (total >= cap) continue;
 
-    const priority = hostiles.length ? ['defender', 'worker'] : ['worker', 'defender'];
+    const priority = targets.defender ? ['defender', 'worker'] : ['worker'];
     const role = priority.find(r => c[r] < targets[r]);
     if (!role) { runExpansion('trySpawn', spawn, c, targets); continue; }
     // Wait for a useful worker body instead of spending energy on weak partial bodies.
@@ -100,8 +101,7 @@ function normalizeRole(creep) {
   creep.memory.role = role;
   return role;
 }
-function isUseful(creep, role) {
-  if (role === 'defender') return creep.getActiveBodyparts(ATTACK) + creep.getActiveBodyparts(RANGED_ATTACK) > 0;
+function isUsefulWorker(creep) {
   return creep.getActiveBodyparts(WORK) > 0 && creep.getActiveBodyparts(CARRY) > 0 && creep.getActiveBodyparts(MOVE) > 0;
 }
 function workerBody(energy) {
@@ -125,15 +125,13 @@ function workerBody(energy) {
 function runDefense(room) {
   const hostiles = room.find(FIND_HOSTILE_CREEPS);
   const towers = room.find(FIND_MY_STRUCTURES, { filter: s => s.structureType === STRUCTURE_TOWER });
-  const critical = room.find(FIND_MY_STRUCTURES, { filter: s => [STRUCTURE_SPAWN, STRUCTURE_TOWER, STRUCTURE_STORAGE, STRUCTURE_TERMINAL].includes(s.structureType) });
-  if (hostiles.length && room.controller.safeModeAvailable && !room.controller.safeMode && !room.controller.safeModeCooldown) {
-    const danger = hostiles.some(h => critical.some(s => h.pos.getRangeTo(s) <= 4) || h.getActiveBodyparts(ATTACK) + h.getActiveBodyparts(RANGED_ATTACK) + h.getActiveBodyparts(WORK) > 0);
-    if (danger) room.controller.activateSafeMode();
-  }
   for (const tower of towers) {
-    if (tower.store.getUsedCapacity(RESOURCE_ENERGY) < 10) continue;
+    if (!(tower.store?.getUsedCapacity(RESOURCE_ENERGY) >= 10)) continue;
     const target = hostiles.length ? tower.pos.findClosestByRange(hostiles) : null;
     if (target) { tower.attack(target); continue; }
+    const wounded = room.find(FIND_MY_CREEPS, { filter: creep => creep.hits < creep.hitsMax });
+    const patient = wounded.length ? tower.pos.findClosestByRange(wounded) : null;
+    if (patient) { tower.heal(patient); continue; }
     // Roads are neutral structures, so include all room roads explicitly;
     // other repair targets must belong to us. Towers attack first above.
     const damaged = room.find(FIND_STRUCTURES, {

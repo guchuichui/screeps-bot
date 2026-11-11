@@ -78,7 +78,7 @@ exports.trySpawn = function (spawn) {
   for (const intent of colony.spawnIntents) if (!Game.creeps[intent.name]) count[intent.role]++;
   const demand = population(spawn.room);
   const priority = count.colonyHarvester === 0 ? roles :
-    spawn.room.find(FIND_HOSTILE_CREEPS).length ? ['colonyDefender', ...roles.slice(0, 3)] : roles;
+    demand.colonyDefender ? ['colonyDefender', ...roles.slice(0, 3)] : roles;
   const role = priority.find(r => count[r] < demand[r]);
   if (!role) return true;
   let body;
@@ -114,8 +114,11 @@ function members(roomName) {
 function counts(creeps, ttl) {
   const count = Object.fromEntries(roles.map(r => [r, 0]));
   for (const c of creeps) {
-    const useful = c.memory.role === 'colonyDefender' ? c.getActiveBodyparts(ATTACK) + c.getActiveBodyparts(RANGED_ATTACK) > 0 :
-      c.getActiveBodyparts(WORK) && c.getActiveBodyparts(CARRY) && c.getActiveBodyparts(MOVE);
+    if (c.memory.role === 'colonyDefender') {
+      count.colonyDefender++;
+      continue;
+    }
+    const useful = c.getActiveBodyparts(WORK) && c.getActiveBodyparts(CARRY) && c.getActiveBodyparts(MOVE);
     if (useful && (c.spawning || c.ticksToLive > ttl)) count[c.memory.role]++;
   }
   return count;
@@ -126,6 +129,6 @@ function population(room) {
     colonyHarvester: Math.max(1, Math.min(4, sources.reduce((n, s) => n + Math.min(2, s.slots.length), 0))),
     colonyBuilder: room.find(FIND_MY_CONSTRUCTION_SITES).length ? 1 : 0,
     colonyUpgrader: 1,
-    colonyDefender: room.find(FIND_HOSTILE_CREEPS).length ? 1 : 0
+    colonyDefender: defender.needsDefense(room.find(FIND_HOSTILE_CREEPS)) ? 1 : 0
   };
 }

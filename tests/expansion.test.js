@@ -407,4 +407,5 @@ test('scenario: claim to stable local economy survives global reset with bounded
 passed += require('./telemetry.test')();
 passed += require('./pioneer.salvage.test')();
 passed += require('./link.transition.test')();
+passed += require('./defense.basic.test')();
 console.log(`${passed} tests passed`);

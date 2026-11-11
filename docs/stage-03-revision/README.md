@@ -44,3 +44,11 @@ RCL6 终态占满 3 个 Link 名额，Controller 保持人工运输。今后经�
 旧 Link 退役并补齐道路后，零 Link 和三新 Link 的四项路径模拟同为 14、14、30、10，顺序同上表。三新 Link 增加预计建造能量 15,000，RCL6 全部施工理论预算 69,900，不含维修与后续 RCL7 Link。详见 [links.json](links.json)。
 
     python tools/screeps_stage03_link_plan.py docs/stage-03/coordinates-and-costs.json --output docs/stage-03-revision/links.json
+
+## Pioneer 与基础防御
+
+E22S37 Pioneer 在 (13,23) 的两格范围内重查掉落能量、废墟和墓碑。掉落使用 pickup，废墟和墓碑使用限量 withdraw。同行者按待取量保留资源，路径须到达交互范围。目标消失、没有能量或不可达时回到容器/Storage/Source 的既有取能流程；空目标进入短冷却。成功带回部分能量也可直接建造，找不到可建工地时升级。原 E22S36 派遣、预算、能量和人口保护保留；有 Spawn 但本地生产失效时，携能 Pioneer 仍能转本地采集角色进行恢复。现有健康人口或可用生产能量足以恢复时，不因遗留资源额外派遣。
+
+母基地和自治房均取消常态 Defender 名额。有活跃攻击、远程、WORK、治疗或 CLAIM 部件的敌方 Creep 时才请求，房间内已有 Defender 或正在生产时不重复请求。Tower 有能量时先攻击最近可攻击敌方，随后治疗受伤己方，再走现有维修规则。Safe Mode 由操作者管理。
+
+人工部署候选版本后，先核对 stage03-support-layout-defense-v1 已运行，验证 E22S37 的 SALVAGE_WITHDRAW/SALVAGE_PICKUP 与工地进度，并确认 E22S36 未自动生成工地。开工和退役均另行审批。分别比对施工前后 Source 采量、Spawn 实际补能、通道阻塞和 CPU，当前报告不含改造后线上实测。

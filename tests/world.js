@@ -8,6 +8,7 @@ function world(overrides = {}) {
     OK: 0, ERR_NOT_OWNER: -1, ERR_NO_PATH: -2, ERR_NAME_EXISTS: -3, ERR_BUSY: -4,
     ERR_NOT_ENOUGH_ENERGY: -6, ERR_INVALID_TARGET: -7, ERR_FULL: -8, ERR_NOT_IN_RANGE: -9,
     ERR_TIRED: -11, ERR_NO_BODYPART: -12, ERR_GCL_NOT_ENOUGH: -15,
+    TOUGH: 'tough', HEAL: 'heal', FIND_MY_CREEPS: 102,
     CLAIM: 'claim', MOVE: 'move', WORK: 'work', CARRY: 'carry', ATTACK: 'attack', RANGED_ATTACK: 'ranged_attack',
     FIND_HOSTILE_CREEPS: 103, FIND_MY_CONSTRUCTION_SITES: 114, FIND_MY_STRUCTURES: 108,
     FIND_MY_SPAWNS: 112, FIND_SOURCES: 105, FIND_SOURCES_ACTIVE: 104, FIND_MINERALS: 116,
@@ -19,7 +20,7 @@ function world(overrides = {}) {
     FIND_DROPPED_RESOURCES: 106, FIND_TOMBSTONES: 118, FIND_RUINS: 123,
     FIND_STRUCTURES: 107, STRUCTURE_SPAWN: 'spawn', STRUCTURE_TOWER: 'tower', STRUCTURE_STORAGE: 'storage',
     STRUCTURE_TERMINAL: 'terminal', STRUCTURE_ROAD: 'road', STRUCTURE_WALL: 'wall', STRUCTURE_RAMPART: 'rampart',
-    BODYPART_COST: { claim: 600, move: 50, work: 100, carry: 50 }, CREEP_CLAIM_LIFE_TIME: 600
+    BODYPART_COST: { claim: 600, move: 50, work: 100, carry: 50, tough: 10, attack: 80, ranged_attack: 150, heal: 250 }, CREEP_CLAIM_LIFE_TIME: 600
   };
   // Unit fixtures opt into each stage independently; production defaults enable all stages.
   const config = Object.assign({}, require('../code/expansion.config'), { autoBuildSpawn: false, autoBootstrap: false }, overrides);
@@ -40,7 +41,7 @@ function world(overrides = {}) {
     getActiveBodyparts: part => ['work', 'carry', 'move'].includes(part) ? 1 : 0
   };
   const modules = { 'expansion.config': config, 'starter.worker': { run() {} },
-    'starter.defender': { run() {}, body: () => [] }, 'starter.planner': { run() {} } };
+    'starter.defender': { run() {}, body: () => [], needsDefense: hostiles => hostiles.length > 0 }, 'starter.planner': { run() {} } };
   class RoomPosition {
     constructor(x, y, roomName) { Object.assign(this, { x, y, roomName }); }
     getRangeTo(object) { const p = object.pos || object; return Math.max(Math.abs(this.x - p.x), Math.abs(this.y - p.y)); }
