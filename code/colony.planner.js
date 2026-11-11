@@ -1,3 +1,4 @@
+const containerPolicy = require('colony.container-policy');
 const config = require('expansion.config');
 const control = require('expansion.control');
 const work = require('colony.work');
@@ -7,7 +8,7 @@ exports.run = function (room, colony) {
   if (control.stopped() || !control.flag('autoBootstrap') || !control.hasCpu() || Game.time < (colony.nextPlanAt || 0)) return;
   if (!room.controller.my || room.find(FIND_HOSTILE_CREEPS).length) return;
   colony.nextPlanAt = Game.time + config.localPlanningInterval;
-  if (room.find(FIND_MY_CONSTRUCTION_SITES).length >= 2 || Object.keys(Game.constructionSites).length >= 90) return;
+  if (containerPolicy.buildSites(room).length >= 2 || Object.keys(Game.constructionSites).length >= 90) return;
   if ((colony.planErrors || 0) >= config.maxSiteAttempts) { colony.planResult = 'LOCAL_PLAN_ERRORS_EXHAUSTED'; return; }
   const spawn = room.find(FIND_MY_SPAWNS)[0]; if (!spawn) return;
   const structures = room.find(FIND_STRUCTURES), sites = room.find(FIND_CONSTRUCTION_SITES);
@@ -35,7 +36,8 @@ exports.run = function (room, colony) {
     }
     colony.planResult = 'NO_LEGAL_CORE_POSITION'; return;
   }
-  if (structures.filter(s => s.structureType === STRUCTURE_CONTAINER).length + sites.filter(s => s.structureType === STRUCTURE_CONTAINER).length < 5) {
+  if (containerPolicy.allows(room, STRUCTURE_CONTAINER) &&
+      structures.concat(sites).filter(s => s.structureType === STRUCTURE_CONTAINER).length < 5) {
     for (const { source, slots } of work.sources(room)) {
       if (structures.concat(sites).some(s => s.structureType === STRUCTURE_CONTAINER && s.pos.getRangeTo(source) <= 1)) continue;
       const slot = slots.find(p => !structures.concat(sites).some(s => s.pos.x === p.x && s.pos.y === p.y));

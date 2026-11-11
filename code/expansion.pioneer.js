@@ -1,3 +1,4 @@
+const containerPolicy = require('colony.container-policy');
 const config = require('expansion.config');
 const control = require('expansion.control');
 const travel = require('expansion.travel');
@@ -60,7 +61,7 @@ function develop(creep) {
   if (!energy) return;
   delete memory.pioneerSalvage;
   memory.working = true;
-  const sites = creep.room.find(FIND_MY_CONSTRUCTION_SITES).filter(site =>
+  const sites = containerPolicy.buildSites(creep.room).filter(site =>
     (site.structureType !== STRUCTURE_SPAWN || control.flag('autoBuildSpawn')) &&
     !(site.progress >= site.progressTotal));
   const usable = sites.filter(site => creep.pos.getRangeTo(site) <= 3 ||

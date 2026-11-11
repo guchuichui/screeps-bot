@@ -1,3 +1,4 @@
+const containerPolicy = require('colony.container-policy');
 // All-purpose colony worker. Old harvester/builder/upgrader creeps are
 // automatically migrated to this role by starter.colony.
 module.exports.run = function (creep) {
@@ -38,7 +39,7 @@ module.exports.run = function (creep) {
     releaseTowerLock(creep, tower, true);
   }
 
-  const sites = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
+  const sites = containerPolicy.buildSites(creep.room);
   const site = closestByPriority(creep, sites, sitePriority);
   if (site) {
     const result = creep.build(site);
@@ -51,6 +52,7 @@ module.exports.run = function (creep) {
   const damaged = creep.room.find(FIND_STRUCTURES, {
     // Roads are neutral structures and are omitted by FIND_MY_STRUCTURES.
     filter: s => (s.structureType === STRUCTURE_ROAD || s.my) &&
+      containerPolicy.allows(creep.room, s.structureType) &&
       s.hits < s.hitsMax * repairThreshold(s) &&
       s.structureType !== STRUCTURE_WALL && s.structureType !== STRUCTURE_RAMPART,
   });

@@ -1,3 +1,4 @@
+const containerPolicy = require('colony.container-policy');
 const worker = require('starter.worker');
 const defender = require('starter.defender');
 const planner = require('starter.planner');
@@ -51,7 +52,7 @@ module.exports.run = function () {
     if (runColony('manages', room.name)) { runColony('trySpawn', spawn); continue; }
     const c = counts[room.name] || (counts[room.name] = emptyCounts());
     const hostiles = room.find(FIND_HOSTILE_CREEPS);
-    const siteCount = room.find(FIND_MY_CONSTRUCTION_SITES).length;
+    const siteCount = containerPolicy.buildSites(room).length;
     const targets = {
       // Unified workers harvest, fuel the room, build, repair and upgrade.
       worker: Math.min(10, 6 + (siteCount >= 3 ? 2 : 0) + Math.max(0, room.controller.level - 3)),
@@ -136,6 +137,7 @@ function runDefense(room) {
     // other repair targets must belong to us. Towers attack first above.
     const damaged = room.find(FIND_STRUCTURES, {
       filter: s => (s.structureType === STRUCTURE_ROAD || s.my) &&
+        containerPolicy.allows(room, s.structureType) &&
         s.structureType !== STRUCTURE_WALL && s.structureType !== STRUCTURE_RAMPART &&
         s.hits < s.hitsMax * (s.structureType === STRUCTURE_ROAD ? 0.8 : 0.7),
     }).sort((a, b) => repairPriority(a) - repairPriority(b) ||
