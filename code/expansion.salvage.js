@@ -32,7 +32,10 @@ function reachable(creep, target) {
 
 exports.applies = room => room.name === 'E22S37';
 
-exports.collect = function (creep, { withdrawOnly = false } = {}) {
+exports.hasStoredEnergy = room => exports.applies(room) &&
+  scan(room).some(entry => entry.method === 'withdraw' && entry.obj.pos.x === AREA.x && entry.obj.pos.y === AREA.y);
+
+exports.collect = function (creep, { withdrawOnly = false, exactTile = false } = {}) {
   const memory = creep.memory;
   if (!exports.applies(creep.room) || memory.pioneerSalvageRetryAt > Game.time) return false;
   const free = creep.store.getFreeCapacity(RESOURCE_ENERGY);
@@ -44,7 +47,8 @@ exports.collect = function (creep, { withdrawOnly = false } = {}) {
     if (claim && claim.until > Game.time) claims.set(claim.id, (claims.get(claim.id) || 0) + claim.amount);
   }
   const previous = memory.pioneerSalvage;
-  const options = scan(creep.room).filter(entry => !withdrawOnly || entry.method === 'withdraw').sort((a, b) =>
+  const options = scan(creep.room).filter(entry => (!withdrawOnly || entry.method === 'withdraw') &&
+    (!exactTile || entry.obj.pos.x === AREA.x && entry.obj.pos.y === AREA.y)).sort((a, b) =>
     Number(b.obj.id === previous?.id) - Number(a.obj.id === previous?.id) ||
     Math.min(free, b.energy) - Math.min(free, a.energy) ||
     creep.pos.getRangeTo(a.obj) - creep.pos.getRangeTo(b.obj) || a.obj.id.localeCompare(b.obj.id));

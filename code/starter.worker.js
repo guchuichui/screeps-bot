@@ -1,4 +1,6 @@
 const containerPolicy = require('colony.container-policy');
+const config = require('expansion.config');
+const plan = require('stage04.plan');
 // All-purpose colony worker. Old harvester/builder/upgrader creeps are
 // automatically migrated to this role by starter.colony.
 module.exports.run = function (creep) {
@@ -41,7 +43,12 @@ module.exports.run = function (creep) {
     releaseTowerLock(creep, tower, true);
   }
 
-  const sites = containerPolicy.buildSites(creep.room);
+  const sites = containerPolicy.buildSites(creep.room).filter(site => {
+    if (!config.homeConstructionHold || creep.room.name !== config.homeRoom || Game.shard?.name !== 'shard3') return true;
+    const tiles = site.structureType === STRUCTURE_EXTENSION ? [...plan.extensions, ...(Memory.expansion?.stage04?.home?.infill || [])] :
+      site.structureType === STRUCTURE_ROAD ? plan.roads : site.structureType === STRUCTURE_LINK ? plan.links : [];
+    return !tiles.some(([x, y]) => site.pos.x === x && site.pos.y === y);
+  });
   const site = closestByPriority(creep, sites, sitePriority);
   if (site) {
     const result = creep.build(site);

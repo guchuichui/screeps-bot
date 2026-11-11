@@ -1,6 +1,7 @@
 const plan = require('stage04.plan');
 const layout = require('stage04.layout');
 const control = require('expansion.control');
+const config = require('expansion.config');
 
 let cacheTick, cached;
 function objects(room) {
@@ -33,7 +34,7 @@ function use(creep, method, target) {
 }
 
 exports.work = function (creep) {
-  if (creep.room.name !== 'E22S36' || Game.shard?.name !== 'shard3' || control.stopped() ||
+  if (config.homeConstructionHold || creep.room.name !== 'E22S36' || Game.shard?.name !== 'shard3' || control.stopped() ||
       Memory.expansion?.stage04Paused === true) return false;
   const state = Memory.expansion?.stage04?.home;
   if (state?.phase !== 'OPERATING' || state.reason !== 'LINK_NETWORK_READY') return false;

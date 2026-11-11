@@ -185,8 +185,13 @@ exports.run = function () {
   const room = Game.rooms[config.homeRoom];
   if (room) {
     try {
-      if (Game.time % 5 === 0) home(room, state.home, workers(room));
-      if (state.home.phase === 'OPERATING' && state.home.reason === 'LINK_NETWORK_READY' && quiet(room)) network.run(room, state.home);
+      if (Game.time % 5 === 0) {
+        if (config.homeConstructionHold) {
+          reconcile(state.home, layout.snapshot(room));
+          state.home.reason = 'HOME_LAYOUT_CONFIRMATION_WAIT';
+        } else home(room, state.home, workers(room));
+      }
+      if (!config.homeConstructionHold && state.home.phase === 'OPERATING' && state.home.reason === 'LINK_NETWORK_READY' && quiet(room)) network.run(room, state.home);
     } catch (error) { state.home.lastError = { tick: Game.time, reason: String(error.stack || error) }; }
   }
   if (Game.time % 5 !== 0) return;

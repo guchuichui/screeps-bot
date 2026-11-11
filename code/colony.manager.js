@@ -4,7 +4,9 @@ const control = require('expansion.control');
 const worker = require('colony.worker');
 const defender = require('starter.defender');
 const planner = require('colony.planner');
-const roles = ['colonyHarvester', 'colonyBuilder', 'colonyUpgrader', 'colonyDefender'];
+const salvage = require('expansion.salvage');
+const economicRoles = ['colonyHarvester', 'colonyBuilder', 'colonyUpgrader', 'colonyHauler'];
+const roles = [...economicRoles, 'colonyDefender'];
 
 exports.register = function (room, task) {
   if (!Memory.colonies) Memory.colonies = {};
@@ -79,12 +81,17 @@ exports.trySpawn = function (spawn) {
   for (const intent of colony.spawnIntents) if (!Game.creeps[intent.name]) count[intent.role]++;
   const demand = population(spawn.room);
   const priority = count.colonyHarvester === 0 ? roles :
-    demand.colonyDefender ? ['colonyDefender', ...roles.slice(0, 3)] : roles;
-  const role = priority.find(r => count[r] < demand[r]);
+    demand.colonyDefender ? ['colonyDefender', ...economicRoles] : economicRoles;
+  const economicTargetReached = config.e22s37Growth && spawn.room.name === 'E22S37' &&
+    economicRoles.reduce((n, key) => n + count[key], 0) >= 9;
+  const role = priority.find(r => count[r] < demand[r] && (r === 'colonyDefender' || !economicTargetReached));
   if (!role) return true;
   let body;
   if (role === 'colonyDefender') body = defender.body(spawn.room.energyAvailable);
-  else {
+  else if (role === 'colonyHauler') {
+    const units = Math.floor(Math.min(config.maxLocalBodyCost, spawn.room.energyAvailable) / 100);
+    body = Array.from({ length: units }, () => [CARRY, MOVE]).flat();
+  } else {
     const budget = count.colonyHarvester === 0 ? 200 : Math.min(config.maxLocalBodyCost, spawn.room.energyAvailable);
     const units = Math.min(5, Math.floor(budget / 200));
     body = [];
@@ -119,17 +126,24 @@ function counts(creeps, ttl) {
       count.colonyDefender++;
       continue;
     }
-    const useful = c.getActiveBodyparts(WORK) && c.getActiveBodyparts(CARRY) && c.getActiveBodyparts(MOVE);
+    const useful = (c.memory.role === 'colonyHauler' || c.getActiveBodyparts(WORK)) &&
+      c.getActiveBodyparts(CARRY) && c.getActiveBodyparts(MOVE);
     if (useful && (c.spawning || c.ticksToLive > ttl)) count[c.memory.role]++;
   }
   return count;
 }
 function population(room) {
   const sources = require('colony.work').sources(room);
+  const harvesters = Math.max(1, Math.min(4, sources.reduce((n, s) => n + Math.min(2, s.slots.length), 0)));
+  const sites = containerPolicy.buildSites(room);
+  const grows = config.e22s37Growth && room.name === 'E22S37';
+  const haulers = grows && room.controller.level >= 4 && room.storage?.my && salvage.hasStoredEnergy(room) ? 2 : 0;
+  const builders = sites.some(site => site.structureType === STRUCTURE_STORAGE) && grows ? 2 : sites.length ? 1 : 0;
   return {
-    colonyHarvester: Math.max(1, Math.min(4, sources.reduce((n, s) => n + Math.min(2, s.slots.length), 0))),
-    colonyBuilder: containerPolicy.buildSites(room).length ? 1 : 0,
-    colonyUpgrader: 1,
+    colonyHarvester: harvesters,
+    colonyBuilder: builders,
+    colonyUpgrader: grows ? 9 - harvesters - builders - haulers : 1,
+    colonyHauler: haulers,
     colonyDefender: defender.needsDefense(room.find(FIND_HOSTILE_CREEPS)) ? 1 : 0
   };
 }

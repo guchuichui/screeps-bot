@@ -23,3 +23,9 @@ E22S38's narrowly scoped recovery verifies the historical `ERR_RCL_NOT_ENOUGH`, 
 `Memory.expansion.stage04` persists the phases, safety reasons, bounded intent history, confirmed results and Link outcomes. Runtime telemetry also reports the GCL. A successful intent alone does not prove completion. Existing `Memory.expansion.emergencyStop` stops Stage 04 and expansion. `Memory.expansion.stage04Paused = true` stops Stage 04 while allowing the existing economy and expansion managers to continue. Restoring the prior code stops new Stage 04 intents. Completed construction and demolition are persistent game changes.
 
 Run `node tests/check-syntax.js`, `node tests/expansion.test.js` and `python -m unittest discover -s tests -p 'test_*.py'` from the repository root.
+
+## E22S36 plan B review and E22S37 growth
+
+`homeConstructionHold` suspends the E22S36 executor and the home workers' Stage 04 site building while the plan B construction map is pending confirmation. Existing sites and their progress are retained. The E22S37 and E22S38 executors continue separately.
+
+E22S37 targets nine local economic creeps. The majority of available positions go to upgraders before RCL4, with harvesting, Spawn refill and a site builder kept available. At RCL4, Storage gets first construction priority and two builders are requested during construction. Once owned Storage is online and stored energy remains at (13,23), two population slots go to CARRY/MOVE haulers. Haulers share the existing salvage reservations and deliver to Storage. Tower and Extension planning resume after Storage. The RCL4 and hauling milestones require live confirmation.

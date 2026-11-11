@@ -431,4 +431,5 @@ passed += require('./link.transition.test')();
 passed += require('./defense.basic.test')();
 passed += require('./container.retirement.test')();
 passed += require('./stage04.autonomy.test')();
+passed += require('./colony.growth.test')();
 console.log(`${passed} tests passed`);

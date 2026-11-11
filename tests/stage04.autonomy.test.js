@@ -4,8 +4,8 @@ const plan = require('../code/stage04.plan');
 const fixture = require('../docs/stage-03/snapshot.json');
 
 module.exports = function () {
-  function setup() {
-    const w = world({ autoBuildSpawn: true, autoBootstrap: true });
+  function setup(homeConstructionHold = false) {
+    const w = world({ autoBuildSpawn: true, autoBootstrap: true, homeConstructionHold });
     w.Game.shard = { name: 'shard3' };
     w.setGlobal('STRUCTURE_LINK', 'link');
     w.setGlobal('FIND_HOSTILE_POWER_CREEPS', 120);
@@ -183,5 +183,11 @@ module.exports = function () {
     assert.deepEqual(amounts, [300, 300]);
   }
 
-  return 5;
+  {
+    const f = setup(true);
+    const state = f.tick(100);
+    assert.equal(state.home.reason, 'HOME_LAYOUT_CONFIRMATION_WAIT');
+    assert.equal(f.log.length, 0);
+  }
+  return 6;
 };
