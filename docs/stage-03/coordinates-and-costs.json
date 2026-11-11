@@ -1,0 +1,8783 @@
+{
+  "snapshot": {
+    "room": "E22S36",
+    "shard": "shard3",
+    "time": "2026-11-11T13:00:01.877834+08:00",
+    "tick": 84200411,
+    "observationAgeTicks": 12,
+    "activeCode": {
+      "branch": "agent-test",
+      "sha256": "03cfce86dd2bc8235885aed8ad9bc2bbba32ac187c6602998edd5a37a18f2161",
+      "matchesExpectedBranch": true,
+      "buildId": "telemetry-hourly-v2"
+    },
+    "layoutKey": "70f4d3f4",
+    "terrainSha256": "cbc720cf880246ff858f34598e36b330fd08d38ed0d874522075b344c231883c",
+    "layoutSha256": "e42245b31343f6a2fdc8bbd7d7b7f331a38d98fe9d354d0ff14198acd4ef99a8",
+    "terrain": "1111111111111111111111111111000000000111111111111111111111111111111111111111110000000000111111111111111111111111111111111111111110000222222111111111111111111111111111111111111111110022222222111111111111111111111111111111111111111110222222200111111111111111111111111111111111111111112222000000111111111111111111111111111111111111111122200000001111111111111111111111111111111111111110000000000001111111111111111111111111111111111111000000001000111111111111111111111111111111111111100000000111201111111111111111111110000000000000000000000001111111111111111111111111000000000000000222200000211111111111111111111111100000001111111022222000000211111111111111111111111000000011111111222201100000021111111111111111111111002222111111111220111100000011111111111111111111110000221111111111221111000000111111111111111111111100000221111111112221110000001111111111111111111111000000221111111222200000000011111111111111111111110220000000000000222000000000111111111111111111111102200110000000022222000000001111111111111111111110020011110000002211111000000011111111111111111111100000111110000222111111000000111111111111111111111000001111110002222111110000001111111111111111111110000011111110022222111100000001111111111111111111100002111111110222000111000000011111111111111111110000221111111112220000122220000111111111111111112200002211111111112220000222200011111111111111111222000002111111111112200002222001111111111111111111220000001111111111112200011200111111111111111111112200000011111111111122001111001111111111111111111112200001111111111111200111110011111111111111111111122200111111111111110000111000111111111111111111111122011111111111111100000222001111111111111111111111200111111111111110000022222011111111111111111111110000001111111111000000222222011111111111111111111100000001111111122000002222222111111111111111111111000200011111112220110022222221111111111111111111110022200111111222201100022222111111111111111111111100222001111122220000000022221111111111111111111111022200021112222200000000222111111111111111111111112220002220000222200000002221111111111111111111111122200002200000222220000022111111111111111111111111222000002000000222220000211111111111111111111111110222000000000111222000001111111111111111111111111000220111000011112220000111111111111111111111111100000001111000111122000011111111111111111111111112200000011110001111220000111111111111111111111111222200000011000001100000000111111111111111111111100020000000000000000000000000000000211111111111111000000000000000000000000000000000000111111111",
+    "supplement": {
+      "time": "2026-11-11T13:47:41.8013408+08:00",
+      "endpoint": "https://screeps.com/api/game/room-objects?room=E22S36&shard=shard3",
+      "crossCheckedGeometry": true
+    },
+    "minerals": [
+      {
+        "x": 41,
+        "y": 3,
+        "mineralType": "K"
+      }
+    ],
+    "controller": {
+      "id": "5bbcae399099fc012e63899c",
+      "x": 17,
+      "y": 37,
+      "my": true,
+      "level": 6,
+      "progress": 904173,
+      "progressTotal": 3645000,
+      "ticksToDowngrade": 119402
+    },
+    "structures": [
+      {
+        "id": "6ab54b85746ce639341c6db6",
+        "type": "road",
+        "x": 29,
+        "y": 23,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 21220,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab5517c69c57e108d1a6001",
+        "type": "road",
+        "x": 37,
+        "y": 27,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4700,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab56176d6fb1557ace85357",
+        "type": "road",
+        "x": 37,
+        "y": 22,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4100,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5664e9e343d273adc64f3",
+        "type": "road",
+        "x": 37,
+        "y": 21,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab56cf8450da3530e7ea331",
+        "type": "road",
+        "x": 36,
+        "y": 20,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5704b690fe2dbc8559c94",
+        "type": "road",
+        "x": 34,
+        "y": 23,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 5000,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab573b14bc33979a0142596",
+        "type": "road",
+        "x": 34,
+        "y": 22,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4500,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab57756c1eb1110654c47ec",
+        "type": "road",
+        "x": 34,
+        "y": 21,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4600,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab58cc3422010016881cda5",
+        "type": "road",
+        "x": 33,
+        "y": 25,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20300,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab59017d86b8f7b3ad50ab4",
+        "type": "road",
+        "x": 34,
+        "y": 20,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4200,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab594448502164150b72d4f",
+        "type": "road",
+        "x": 30,
+        "y": 24,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab59db6e404d0b24b95c88b",
+        "type": "road",
+        "x": 30,
+        "y": 28,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4200,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5a1f728d7bff91a099c0f",
+        "type": "road",
+        "x": 30,
+        "y": 29,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4000,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5a6173081816813d7c81f",
+        "type": "road",
+        "x": 29,
+        "y": 30,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5aaf26ed74101ee731f0c",
+        "type": "road",
+        "x": 28,
+        "y": 31,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4200,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5af88e404d07b0595ccf3",
+        "type": "road",
+        "x": 28,
+        "y": 32,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5b49e16f5fb5a8793b095",
+        "type": "road",
+        "x": 27,
+        "y": 33,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4700,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5b9dcd6fb15ae40e8695e",
+        "type": "road",
+        "x": 26,
+        "y": 34,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4460,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5d4d97f9c2d47e63f0d5d",
+        "type": "road",
+        "x": 25,
+        "y": 35,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 21520,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab5f1f613e32b24739c3fe1",
+        "type": "road",
+        "x": 24,
+        "y": 36,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20900,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab60edf930cc9237f91d124",
+        "type": "road",
+        "x": 23,
+        "y": 37,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20200,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab62fe63d150a70a57a7a64",
+        "type": "road",
+        "x": 22,
+        "y": 38,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20520,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab65012948b8d5206ad46b3",
+        "type": "road",
+        "x": 21,
+        "y": 39,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20940,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab6562ff7b95122a41c1328",
+        "type": "road",
+        "x": 20,
+        "y": 40,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4600,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab65dea16f5fb1c5593db47",
+        "type": "road",
+        "x": 19,
+        "y": 40,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4700,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab6879434772f3745e3e496",
+        "type": "road",
+        "x": 18,
+        "y": 40,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20540,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab6b1da074bd838dfd16512",
+        "type": "road",
+        "x": 17,
+        "y": 39,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 21380,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab8565bacecc88277a8f99d",
+        "type": "constructedWall",
+        "x": 36,
+        "y": 9,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab856668273c9c705aa25ec",
+        "type": "constructedWall",
+        "x": 35,
+        "y": 9,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8566e8273c9890aaa25ef",
+        "type": "constructedWall",
+        "x": 32,
+        "y": 9,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8568634772fc588e45d45",
+        "type": "constructedWall",
+        "x": 31,
+        "y": 9,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8569f655c18fb95db7de7",
+        "type": "constructedWall",
+        "x": 29,
+        "y": 9,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab856b78736c5570082ae19",
+        "type": "constructedWall",
+        "x": 30,
+        "y": 8,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab856dc7a561219518508d5",
+        "type": "constructedWall",
+        "x": 30,
+        "y": 9,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8573afaba0233e250bc1d",
+        "type": "constructedWall",
+        "x": 31,
+        "y": 8,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab857c0e805147aacb9718a",
+        "type": "constructedWall",
+        "x": 32,
+        "y": 8,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab857e45c98fe2c52e7d6b5",
+        "type": "constructedWall",
+        "x": 35,
+        "y": 8,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab857f0956625759be02880",
+        "type": "constructedWall",
+        "x": 36,
+        "y": 8,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85806b765adb2fd63bf5b",
+        "type": "constructedWall",
+        "x": 37,
+        "y": 8,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab858eb067f15c5a661b72b",
+        "type": "constructedWall",
+        "x": 27,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85913eba3da19c764342f",
+        "type": "constructedWall",
+        "x": 28,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8592c91d2f6ac1e0b04ec",
+        "type": "constructedWall",
+        "x": 29,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8596a162753be36aa46c1",
+        "type": "constructedWall",
+        "x": 30,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab859b1c7b3983c92ad5f09",
+        "type": "constructedWall",
+        "x": 31,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab859e3c7bf11178c7bdd88",
+        "type": "constructedWall",
+        "x": 26,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85a9d5c8733a8add988a7",
+        "type": "constructedWall",
+        "x": 14,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85aba5f3b2aa11c336c47",
+        "type": "constructedWall",
+        "x": 14,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85b035f3b2a76be336c60",
+        "type": "constructedWall",
+        "x": 13,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85b215c87331b64d988cb",
+        "type": "constructedWall",
+        "x": 26,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85b528f3760e1e154e35a",
+        "type": "constructedWall",
+        "x": 13,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85bc095662501b2e02950",
+        "type": "constructedWall",
+        "x": 27,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85c1f8f3760114654e38a",
+        "type": "constructedWall",
+        "x": 28,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85ced1627531938aa4791",
+        "type": "constructedWall",
+        "x": 12,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85d2c8f3760cce254e3bf",
+        "type": "constructedWall",
+        "x": 12,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85d4d0339f42a8ff46b07",
+        "type": "constructedWall",
+        "x": 10,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85dbb6f14dedf819c0e9d",
+        "type": "constructedWall",
+        "x": 11,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85e057c0446fe00c868ee",
+        "type": "constructedWall",
+        "x": 11,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85ed3dc512972d8a7e026",
+        "type": "constructedWall",
+        "x": 29,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85f0b34772fc74de45f4e",
+        "type": "constructedWall",
+        "x": 30,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85f8e9e927ee631e22093",
+        "type": "constructedWall",
+        "x": 10,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85fd57a561200f1850b00",
+        "type": "constructedWall",
+        "x": 9,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab86a4a0fa08653e9a386ee",
+        "type": "constructedWall",
+        "x": 9,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab86aa9b71cd57b7b5e1242",
+        "type": "constructedWall",
+        "x": 8,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab86af68f376018d854e729",
+        "type": "constructedWall",
+        "x": 31,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab86e61eba3da3863643962",
+        "type": "constructedWall",
+        "x": 8,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab86f1524e48fd9d165505c",
+        "type": "constructedWall",
+        "x": 7,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8708cfaba0252bf50c25b",
+        "type": "road",
+        "x": 37,
+        "y": 26,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4200,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab870fe47fd63ad28a55b8e",
+        "type": "road",
+        "x": 37,
+        "y": 28,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4500,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab87182c72710454b019959",
+        "type": "road",
+        "x": 34,
+        "y": 24,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4500,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab8901db765ad48e563cd23",
+        "type": "road",
+        "x": 31,
+        "y": 27,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 5000,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab8933dc727102fbb01a169",
+        "type": "road",
+        "x": 37,
+        "y": 23,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4100,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab895aa3936cd83139a5d73",
+        "type": "road",
+        "x": 37,
+        "y": 24,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 5000,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab8962c57ff65abf0407414",
+        "type": "road",
+        "x": 36,
+        "y": 26,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20900,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab897db074bd890e7d1debf",
+        "type": "road",
+        "x": 36,
+        "y": 27,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 21460,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab8995c48b54481a0e07c02",
+        "type": "road",
+        "x": 36,
+        "y": 25,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20300,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab89d3db765ad4f1063d036",
+        "type": "road",
+        "x": 35,
+        "y": 25,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20100,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab8af2324e48f986c655fe2",
+        "type": "road",
+        "x": 37,
+        "y": 25,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab8afa8e1cc157e5143347f",
+        "type": "road",
+        "x": 34,
+        "y": 25,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20500,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab8afe8655c187789db92ae",
+        "type": "road",
+        "x": 33,
+        "y": 26,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20720,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab8b0fe3936cd0d859a63e8",
+        "type": "road",
+        "x": 16,
+        "y": 38,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4300,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab9339f0fa086a5c2a3b66b",
+        "type": "road",
+        "x": 26,
+        "y": 35,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20040,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab93688eba3da640f6468a4",
+        "type": "road",
+        "x": 25,
+        "y": 36,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20100,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab9387d0945d29d791d5500",
+        "type": "road",
+        "x": 24,
+        "y": 37,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 21040,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab93ad4ef472c23a8744bf1",
+        "type": "road",
+        "x": 23,
+        "y": 38,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20640,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab93df7c7b39842b5ad953b",
+        "type": "road",
+        "x": 22,
+        "y": 39,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20420,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ac6fa32e00622522dfd9c19",
+        "type": "road",
+        "x": 32,
+        "y": 26,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ac6fa3ee407d52cdb4fa218",
+        "type": "road",
+        "x": 31,
+        "y": 25,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "5bbcae399099fc012e63899c",
+        "type": "controller",
+        "x": 17,
+        "y": 37,
+        "my": true,
+        "energy": null,
+        "capacity": null,
+        "hits": 0,
+        "hitsMax": 0
+      },
+      {
+        "id": "6ab52dfe67c06400133c3a40",
+        "type": "spawn",
+        "x": 35,
+        "y": 19,
+        "my": true,
+        "energy": 300,
+        "capacity": 300,
+        "hits": 5000,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab7b5270d0891445c99ef4f",
+        "type": "tower",
+        "x": 36,
+        "y": 21,
+        "my": true,
+        "energy": 810,
+        "capacity": 1000,
+        "hits": 3000,
+        "hitsMax": 3000
+      },
+      {
+        "id": "6ab7ca420d6d56a8c90fb9fc",
+        "type": "extension",
+        "x": 35,
+        "y": 21,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab7e40c0832a8838a6e907d",
+        "type": "extension",
+        "x": 33,
+        "y": 19,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab809a8e1cc15bd7c430d27",
+        "type": "extension",
+        "x": 37,
+        "y": 18,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab82603a3233984645c2e0e",
+        "type": "extension",
+        "x": 33,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab8394520367424f8575b58",
+        "type": "extension",
+        "x": 34,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab855e02bb82cd2f3a59860",
+        "type": "extension",
+        "x": 36,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab88dd54f721e57d1ded5ee",
+        "type": "extension",
+        "x": 33,
+        "y": 18,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab8a11d28e699ea085e661a",
+        "type": "extension",
+        "x": 33,
+        "y": 20,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab8a5354f3b274a4acc8fa5",
+        "type": "extension",
+        "x": 37,
+        "y": 20,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab8ab538ba11ebf35268d55",
+        "type": "extension",
+        "x": 35,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc0ff0d6b1fc682227df67",
+        "type": "extension",
+        "x": 37,
+        "y": 19,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc13fb7d817266899e540f",
+        "type": "extension",
+        "x": 37,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc1afe8f3760eca955d95e",
+        "type": "extension",
+        "x": 38,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc2140a667ce0145d272e8",
+        "type": "extension",
+        "x": 38,
+        "y": 21,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc2800f61cf8c33e16b49c",
+        "type": "extension",
+        "x": 32,
+        "y": 19,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc2f5beba3dad8876521b5",
+        "type": "extension",
+        "x": 38,
+        "y": 18,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc32fc8273c9b2e9ab1292",
+        "type": "extension",
+        "x": 38,
+        "y": 19,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc352c6f14de96119d05b6",
+        "type": "extension",
+        "x": 38,
+        "y": 16,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc420a0832a897536f9e77",
+        "type": "extension",
+        "x": 32,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc45dc2bb82c7240a69658",
+        "type": "extension",
+        "x": 37,
+        "y": 16,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abcb3144f721e2a78dfda15",
+        "type": "storage",
+        "x": 36,
+        "y": 16,
+        "my": true,
+        "energy": 0,
+        "capacity": 1000000,
+        "hits": 10000,
+        "hitsMax": 10000
+      },
+      {
+        "id": "6ac497e12dd7984034698c83",
+        "type": "tower",
+        "x": 38,
+        "y": 20,
+        "my": true,
+        "energy": 740,
+        "capacity": 1000,
+        "hits": 3000,
+        "hitsMax": 3000
+      },
+      {
+        "id": "6ac4a061acecc8bb24ac2e18",
+        "type": "extension",
+        "x": 36,
+        "y": 22,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac4ad13655c18130ede9392",
+        "type": "extension",
+        "x": 38,
+        "y": 22,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac4b1990339f43a35f7a031",
+        "type": "extension",
+        "x": 32,
+        "y": 18,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac4b1f27a561269ca8825e9",
+        "type": "extension",
+        "x": 35,
+        "y": 22,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac66431c5769323ed7002ad",
+        "type": "extension",
+        "x": 36,
+        "y": 13,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac6799af1dc4234d15138b3",
+        "type": "extension",
+        "x": 36,
+        "y": 14,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac696c2e805140bd4bd32a1",
+        "type": "extension",
+        "x": 39,
+        "y": 18,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac6a990e407d55d654f8d2d",
+        "type": "extension",
+        "x": 36,
+        "y": 15,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac6c3655c98fedc98eb79d0",
+        "type": "extension",
+        "x": 34,
+        "y": 16,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac6c9906bec47fdc39ea78c",
+        "type": "extension",
+        "x": 35,
+        "y": 16,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac6dad71484db99fc11c993",
+        "type": "rampart",
+        "x": 35,
+        "y": 19,
+        "my": true,
+        "energy": null,
+        "capacity": null,
+        "hits": 101101,
+        "hitsMax": 30000000
+      },
+      {
+        "id": "6ac6dadb5b77c3506f0b2d45",
+        "type": "rampart",
+        "x": 36,
+        "y": 21,
+        "my": true,
+        "energy": null,
+        "capacity": null,
+        "hits": 101101,
+        "hitsMax": 30000000
+      },
+      {
+        "id": "6ac6f94c37bdd2d774d300c1",
+        "type": "link",
+        "x": 39,
+        "y": 19,
+        "my": true,
+        "energy": 0,
+        "capacity": 800,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac6f9bfc7bf11d5237f77c4",
+        "type": "link",
+        "x": 31,
+        "y": 18,
+        "my": true,
+        "energy": 0,
+        "capacity": 800,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac6fa051a053d47d081a7db",
+        "type": "rampart",
+        "x": 36,
+        "y": 16,
+        "my": true,
+        "energy": null,
+        "capacity": null,
+        "hits": 100701,
+        "hitsMax": 30000000
+      },
+      {
+        "id": "6ac6fa12ea44851ea02948f1",
+        "type": "rampart",
+        "x": 38,
+        "y": 20,
+        "my": true,
+        "energy": null,
+        "capacity": null,
+        "hits": 100701,
+        "hitsMax": 30000000
+      }
+    ],
+    "sites": [],
+    "links": [
+      {
+        "id": "6ac6f94c37bdd2d774d300c1",
+        "x": 39,
+        "y": 19,
+        "my": true,
+        "active": true,
+        "energy": 0,
+        "capacity": 800,
+        "cooldown": 0,
+        "nearSources": [],
+        "nearController": false,
+        "nearStorage": false,
+        "transferStatus": {
+          "available": true,
+          "observed": null,
+          "reason": "Only covered EVENT_TRANSFER sender amounts; no inferred received energy or game writes"
+        }
+      },
+      {
+        "id": "6ac6f9bfc7bf11d5237f77c4",
+        "x": 31,
+        "y": 18,
+        "my": true,
+        "active": true,
+        "energy": 0,
+        "capacity": 800,
+        "cooldown": 0,
+        "nearSources": [],
+        "nearController": false,
+        "nearStorage": false,
+        "transferStatus": {
+          "available": true,
+          "observed": null,
+          "reason": "Only covered EVENT_TRANSFER sender amounts; no inferred received energy or game writes"
+        }
+      }
+    ],
+    "rclLimits": {
+      "spawn": 1,
+      "extension": 40,
+      "storage": 1,
+      "container": 5,
+      "terminal": 1,
+      "tower": 2,
+      "link": 3,
+      "road": 2500
+    },
+    "sources": [
+      {
+        "id": "5bbcae399099fc012e63899a",
+        "x": 30,
+        "y": 22,
+        "capacity": 3000,
+        "walkableAdjacentSlots": 1
+      },
+      {
+        "id": "5bbcae399099fc012e63899b",
+        "x": 38,
+        "y": 28,
+        "capacity": 3000,
+        "walkableAdjacentSlots": 4
+      }
+    ]
+  },
+  "roadConflictsIfAThenB": [],
+  "stations": {
+    "S1": [
+      29,
+      23
+    ],
+    "S2": [
+      37,
+      27
+    ]
+  },
+  "model": "8-way shortest static paths, road/plain/swamp 1/2/5, interaction at range 1 (Controller range 3). No observed traffic or throughput.",
+  "current": {
+    "rcl": 6,
+    "counts": {
+      "road": 48,
+      "constructedWall": 39,
+      "controller": 1,
+      "spawn": 1,
+      "tower": 2,
+      "extension": 30,
+      "storage": 1,
+      "rampart": 4,
+      "link": 2
+    },
+    "limits": {
+      "spawn": 1,
+      "extension": 40,
+      "storage": 1,
+      "link": 3
+    },
+    "structures": [
+      {
+        "id": "6ab54b85746ce639341c6db6",
+        "type": "road",
+        "x": 29,
+        "y": 23,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 21220,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab5517c69c57e108d1a6001",
+        "type": "road",
+        "x": 37,
+        "y": 27,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4700,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab56176d6fb1557ace85357",
+        "type": "road",
+        "x": 37,
+        "y": 22,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4100,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5664e9e343d273adc64f3",
+        "type": "road",
+        "x": 37,
+        "y": 21,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab56cf8450da3530e7ea331",
+        "type": "road",
+        "x": 36,
+        "y": 20,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5704b690fe2dbc8559c94",
+        "type": "road",
+        "x": 34,
+        "y": 23,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 5000,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab573b14bc33979a0142596",
+        "type": "road",
+        "x": 34,
+        "y": 22,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4500,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab57756c1eb1110654c47ec",
+        "type": "road",
+        "x": 34,
+        "y": 21,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4600,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab58cc3422010016881cda5",
+        "type": "road",
+        "x": 33,
+        "y": 25,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20300,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab59017d86b8f7b3ad50ab4",
+        "type": "road",
+        "x": 34,
+        "y": 20,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4200,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab594448502164150b72d4f",
+        "type": "road",
+        "x": 30,
+        "y": 24,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab59db6e404d0b24b95c88b",
+        "type": "road",
+        "x": 30,
+        "y": 28,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4200,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5a1f728d7bff91a099c0f",
+        "type": "road",
+        "x": 30,
+        "y": 29,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4000,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5a6173081816813d7c81f",
+        "type": "road",
+        "x": 29,
+        "y": 30,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5aaf26ed74101ee731f0c",
+        "type": "road",
+        "x": 28,
+        "y": 31,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4200,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5af88e404d07b0595ccf3",
+        "type": "road",
+        "x": 28,
+        "y": 32,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5b49e16f5fb5a8793b095",
+        "type": "road",
+        "x": 27,
+        "y": 33,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4700,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5b9dcd6fb15ae40e8695e",
+        "type": "road",
+        "x": 26,
+        "y": 34,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4460,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5d4d97f9c2d47e63f0d5d",
+        "type": "road",
+        "x": 25,
+        "y": 35,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 21520,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab5f1f613e32b24739c3fe1",
+        "type": "road",
+        "x": 24,
+        "y": 36,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20900,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab60edf930cc9237f91d124",
+        "type": "road",
+        "x": 23,
+        "y": 37,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20200,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab62fe63d150a70a57a7a64",
+        "type": "road",
+        "x": 22,
+        "y": 38,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20520,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab65012948b8d5206ad46b3",
+        "type": "road",
+        "x": 21,
+        "y": 39,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20940,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab6562ff7b95122a41c1328",
+        "type": "road",
+        "x": 20,
+        "y": 40,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4600,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab65dea16f5fb1c5593db47",
+        "type": "road",
+        "x": 19,
+        "y": 40,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4700,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab6879434772f3745e3e496",
+        "type": "road",
+        "x": 18,
+        "y": 40,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20540,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab6b1da074bd838dfd16512",
+        "type": "road",
+        "x": 17,
+        "y": 39,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 21380,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab8565bacecc88277a8f99d",
+        "type": "constructedWall",
+        "x": 36,
+        "y": 9,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab856668273c9c705aa25ec",
+        "type": "constructedWall",
+        "x": 35,
+        "y": 9,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8566e8273c9890aaa25ef",
+        "type": "constructedWall",
+        "x": 32,
+        "y": 9,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8568634772fc588e45d45",
+        "type": "constructedWall",
+        "x": 31,
+        "y": 9,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8569f655c18fb95db7de7",
+        "type": "constructedWall",
+        "x": 29,
+        "y": 9,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab856b78736c5570082ae19",
+        "type": "constructedWall",
+        "x": 30,
+        "y": 8,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab856dc7a561219518508d5",
+        "type": "constructedWall",
+        "x": 30,
+        "y": 9,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8573afaba0233e250bc1d",
+        "type": "constructedWall",
+        "x": 31,
+        "y": 8,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab857c0e805147aacb9718a",
+        "type": "constructedWall",
+        "x": 32,
+        "y": 8,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab857e45c98fe2c52e7d6b5",
+        "type": "constructedWall",
+        "x": 35,
+        "y": 8,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab857f0956625759be02880",
+        "type": "constructedWall",
+        "x": 36,
+        "y": 8,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85806b765adb2fd63bf5b",
+        "type": "constructedWall",
+        "x": 37,
+        "y": 8,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab858eb067f15c5a661b72b",
+        "type": "constructedWall",
+        "x": 27,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85913eba3da19c764342f",
+        "type": "constructedWall",
+        "x": 28,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8592c91d2f6ac1e0b04ec",
+        "type": "constructedWall",
+        "x": 29,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8596a162753be36aa46c1",
+        "type": "constructedWall",
+        "x": 30,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab859b1c7b3983c92ad5f09",
+        "type": "constructedWall",
+        "x": 31,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab859e3c7bf11178c7bdd88",
+        "type": "constructedWall",
+        "x": 26,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85a9d5c8733a8add988a7",
+        "type": "constructedWall",
+        "x": 14,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85aba5f3b2aa11c336c47",
+        "type": "constructedWall",
+        "x": 14,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85b035f3b2a76be336c60",
+        "type": "constructedWall",
+        "x": 13,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85b215c87331b64d988cb",
+        "type": "constructedWall",
+        "x": 26,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85b528f3760e1e154e35a",
+        "type": "constructedWall",
+        "x": 13,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85bc095662501b2e02950",
+        "type": "constructedWall",
+        "x": 27,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85c1f8f3760114654e38a",
+        "type": "constructedWall",
+        "x": 28,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85ced1627531938aa4791",
+        "type": "constructedWall",
+        "x": 12,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85d2c8f3760cce254e3bf",
+        "type": "constructedWall",
+        "x": 12,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85d4d0339f42a8ff46b07",
+        "type": "constructedWall",
+        "x": 10,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85dbb6f14dedf819c0e9d",
+        "type": "constructedWall",
+        "x": 11,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85e057c0446fe00c868ee",
+        "type": "constructedWall",
+        "x": 11,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85ed3dc512972d8a7e026",
+        "type": "constructedWall",
+        "x": 29,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85f0b34772fc74de45f4e",
+        "type": "constructedWall",
+        "x": 30,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85f8e9e927ee631e22093",
+        "type": "constructedWall",
+        "x": 10,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85fd57a561200f1850b00",
+        "type": "constructedWall",
+        "x": 9,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab86a4a0fa08653e9a386ee",
+        "type": "constructedWall",
+        "x": 9,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab86aa9b71cd57b7b5e1242",
+        "type": "constructedWall",
+        "x": 8,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab86af68f376018d854e729",
+        "type": "constructedWall",
+        "x": 31,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab86e61eba3da3863643962",
+        "type": "constructedWall",
+        "x": 8,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab86f1524e48fd9d165505c",
+        "type": "constructedWall",
+        "x": 7,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8708cfaba0252bf50c25b",
+        "type": "road",
+        "x": 37,
+        "y": 26,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4200,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab870fe47fd63ad28a55b8e",
+        "type": "road",
+        "x": 37,
+        "y": 28,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4500,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab87182c72710454b019959",
+        "type": "road",
+        "x": 34,
+        "y": 24,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4500,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab8901db765ad48e563cd23",
+        "type": "road",
+        "x": 31,
+        "y": 27,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 5000,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab8933dc727102fbb01a169",
+        "type": "road",
+        "x": 37,
+        "y": 23,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4100,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab895aa3936cd83139a5d73",
+        "type": "road",
+        "x": 37,
+        "y": 24,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 5000,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab8962c57ff65abf0407414",
+        "type": "road",
+        "x": 36,
+        "y": 26,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20900,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab897db074bd890e7d1debf",
+        "type": "road",
+        "x": 36,
+        "y": 27,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 21460,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab8995c48b54481a0e07c02",
+        "type": "road",
+        "x": 36,
+        "y": 25,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20300,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab89d3db765ad4f1063d036",
+        "type": "road",
+        "x": 35,
+        "y": 25,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20100,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab8af2324e48f986c655fe2",
+        "type": "road",
+        "x": 37,
+        "y": 25,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab8afa8e1cc157e5143347f",
+        "type": "road",
+        "x": 34,
+        "y": 25,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20500,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab8afe8655c187789db92ae",
+        "type": "road",
+        "x": 33,
+        "y": 26,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20720,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab8b0fe3936cd0d859a63e8",
+        "type": "road",
+        "x": 16,
+        "y": 38,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4300,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab9339f0fa086a5c2a3b66b",
+        "type": "road",
+        "x": 26,
+        "y": 35,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20040,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab93688eba3da640f6468a4",
+        "type": "road",
+        "x": 25,
+        "y": 36,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20100,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab9387d0945d29d791d5500",
+        "type": "road",
+        "x": 24,
+        "y": 37,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 21040,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab93ad4ef472c23a8744bf1",
+        "type": "road",
+        "x": 23,
+        "y": 38,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20640,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab93df7c7b39842b5ad953b",
+        "type": "road",
+        "x": 22,
+        "y": 39,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20420,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ac6fa32e00622522dfd9c19",
+        "type": "road",
+        "x": 32,
+        "y": 26,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ac6fa3ee407d52cdb4fa218",
+        "type": "road",
+        "x": 31,
+        "y": 25,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "5bbcae399099fc012e63899c",
+        "type": "controller",
+        "x": 17,
+        "y": 37,
+        "my": true,
+        "energy": null,
+        "capacity": null,
+        "hits": 0,
+        "hitsMax": 0
+      },
+      {
+        "id": "6ab52dfe67c06400133c3a40",
+        "type": "spawn",
+        "x": 35,
+        "y": 19,
+        "my": true,
+        "energy": 300,
+        "capacity": 300,
+        "hits": 5000,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab7b5270d0891445c99ef4f",
+        "type": "tower",
+        "x": 36,
+        "y": 21,
+        "my": true,
+        "energy": 810,
+        "capacity": 1000,
+        "hits": 3000,
+        "hitsMax": 3000
+      },
+      {
+        "id": "6ab7ca420d6d56a8c90fb9fc",
+        "type": "extension",
+        "x": 35,
+        "y": 21,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab7e40c0832a8838a6e907d",
+        "type": "extension",
+        "x": 33,
+        "y": 19,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab809a8e1cc15bd7c430d27",
+        "type": "extension",
+        "x": 37,
+        "y": 18,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab82603a3233984645c2e0e",
+        "type": "extension",
+        "x": 33,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab8394520367424f8575b58",
+        "type": "extension",
+        "x": 34,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab855e02bb82cd2f3a59860",
+        "type": "extension",
+        "x": 36,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab88dd54f721e57d1ded5ee",
+        "type": "extension",
+        "x": 33,
+        "y": 18,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab8a11d28e699ea085e661a",
+        "type": "extension",
+        "x": 33,
+        "y": 20,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab8a5354f3b274a4acc8fa5",
+        "type": "extension",
+        "x": 37,
+        "y": 20,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab8ab538ba11ebf35268d55",
+        "type": "extension",
+        "x": 35,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc0ff0d6b1fc682227df67",
+        "type": "extension",
+        "x": 37,
+        "y": 19,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc13fb7d817266899e540f",
+        "type": "extension",
+        "x": 37,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc1afe8f3760eca955d95e",
+        "type": "extension",
+        "x": 38,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc2140a667ce0145d272e8",
+        "type": "extension",
+        "x": 38,
+        "y": 21,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc2800f61cf8c33e16b49c",
+        "type": "extension",
+        "x": 32,
+        "y": 19,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc2f5beba3dad8876521b5",
+        "type": "extension",
+        "x": 38,
+        "y": 18,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc32fc8273c9b2e9ab1292",
+        "type": "extension",
+        "x": 38,
+        "y": 19,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc352c6f14de96119d05b6",
+        "type": "extension",
+        "x": 38,
+        "y": 16,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc420a0832a897536f9e77",
+        "type": "extension",
+        "x": 32,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc45dc2bb82c7240a69658",
+        "type": "extension",
+        "x": 37,
+        "y": 16,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abcb3144f721e2a78dfda15",
+        "type": "storage",
+        "x": 36,
+        "y": 16,
+        "my": true,
+        "energy": 0,
+        "capacity": 1000000,
+        "hits": 10000,
+        "hitsMax": 10000
+      },
+      {
+        "id": "6ac497e12dd7984034698c83",
+        "type": "tower",
+        "x": 38,
+        "y": 20,
+        "my": true,
+        "energy": 740,
+        "capacity": 1000,
+        "hits": 3000,
+        "hitsMax": 3000
+      },
+      {
+        "id": "6ac4a061acecc8bb24ac2e18",
+        "type": "extension",
+        "x": 36,
+        "y": 22,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac4ad13655c18130ede9392",
+        "type": "extension",
+        "x": 38,
+        "y": 22,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac4b1990339f43a35f7a031",
+        "type": "extension",
+        "x": 32,
+        "y": 18,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac4b1f27a561269ca8825e9",
+        "type": "extension",
+        "x": 35,
+        "y": 22,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac66431c5769323ed7002ad",
+        "type": "extension",
+        "x": 36,
+        "y": 13,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac6799af1dc4234d15138b3",
+        "type": "extension",
+        "x": 36,
+        "y": 14,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac696c2e805140bd4bd32a1",
+        "type": "extension",
+        "x": 39,
+        "y": 18,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac6a990e407d55d654f8d2d",
+        "type": "extension",
+        "x": 36,
+        "y": 15,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac6c3655c98fedc98eb79d0",
+        "type": "extension",
+        "x": 34,
+        "y": 16,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac6c9906bec47fdc39ea78c",
+        "type": "extension",
+        "x": 35,
+        "y": 16,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac6dad71484db99fc11c993",
+        "type": "rampart",
+        "x": 35,
+        "y": 19,
+        "my": true,
+        "energy": null,
+        "capacity": null,
+        "hits": 101101,
+        "hitsMax": 30000000
+      },
+      {
+        "id": "6ac6dadb5b77c3506f0b2d45",
+        "type": "rampart",
+        "x": 36,
+        "y": 21,
+        "my": true,
+        "energy": null,
+        "capacity": null,
+        "hits": 101101,
+        "hitsMax": 30000000
+      },
+      {
+        "id": "6ac6f94c37bdd2d774d300c1",
+        "type": "link",
+        "x": 39,
+        "y": 19,
+        "my": true,
+        "energy": 0,
+        "capacity": 800,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac6f9bfc7bf11d5237f77c4",
+        "type": "link",
+        "x": 31,
+        "y": 18,
+        "my": true,
+        "energy": 0,
+        "capacity": 800,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac6fa051a053d47d081a7db",
+        "type": "rampart",
+        "x": 36,
+        "y": 16,
+        "my": true,
+        "energy": null,
+        "capacity": null,
+        "hits": 100701,
+        "hitsMax": 30000000
+      },
+      {
+        "id": "6ac6fa12ea44851ea02948f1",
+        "type": "rampart",
+        "x": 38,
+        "y": 20,
+        "my": true,
+        "energy": null,
+        "capacity": null,
+        "hits": 100701,
+        "hitsMax": 30000000
+      }
+    ],
+    "add": [],
+    "remove": [],
+    "cost": 0,
+    "paths": {
+      "S1 → Storage": {
+        "cost": 43,
+        "tiles": [
+          [
+            28,
+            22
+          ],
+          [
+            27,
+            21
+          ],
+          [
+            26,
+            20
+          ],
+          [
+            25,
+            19
+          ],
+          [
+            26,
+            18
+          ],
+          [
+            27,
+            17
+          ],
+          [
+            28,
+            16
+          ],
+          [
+            28,
+            15
+          ],
+          [
+            29,
+            14
+          ],
+          [
+            30,
+            13
+          ],
+          [
+            31,
+            12
+          ],
+          [
+            32,
+            12
+          ],
+          [
+            33,
+            13
+          ],
+          [
+            34,
+            14
+          ],
+          [
+            35,
+            15
+          ]
+        ]
+      },
+      "S2 → Storage": {
+        "cost": 58,
+        "tiles": [
+          [
+            36,
+            26
+          ],
+          [
+            35,
+            25
+          ],
+          [
+            34,
+            24
+          ],
+          [
+            33,
+            25
+          ],
+          [
+            32,
+            26
+          ],
+          [
+            31,
+            25
+          ],
+          [
+            30,
+            24
+          ],
+          [
+            29,
+            24
+          ],
+          [
+            28,
+            23
+          ],
+          [
+            27,
+            22
+          ],
+          [
+            26,
+            21
+          ],
+          [
+            25,
+            20
+          ],
+          [
+            25,
+            19
+          ],
+          [
+            26,
+            18
+          ],
+          [
+            27,
+            17
+          ],
+          [
+            28,
+            16
+          ],
+          [
+            28,
+            15
+          ],
+          [
+            29,
+            14
+          ],
+          [
+            30,
+            13
+          ],
+          [
+            31,
+            12
+          ],
+          [
+            32,
+            12
+          ],
+          [
+            33,
+            13
+          ],
+          [
+            34,
+            14
+          ],
+          [
+            35,
+            15
+          ]
+        ]
+      },
+      "Storage → Controller": {
+        "cost": 67,
+        "tiles": [
+          [
+            35,
+            15
+          ],
+          [
+            34,
+            14
+          ],
+          [
+            33,
+            13
+          ],
+          [
+            32,
+            12
+          ],
+          [
+            31,
+            12
+          ],
+          [
+            30,
+            13
+          ],
+          [
+            29,
+            14
+          ],
+          [
+            28,
+            15
+          ],
+          [
+            28,
+            16
+          ],
+          [
+            27,
+            17
+          ],
+          [
+            26,
+            18
+          ],
+          [
+            25,
+            19
+          ],
+          [
+            25,
+            20
+          ],
+          [
+            26,
+            21
+          ],
+          [
+            27,
+            22
+          ],
+          [
+            28,
+            23
+          ],
+          [
+            29,
+            24
+          ],
+          [
+            30,
+            24
+          ],
+          [
+            31,
+            25
+          ],
+          [
+            32,
+            26
+          ],
+          [
+            31,
+            27
+          ],
+          [
+            30,
+            28
+          ],
+          [
+            30,
+            29
+          ],
+          [
+            29,
+            30
+          ],
+          [
+            28,
+            31
+          ],
+          [
+            28,
+            32
+          ],
+          [
+            27,
+            33
+          ],
+          [
+            26,
+            34
+          ],
+          [
+            25,
+            35
+          ],
+          [
+            24,
+            36
+          ],
+          [
+            23,
+            37
+          ],
+          [
+            22,
+            38
+          ],
+          [
+            21,
+            39
+          ],
+          [
+            20,
+            40
+          ]
+        ]
+      },
+      "Storage → Spawn (35, 19)": {
+        "cost": 59,
+        "tiles": [
+          [
+            35,
+            15
+          ],
+          [
+            34,
+            14
+          ],
+          [
+            33,
+            13
+          ],
+          [
+            32,
+            12
+          ],
+          [
+            31,
+            12
+          ],
+          [
+            30,
+            13
+          ],
+          [
+            29,
+            14
+          ],
+          [
+            28,
+            15
+          ],
+          [
+            28,
+            16
+          ],
+          [
+            27,
+            17
+          ],
+          [
+            26,
+            18
+          ],
+          [
+            25,
+            19
+          ],
+          [
+            25,
+            20
+          ],
+          [
+            26,
+            21
+          ],
+          [
+            27,
+            22
+          ],
+          [
+            28,
+            23
+          ],
+          [
+            29,
+            24
+          ],
+          [
+            30,
+            24
+          ],
+          [
+            31,
+            25
+          ],
+          [
+            32,
+            26
+          ],
+          [
+            33,
+            25
+          ],
+          [
+            34,
+            24
+          ],
+          [
+            34,
+            23
+          ],
+          [
+            34,
+            22
+          ],
+          [
+            34,
+            21
+          ],
+          [
+            34,
+            20
+          ]
+        ]
+      }
+    },
+    "extensionCosts": [
+      {
+        "tile": [
+          32,
+          17
+        ],
+        "cost": 24
+      },
+      {
+        "tile": [
+          32,
+          18
+        ],
+        "cost": 24
+      },
+      {
+        "tile": [
+          32,
+          19
+        ],
+        "cost": 31
+      },
+      {
+        "tile": [
+          33,
+          17
+        ],
+        "cost": 63
+      },
+      {
+        "tile": [
+          33,
+          18
+        ],
+        "cost": 61
+      },
+      {
+        "tile": [
+          33,
+          19
+        ],
+        "cost": 60
+      },
+      {
+        "tile": [
+          33,
+          20
+        ],
+        "cost": 59
+      },
+      {
+        "tile": [
+          34,
+          16
+        ],
+        "cost": 0
+      },
+      {
+        "tile": [
+          34,
+          17
+        ],
+        "cost": 63
+      },
+      {
+        "tile": [
+          35,
+          16
+        ],
+        "cost": 0
+      },
+      {
+        "tile": [
+          35,
+          17
+        ],
+        "cost": 63
+      },
+      {
+        "tile": [
+          35,
+          21
+        ],
+        "cost": 58
+      },
+      {
+        "tile": [
+          35,
+          22
+        ],
+        "cost": 57
+      },
+      {
+        "tile": [
+          36,
+          13
+        ],
+        "cost": 2
+      },
+      {
+        "tile": [
+          36,
+          14
+        ],
+        "cost": 0
+      },
+      {
+        "tile": [
+          36,
+          15
+        ],
+        "cost": 0
+      },
+      {
+        "tile": [
+          36,
+          17
+        ],
+        "cost": 63
+      },
+      {
+        "tile": [
+          36,
+          22
+        ],
+        "cost": 57
+      },
+      {
+        "tile": [
+          37,
+          16
+        ],
+        "cost": 0
+      },
+      {
+        "tile": [
+          37,
+          17
+        ],
+        "cost": 64
+      },
+      {
+        "tile": [
+          37,
+          18
+        ],
+        "cost": 62
+      },
+      {
+        "tile": [
+          37,
+          19
+        ],
+        "cost": 62
+      },
+      {
+        "tile": [
+          37,
+          20
+        ],
+        "cost": 62
+      },
+      {
+        "tile": [
+          38,
+          16
+        ],
+        "cost": 0
+      },
+      {
+        "tile": [
+          38,
+          17
+        ],
+        "cost": 4
+      },
+      {
+        "tile": [
+          38,
+          18
+        ],
+        "cost": 6
+      },
+      {
+        "tile": [
+          38,
+          19
+        ],
+        "cost": 66
+      },
+      {
+        "tile": [
+          38,
+          21
+        ],
+        "cost": 61
+      },
+      {
+        "tile": [
+          38,
+          22
+        ],
+        "cost": 60
+      },
+      {
+        "tile": [
+          39,
+          18
+        ],
+        "cost": 6
+      }
+    ],
+    "linkNetwork": {
+      "roles": {
+        "unassigned 1": [
+          39,
+          19
+        ],
+        "unassigned 2": [
+          31,
+          18
+        ]
+      },
+      "edges": [],
+      "storageHandoff": null,
+      "priority": "No Link duties confirmed.",
+      "dispatchGuards": {
+        "minimumBatch": 200,
+        "controllerTarget": 400,
+        "requireSenderCooldownZero": true,
+        "reserveReceiverGrossSpace": true,
+        "oneSendPerSenderPerTick": true,
+        "excludeInactiveAndReserveLinks": true
+      }
+    },
+    "meanExtensionCost": 37.93,
+    "sharedRetainedExtensionMean": 61.67
+  },
+  "A": {
+    "rcl": 6,
+    "counts": {
+      "road": 70,
+      "constructedWall": 39,
+      "controller": 1,
+      "spawn": 1,
+      "tower": 2,
+      "extension": 30,
+      "storage": 1,
+      "rampart": 4,
+      "link": 3
+    },
+    "limits": {
+      "spawn": 1,
+      "extension": 40,
+      "storage": 1,
+      "link": 3
+    },
+    "structures": [
+      {
+        "id": "6ab54b85746ce639341c6db6",
+        "type": "road",
+        "x": 29,
+        "y": 23,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 21220,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab5517c69c57e108d1a6001",
+        "type": "road",
+        "x": 37,
+        "y": 27,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4700,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab56176d6fb1557ace85357",
+        "type": "road",
+        "x": 37,
+        "y": 22,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4100,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5664e9e343d273adc64f3",
+        "type": "road",
+        "x": 37,
+        "y": 21,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab56cf8450da3530e7ea331",
+        "type": "road",
+        "x": 36,
+        "y": 20,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5704b690fe2dbc8559c94",
+        "type": "road",
+        "x": 34,
+        "y": 23,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 5000,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab573b14bc33979a0142596",
+        "type": "road",
+        "x": 34,
+        "y": 22,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4500,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab57756c1eb1110654c47ec",
+        "type": "road",
+        "x": 34,
+        "y": 21,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4600,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab58cc3422010016881cda5",
+        "type": "road",
+        "x": 33,
+        "y": 25,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20300,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab59017d86b8f7b3ad50ab4",
+        "type": "road",
+        "x": 34,
+        "y": 20,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4200,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab594448502164150b72d4f",
+        "type": "road",
+        "x": 30,
+        "y": 24,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab59db6e404d0b24b95c88b",
+        "type": "road",
+        "x": 30,
+        "y": 28,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4200,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5a1f728d7bff91a099c0f",
+        "type": "road",
+        "x": 30,
+        "y": 29,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4000,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5a6173081816813d7c81f",
+        "type": "road",
+        "x": 29,
+        "y": 30,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5aaf26ed74101ee731f0c",
+        "type": "road",
+        "x": 28,
+        "y": 31,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4200,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5af88e404d07b0595ccf3",
+        "type": "road",
+        "x": 28,
+        "y": 32,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5b49e16f5fb5a8793b095",
+        "type": "road",
+        "x": 27,
+        "y": 33,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4700,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5b9dcd6fb15ae40e8695e",
+        "type": "road",
+        "x": 26,
+        "y": 34,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4460,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5d4d97f9c2d47e63f0d5d",
+        "type": "road",
+        "x": 25,
+        "y": 35,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 21520,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab5f1f613e32b24739c3fe1",
+        "type": "road",
+        "x": 24,
+        "y": 36,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20900,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab60edf930cc9237f91d124",
+        "type": "road",
+        "x": 23,
+        "y": 37,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20200,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab62fe63d150a70a57a7a64",
+        "type": "road",
+        "x": 22,
+        "y": 38,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20520,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab65012948b8d5206ad46b3",
+        "type": "road",
+        "x": 21,
+        "y": 39,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20940,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab6562ff7b95122a41c1328",
+        "type": "road",
+        "x": 20,
+        "y": 40,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4600,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab65dea16f5fb1c5593db47",
+        "type": "road",
+        "x": 19,
+        "y": 40,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4700,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab6879434772f3745e3e496",
+        "type": "road",
+        "x": 18,
+        "y": 40,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20540,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab6b1da074bd838dfd16512",
+        "type": "road",
+        "x": 17,
+        "y": 39,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 21380,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab8565bacecc88277a8f99d",
+        "type": "constructedWall",
+        "x": 36,
+        "y": 9,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab856668273c9c705aa25ec",
+        "type": "constructedWall",
+        "x": 35,
+        "y": 9,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8566e8273c9890aaa25ef",
+        "type": "constructedWall",
+        "x": 32,
+        "y": 9,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8568634772fc588e45d45",
+        "type": "constructedWall",
+        "x": 31,
+        "y": 9,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8569f655c18fb95db7de7",
+        "type": "constructedWall",
+        "x": 29,
+        "y": 9,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab856b78736c5570082ae19",
+        "type": "constructedWall",
+        "x": 30,
+        "y": 8,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab856dc7a561219518508d5",
+        "type": "constructedWall",
+        "x": 30,
+        "y": 9,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8573afaba0233e250bc1d",
+        "type": "constructedWall",
+        "x": 31,
+        "y": 8,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab857c0e805147aacb9718a",
+        "type": "constructedWall",
+        "x": 32,
+        "y": 8,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab857e45c98fe2c52e7d6b5",
+        "type": "constructedWall",
+        "x": 35,
+        "y": 8,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab857f0956625759be02880",
+        "type": "constructedWall",
+        "x": 36,
+        "y": 8,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85806b765adb2fd63bf5b",
+        "type": "constructedWall",
+        "x": 37,
+        "y": 8,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab858eb067f15c5a661b72b",
+        "type": "constructedWall",
+        "x": 27,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85913eba3da19c764342f",
+        "type": "constructedWall",
+        "x": 28,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8592c91d2f6ac1e0b04ec",
+        "type": "constructedWall",
+        "x": 29,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8596a162753be36aa46c1",
+        "type": "constructedWall",
+        "x": 30,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab859b1c7b3983c92ad5f09",
+        "type": "constructedWall",
+        "x": 31,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab859e3c7bf11178c7bdd88",
+        "type": "constructedWall",
+        "x": 26,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85a9d5c8733a8add988a7",
+        "type": "constructedWall",
+        "x": 14,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85aba5f3b2aa11c336c47",
+        "type": "constructedWall",
+        "x": 14,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85b035f3b2a76be336c60",
+        "type": "constructedWall",
+        "x": 13,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85b215c87331b64d988cb",
+        "type": "constructedWall",
+        "x": 26,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85b528f3760e1e154e35a",
+        "type": "constructedWall",
+        "x": 13,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85bc095662501b2e02950",
+        "type": "constructedWall",
+        "x": 27,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85c1f8f3760114654e38a",
+        "type": "constructedWall",
+        "x": 28,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85ced1627531938aa4791",
+        "type": "constructedWall",
+        "x": 12,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85d2c8f3760cce254e3bf",
+        "type": "constructedWall",
+        "x": 12,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85d4d0339f42a8ff46b07",
+        "type": "constructedWall",
+        "x": 10,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85dbb6f14dedf819c0e9d",
+        "type": "constructedWall",
+        "x": 11,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85e057c0446fe00c868ee",
+        "type": "constructedWall",
+        "x": 11,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85ed3dc512972d8a7e026",
+        "type": "constructedWall",
+        "x": 29,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85f0b34772fc74de45f4e",
+        "type": "constructedWall",
+        "x": 30,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85f8e9e927ee631e22093",
+        "type": "constructedWall",
+        "x": 10,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85fd57a561200f1850b00",
+        "type": "constructedWall",
+        "x": 9,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab86a4a0fa08653e9a386ee",
+        "type": "constructedWall",
+        "x": 9,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab86aa9b71cd57b7b5e1242",
+        "type": "constructedWall",
+        "x": 8,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab86af68f376018d854e729",
+        "type": "constructedWall",
+        "x": 31,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab86e61eba3da3863643962",
+        "type": "constructedWall",
+        "x": 8,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab86f1524e48fd9d165505c",
+        "type": "constructedWall",
+        "x": 7,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8708cfaba0252bf50c25b",
+        "type": "road",
+        "x": 37,
+        "y": 26,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4200,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab870fe47fd63ad28a55b8e",
+        "type": "road",
+        "x": 37,
+        "y": 28,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4500,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab87182c72710454b019959",
+        "type": "road",
+        "x": 34,
+        "y": 24,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4500,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab8901db765ad48e563cd23",
+        "type": "road",
+        "x": 31,
+        "y": 27,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 5000,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab8933dc727102fbb01a169",
+        "type": "road",
+        "x": 37,
+        "y": 23,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4100,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab895aa3936cd83139a5d73",
+        "type": "road",
+        "x": 37,
+        "y": 24,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 5000,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab8962c57ff65abf0407414",
+        "type": "road",
+        "x": 36,
+        "y": 26,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20900,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab897db074bd890e7d1debf",
+        "type": "road",
+        "x": 36,
+        "y": 27,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 21460,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab8995c48b54481a0e07c02",
+        "type": "road",
+        "x": 36,
+        "y": 25,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20300,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab89d3db765ad4f1063d036",
+        "type": "road",
+        "x": 35,
+        "y": 25,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20100,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab8af2324e48f986c655fe2",
+        "type": "road",
+        "x": 37,
+        "y": 25,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab8afa8e1cc157e5143347f",
+        "type": "road",
+        "x": 34,
+        "y": 25,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20500,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab8afe8655c187789db92ae",
+        "type": "road",
+        "x": 33,
+        "y": 26,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20720,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab8b0fe3936cd0d859a63e8",
+        "type": "road",
+        "x": 16,
+        "y": 38,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4300,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab9339f0fa086a5c2a3b66b",
+        "type": "road",
+        "x": 26,
+        "y": 35,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20040,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab93688eba3da640f6468a4",
+        "type": "road",
+        "x": 25,
+        "y": 36,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20100,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab9387d0945d29d791d5500",
+        "type": "road",
+        "x": 24,
+        "y": 37,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 21040,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab93ad4ef472c23a8744bf1",
+        "type": "road",
+        "x": 23,
+        "y": 38,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20640,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab93df7c7b39842b5ad953b",
+        "type": "road",
+        "x": 22,
+        "y": 39,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20420,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ac6fa32e00622522dfd9c19",
+        "type": "road",
+        "x": 32,
+        "y": 26,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ac6fa3ee407d52cdb4fa218",
+        "type": "road",
+        "x": 31,
+        "y": 25,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "5bbcae399099fc012e63899c",
+        "type": "controller",
+        "x": 17,
+        "y": 37,
+        "my": true,
+        "energy": null,
+        "capacity": null,
+        "hits": 0,
+        "hitsMax": 0
+      },
+      {
+        "id": "6ab52dfe67c06400133c3a40",
+        "type": "spawn",
+        "x": 35,
+        "y": 19,
+        "my": true,
+        "energy": 300,
+        "capacity": 300,
+        "hits": 5000,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab7b5270d0891445c99ef4f",
+        "type": "tower",
+        "x": 36,
+        "y": 21,
+        "my": true,
+        "energy": 810,
+        "capacity": 1000,
+        "hits": 3000,
+        "hitsMax": 3000
+      },
+      {
+        "id": "6ab7ca420d6d56a8c90fb9fc",
+        "type": "extension",
+        "x": 35,
+        "y": 21,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab7e40c0832a8838a6e907d",
+        "type": "extension",
+        "x": 33,
+        "y": 19,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab809a8e1cc15bd7c430d27",
+        "type": "extension",
+        "x": 37,
+        "y": 18,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab82603a3233984645c2e0e",
+        "type": "extension",
+        "x": 33,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab8394520367424f8575b58",
+        "type": "extension",
+        "x": 34,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab855e02bb82cd2f3a59860",
+        "type": "extension",
+        "x": 36,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab88dd54f721e57d1ded5ee",
+        "type": "extension",
+        "x": 33,
+        "y": 18,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab8a11d28e699ea085e661a",
+        "type": "extension",
+        "x": 33,
+        "y": 20,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab8a5354f3b274a4acc8fa5",
+        "type": "extension",
+        "x": 37,
+        "y": 20,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab8ab538ba11ebf35268d55",
+        "type": "extension",
+        "x": 35,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc0ff0d6b1fc682227df67",
+        "type": "extension",
+        "x": 37,
+        "y": 19,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc13fb7d817266899e540f",
+        "type": "extension",
+        "x": 37,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc1afe8f3760eca955d95e",
+        "type": "extension",
+        "x": 38,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc2140a667ce0145d272e8",
+        "type": "extension",
+        "x": 38,
+        "y": 21,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc2800f61cf8c33e16b49c",
+        "type": "extension",
+        "x": 32,
+        "y": 19,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc2f5beba3dad8876521b5",
+        "type": "extension",
+        "x": 38,
+        "y": 18,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc32fc8273c9b2e9ab1292",
+        "type": "extension",
+        "x": 38,
+        "y": 19,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc352c6f14de96119d05b6",
+        "type": "extension",
+        "x": 38,
+        "y": 16,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc420a0832a897536f9e77",
+        "type": "extension",
+        "x": 32,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc45dc2bb82c7240a69658",
+        "type": "extension",
+        "x": 37,
+        "y": 16,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abcb3144f721e2a78dfda15",
+        "type": "storage",
+        "x": 36,
+        "y": 16,
+        "my": true,
+        "energy": 0,
+        "capacity": 1000000,
+        "hits": 10000,
+        "hitsMax": 10000
+      },
+      {
+        "id": "6ac497e12dd7984034698c83",
+        "type": "tower",
+        "x": 38,
+        "y": 20,
+        "my": true,
+        "energy": 740,
+        "capacity": 1000,
+        "hits": 3000,
+        "hitsMax": 3000
+      },
+      {
+        "id": "6ac4a061acecc8bb24ac2e18",
+        "type": "extension",
+        "x": 36,
+        "y": 22,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac4ad13655c18130ede9392",
+        "type": "extension",
+        "x": 38,
+        "y": 22,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac4b1990339f43a35f7a031",
+        "type": "extension",
+        "x": 32,
+        "y": 18,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac4b1f27a561269ca8825e9",
+        "type": "extension",
+        "x": 35,
+        "y": 22,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac66431c5769323ed7002ad",
+        "type": "extension",
+        "x": 36,
+        "y": 13,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac6799af1dc4234d15138b3",
+        "type": "extension",
+        "x": 36,
+        "y": 14,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac696c2e805140bd4bd32a1",
+        "type": "extension",
+        "x": 39,
+        "y": 18,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac6a990e407d55d654f8d2d",
+        "type": "extension",
+        "x": 36,
+        "y": 15,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac6c3655c98fedc98eb79d0",
+        "type": "extension",
+        "x": 34,
+        "y": 16,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac6c9906bec47fdc39ea78c",
+        "type": "extension",
+        "x": 35,
+        "y": 16,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac6dad71484db99fc11c993",
+        "type": "rampart",
+        "x": 35,
+        "y": 19,
+        "my": true,
+        "energy": null,
+        "capacity": null,
+        "hits": 101101,
+        "hitsMax": 30000000
+      },
+      {
+        "id": "6ac6dadb5b77c3506f0b2d45",
+        "type": "rampart",
+        "x": 36,
+        "y": 21,
+        "my": true,
+        "energy": null,
+        "capacity": null,
+        "hits": 101101,
+        "hitsMax": 30000000
+      },
+      {
+        "id": "6ac6f94c37bdd2d774d300c1",
+        "type": "link",
+        "x": 39,
+        "y": 19,
+        "my": true,
+        "energy": 0,
+        "capacity": 800,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac6f9bfc7bf11d5237f77c4",
+        "type": "link",
+        "x": 31,
+        "y": 18,
+        "my": true,
+        "energy": 0,
+        "capacity": 800,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac6fa051a053d47d081a7db",
+        "type": "rampart",
+        "x": 36,
+        "y": 16,
+        "my": true,
+        "energy": null,
+        "capacity": null,
+        "hits": 100701,
+        "hitsMax": 30000000
+      },
+      {
+        "id": "6ac6fa12ea44851ea02948f1",
+        "type": "rampart",
+        "x": 38,
+        "y": 20,
+        "my": true,
+        "energy": null,
+        "capacity": null,
+        "hits": 100701,
+        "hitsMax": 30000000
+      },
+      {
+        "type": "link",
+        "x": 29,
+        "y": 24,
+        "my": true
+      },
+      {
+        "type": "road",
+        "x": 24,
+        "y": 20,
+        "my": true
+      },
+      {
+        "type": "road",
+        "x": 25,
+        "y": 19,
+        "my": true
+      },
+      {
+        "type": "road",
+        "x": 25,
+        "y": 21,
+        "my": true
+      },
+      {
+        "type": "road",
+        "x": 26,
+        "y": 18,
+        "my": true
+      },
+      {
+        "type": "road",
+        "x": 26,
+        "y": 20,
+        "my": true
+      },
+      {
+        "type": "road",
+        "x": 26,
+        "y": 22,
+        "my": true
+      },
+      {
+        "type": "road",
+        "x": 27,
+        "y": 17,
+        "my": true
+      },
+      {
+        "type": "road",
+        "x": 27,
+        "y": 21,
+        "my": true
+      },
+      {
+        "type": "road",
+        "x": 27,
+        "y": 23,
+        "my": true
+      },
+      {
+        "type": "road",
+        "x": 28,
+        "y": 15,
+        "my": true
+      },
+      {
+        "type": "road",
+        "x": 28,
+        "y": 16,
+        "my": true
+      },
+      {
+        "type": "road",
+        "x": 28,
+        "y": 22,
+        "my": true
+      },
+      {
+        "type": "road",
+        "x": 28,
+        "y": 24,
+        "my": true
+      },
+      {
+        "type": "road",
+        "x": 29,
+        "y": 14,
+        "my": true
+      },
+      {
+        "type": "road",
+        "x": 29,
+        "y": 25,
+        "my": true
+      },
+      {
+        "type": "road",
+        "x": 30,
+        "y": 13,
+        "my": true
+      },
+      {
+        "type": "road",
+        "x": 30,
+        "y": 26,
+        "my": true
+      },
+      {
+        "type": "road",
+        "x": 31,
+        "y": 12,
+        "my": true
+      },
+      {
+        "type": "road",
+        "x": 32,
+        "y": 12,
+        "my": true
+      },
+      {
+        "type": "road",
+        "x": 33,
+        "y": 13,
+        "my": true
+      },
+      {
+        "type": "road",
+        "x": 34,
+        "y": 14,
+        "my": true
+      },
+      {
+        "type": "road",
+        "x": 35,
+        "y": 15,
+        "my": true
+      }
+    ],
+    "add": [
+      {
+        "type": "link",
+        "x": 29,
+        "y": 24,
+        "constructionProgress": 5000
+      },
+      {
+        "type": "road",
+        "x": 24,
+        "y": 20,
+        "constructionProgress": 300
+      },
+      {
+        "type": "road",
+        "x": 25,
+        "y": 19,
+        "constructionProgress": 300
+      },
+      {
+        "type": "road",
+        "x": 25,
+        "y": 21,
+        "constructionProgress": 1500
+      },
+      {
+        "type": "road",
+        "x": 26,
+        "y": 18,
+        "constructionProgress": 300
+      },
+      {
+        "type": "road",
+        "x": 26,
+        "y": 20,
+        "constructionProgress": 1500
+      },
+      {
+        "type": "road",
+        "x": 26,
+        "y": 22,
+        "constructionProgress": 1500
+      },
+      {
+        "type": "road",
+        "x": 27,
+        "y": 17,
+        "constructionProgress": 1500
+      },
+      {
+        "type": "road",
+        "x": 27,
+        "y": 21,
+        "constructionProgress": 1500
+      },
+      {
+        "type": "road",
+        "x": 27,
+        "y": 23,
+        "constructionProgress": 1500
+      },
+      {
+        "type": "road",
+        "x": 28,
+        "y": 15,
+        "constructionProgress": 1500
+      },
+      {
+        "type": "road",
+        "x": 28,
+        "y": 16,
+        "constructionProgress": 1500
+      },
+      {
+        "type": "road",
+        "x": 28,
+        "y": 22,
+        "constructionProgress": 1500
+      },
+      {
+        "type": "road",
+        "x": 28,
+        "y": 24,
+        "constructionProgress": 300
+      },
+      {
+        "type": "road",
+        "x": 29,
+        "y": 14,
+        "constructionProgress": 300
+      },
+      {
+        "type": "road",
+        "x": 29,
+        "y": 25,
+        "constructionProgress": 300
+      },
+      {
+        "type": "road",
+        "x": 30,
+        "y": 13,
+        "constructionProgress": 300
+      },
+      {
+        "type": "road",
+        "x": 30,
+        "y": 26,
+        "constructionProgress": 300
+      },
+      {
+        "type": "road",
+        "x": 31,
+        "y": 12,
+        "constructionProgress": 300
+      },
+      {
+        "type": "road",
+        "x": 32,
+        "y": 12,
+        "constructionProgress": 300
+      },
+      {
+        "type": "road",
+        "x": 33,
+        "y": 13,
+        "constructionProgress": 300
+      },
+      {
+        "type": "road",
+        "x": 34,
+        "y": 14,
+        "constructionProgress": 300
+      },
+      {
+        "type": "road",
+        "x": 35,
+        "y": 15,
+        "constructionProgress": 300
+      }
+    ],
+    "remove": [],
+    "cost": 22400,
+    "paths": {
+      "S1 → Storage": {
+        "cost": 14,
+        "tiles": [
+          [
+            28,
+            22
+          ],
+          [
+            27,
+            21
+          ],
+          [
+            26,
+            20
+          ],
+          [
+            25,
+            19
+          ],
+          [
+            26,
+            18
+          ],
+          [
+            27,
+            17
+          ],
+          [
+            28,
+            16
+          ],
+          [
+            28,
+            15
+          ],
+          [
+            29,
+            14
+          ],
+          [
+            30,
+            13
+          ],
+          [
+            31,
+            12
+          ],
+          [
+            32,
+            12
+          ],
+          [
+            33,
+            13
+          ],
+          [
+            34,
+            14
+          ],
+          [
+            35,
+            15
+          ]
+        ]
+      },
+      "S2 → Storage": {
+        "cost": 24,
+        "tiles": [
+          [
+            36,
+            26
+          ],
+          [
+            35,
+            25
+          ],
+          [
+            34,
+            24
+          ],
+          [
+            33,
+            25
+          ],
+          [
+            32,
+            26
+          ],
+          [
+            31,
+            25
+          ],
+          [
+            30,
+            24
+          ],
+          [
+            29,
+            25
+          ],
+          [
+            28,
+            24
+          ],
+          [
+            27,
+            23
+          ],
+          [
+            26,
+            22
+          ],
+          [
+            25,
+            21
+          ],
+          [
+            24,
+            20
+          ],
+          [
+            25,
+            19
+          ],
+          [
+            26,
+            18
+          ],
+          [
+            27,
+            17
+          ],
+          [
+            28,
+            16
+          ],
+          [
+            28,
+            15
+          ],
+          [
+            29,
+            14
+          ],
+          [
+            30,
+            13
+          ],
+          [
+            31,
+            12
+          ],
+          [
+            32,
+            12
+          ],
+          [
+            33,
+            13
+          ],
+          [
+            34,
+            14
+          ],
+          [
+            35,
+            15
+          ]
+        ]
+      },
+      "Storage → Controller": {
+        "cost": 32,
+        "tiles": [
+          [
+            35,
+            15
+          ],
+          [
+            34,
+            14
+          ],
+          [
+            33,
+            13
+          ],
+          [
+            32,
+            12
+          ],
+          [
+            31,
+            12
+          ],
+          [
+            30,
+            13
+          ],
+          [
+            29,
+            14
+          ],
+          [
+            28,
+            15
+          ],
+          [
+            28,
+            16
+          ],
+          [
+            27,
+            17
+          ],
+          [
+            26,
+            18
+          ],
+          [
+            25,
+            19
+          ],
+          [
+            24,
+            20
+          ],
+          [
+            25,
+            21
+          ],
+          [
+            26,
+            22
+          ],
+          [
+            27,
+            23
+          ],
+          [
+            28,
+            24
+          ],
+          [
+            29,
+            25
+          ],
+          [
+            30,
+            26
+          ],
+          [
+            31,
+            27
+          ],
+          [
+            30,
+            28
+          ],
+          [
+            30,
+            29
+          ],
+          [
+            29,
+            30
+          ],
+          [
+            28,
+            31
+          ],
+          [
+            28,
+            32
+          ],
+          [
+            27,
+            33
+          ],
+          [
+            26,
+            34
+          ],
+          [
+            25,
+            35
+          ],
+          [
+            24,
+            36
+          ],
+          [
+            23,
+            37
+          ],
+          [
+            22,
+            38
+          ],
+          [
+            21,
+            39
+          ],
+          [
+            20,
+            40
+          ]
+        ]
+      },
+      "Storage → Spawn (35, 19)": {
+        "cost": 26,
+        "tiles": [
+          [
+            35,
+            15
+          ],
+          [
+            34,
+            14
+          ],
+          [
+            33,
+            13
+          ],
+          [
+            32,
+            12
+          ],
+          [
+            31,
+            12
+          ],
+          [
+            30,
+            13
+          ],
+          [
+            29,
+            14
+          ],
+          [
+            28,
+            15
+          ],
+          [
+            28,
+            16
+          ],
+          [
+            27,
+            17
+          ],
+          [
+            26,
+            18
+          ],
+          [
+            25,
+            19
+          ],
+          [
+            24,
+            20
+          ],
+          [
+            25,
+            21
+          ],
+          [
+            26,
+            22
+          ],
+          [
+            27,
+            23
+          ],
+          [
+            28,
+            24
+          ],
+          [
+            29,
+            25
+          ],
+          [
+            30,
+            24
+          ],
+          [
+            31,
+            25
+          ],
+          [
+            32,
+            26
+          ],
+          [
+            33,
+            25
+          ],
+          [
+            34,
+            24
+          ],
+          [
+            34,
+            23
+          ],
+          [
+            34,
+            22
+          ],
+          [
+            34,
+            21
+          ],
+          [
+            34,
+            20
+          ]
+        ]
+      }
+    },
+    "extensionCosts": [
+      {
+        "tile": [
+          32,
+          17
+        ],
+        "cost": 17
+      },
+      {
+        "tile": [
+          32,
+          18
+        ],
+        "cost": 17
+      },
+      {
+        "tile": [
+          32,
+          19
+        ],
+        "cost": 19
+      },
+      {
+        "tile": [
+          33,
+          17
+        ],
+        "cost": 29
+      },
+      {
+        "tile": [
+          33,
+          18
+        ],
+        "cost": 27
+      },
+      {
+        "tile": [
+          33,
+          19
+        ],
+        "cost": 26
+      },
+      {
+        "tile": [
+          33,
+          20
+        ],
+        "cost": 25
+      },
+      {
+        "tile": [
+          34,
+          16
+        ],
+        "cost": 0
+      },
+      {
+        "tile": [
+          34,
+          17
+        ],
+        "cost": 29
+      },
+      {
+        "tile": [
+          35,
+          16
+        ],
+        "cost": 0
+      },
+      {
+        "tile": [
+          35,
+          17
+        ],
+        "cost": 29
+      },
+      {
+        "tile": [
+          35,
+          21
+        ],
+        "cost": 24
+      },
+      {
+        "tile": [
+          35,
+          22
+        ],
+        "cost": 23
+      },
+      {
+        "tile": [
+          36,
+          13
+        ],
+        "cost": 1
+      },
+      {
+        "tile": [
+          36,
+          14
+        ],
+        "cost": 0
+      },
+      {
+        "tile": [
+          36,
+          15
+        ],
+        "cost": 0
+      },
+      {
+        "tile": [
+          36,
+          17
+        ],
+        "cost": 29
+      },
+      {
+        "tile": [
+          36,
+          22
+        ],
+        "cost": 23
+      },
+      {
+        "tile": [
+          37,
+          16
+        ],
+        "cost": 0
+      },
+      {
+        "tile": [
+          37,
+          17
+        ],
+        "cost": 30
+      },
+      {
+        "tile": [
+          37,
+          18
+        ],
+        "cost": 28
+      },
+      {
+        "tile": [
+          37,
+          19
+        ],
+        "cost": 28
+      },
+      {
+        "tile": [
+          37,
+          20
+        ],
+        "cost": 28
+      },
+      {
+        "tile": [
+          38,
+          16
+        ],
+        "cost": 0
+      },
+      {
+        "tile": [
+          38,
+          17
+        ],
+        "cost": 4
+      },
+      {
+        "tile": [
+          38,
+          18
+        ],
+        "cost": 6
+      },
+      {
+        "tile": [
+          38,
+          19
+        ],
+        "cost": 32
+      },
+      {
+        "tile": [
+          38,
+          21
+        ],
+        "cost": 27
+      },
+      {
+        "tile": [
+          38,
+          22
+        ],
+        "cost": 26
+      },
+      {
+        "tile": [
+          39,
+          18
+        ],
+        "cost": 6
+      }
+    ],
+    "linkNetwork": {
+      "roles": {
+        "S1 feed": [
+          29,
+          24
+        ],
+        "storage relay": [
+          31,
+          18
+        ],
+        "reserve": [
+          39,
+          19
+        ]
+      },
+      "edges": [
+        {
+          "from": "S1 feed",
+          "to": "storage relay",
+          "cooldownTicks": 6,
+          "maxBatch": 800,
+          "modeledNetPerFullBatch": 776,
+          "idealNetPerCooldownTick": 129.33
+        }
+      ],
+      "storageHandoff": {
+        "cost": 13,
+        "tiles": [
+          [
+            30,
+            17
+          ],
+          [
+            29,
+            16
+          ],
+          [
+            28,
+            15
+          ],
+          [
+            29,
+            14
+          ],
+          [
+            30,
+            13
+          ],
+          [
+            31,
+            12
+          ],
+          [
+            32,
+            12
+          ],
+          [
+            33,
+            13
+          ],
+          [
+            34,
+            14
+          ],
+          [
+            35,
+            15
+          ]
+        ]
+      },
+      "priority": "Roads first. Pilot only S1 to storage relay when both ends are serviceable; keep S2 and the Controller on hauling.",
+      "dispatchGuards": {
+        "minimumBatch": 200,
+        "controllerTarget": 400,
+        "requireSenderCooldownZero": true,
+        "reserveReceiverGrossSpace": true,
+        "oneSendPerSenderPerTick": true,
+        "excludeInactiveAndReserveLinks": true
+      }
+    },
+    "meanExtensionCost": 17.77,
+    "sharedRetainedExtensionMean": 27.67
+  },
+  "B": {
+    "rcl": 8,
+    "counts": {
+      "road": 51,
+      "constructedWall": 39,
+      "controller": 1,
+      "spawn": 3,
+      "tower": 2,
+      "extension": 60,
+      "rampart": 4,
+      "link": 6,
+      "storage": 1
+    },
+    "limits": {
+      "spawn": 3,
+      "extension": 60,
+      "storage": 1,
+      "link": 6
+    },
+    "structures": [
+      {
+        "id": "6ab54b85746ce639341c6db6",
+        "type": "road",
+        "x": 29,
+        "y": 23,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 21220,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab5517c69c57e108d1a6001",
+        "type": "road",
+        "x": 37,
+        "y": 27,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4700,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab56176d6fb1557ace85357",
+        "type": "road",
+        "x": 37,
+        "y": 22,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4100,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5664e9e343d273adc64f3",
+        "type": "road",
+        "x": 37,
+        "y": 21,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab56cf8450da3530e7ea331",
+        "type": "road",
+        "x": 36,
+        "y": 20,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5704b690fe2dbc8559c94",
+        "type": "road",
+        "x": 34,
+        "y": 23,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 5000,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab573b14bc33979a0142596",
+        "type": "road",
+        "x": 34,
+        "y": 22,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4500,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab57756c1eb1110654c47ec",
+        "type": "road",
+        "x": 34,
+        "y": 21,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4600,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab58cc3422010016881cda5",
+        "type": "road",
+        "x": 33,
+        "y": 25,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20300,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab59017d86b8f7b3ad50ab4",
+        "type": "road",
+        "x": 34,
+        "y": 20,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4200,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab594448502164150b72d4f",
+        "type": "road",
+        "x": 30,
+        "y": 24,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab59db6e404d0b24b95c88b",
+        "type": "road",
+        "x": 30,
+        "y": 28,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4200,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5a1f728d7bff91a099c0f",
+        "type": "road",
+        "x": 30,
+        "y": 29,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4000,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5a6173081816813d7c81f",
+        "type": "road",
+        "x": 29,
+        "y": 30,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5aaf26ed74101ee731f0c",
+        "type": "road",
+        "x": 28,
+        "y": 31,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4200,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5af88e404d07b0595ccf3",
+        "type": "road",
+        "x": 28,
+        "y": 32,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5b49e16f5fb5a8793b095",
+        "type": "road",
+        "x": 27,
+        "y": 33,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4700,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5b9dcd6fb15ae40e8695e",
+        "type": "road",
+        "x": 26,
+        "y": 34,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4460,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab5d4d97f9c2d47e63f0d5d",
+        "type": "road",
+        "x": 25,
+        "y": 35,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 21520,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab5f1f613e32b24739c3fe1",
+        "type": "road",
+        "x": 24,
+        "y": 36,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20900,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab60edf930cc9237f91d124",
+        "type": "road",
+        "x": 23,
+        "y": 37,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20200,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab62fe63d150a70a57a7a64",
+        "type": "road",
+        "x": 22,
+        "y": 38,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20520,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab65012948b8d5206ad46b3",
+        "type": "road",
+        "x": 21,
+        "y": 39,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20940,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab6562ff7b95122a41c1328",
+        "type": "road",
+        "x": 20,
+        "y": 40,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4600,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab65dea16f5fb1c5593db47",
+        "type": "road",
+        "x": 19,
+        "y": 40,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4700,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab6879434772f3745e3e496",
+        "type": "road",
+        "x": 18,
+        "y": 40,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20540,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab6b1da074bd838dfd16512",
+        "type": "road",
+        "x": 17,
+        "y": 39,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 21380,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab8565bacecc88277a8f99d",
+        "type": "constructedWall",
+        "x": 36,
+        "y": 9,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab856668273c9c705aa25ec",
+        "type": "constructedWall",
+        "x": 35,
+        "y": 9,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8566e8273c9890aaa25ef",
+        "type": "constructedWall",
+        "x": 32,
+        "y": 9,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8568634772fc588e45d45",
+        "type": "constructedWall",
+        "x": 31,
+        "y": 9,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8569f655c18fb95db7de7",
+        "type": "constructedWall",
+        "x": 29,
+        "y": 9,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab856b78736c5570082ae19",
+        "type": "constructedWall",
+        "x": 30,
+        "y": 8,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab856dc7a561219518508d5",
+        "type": "constructedWall",
+        "x": 30,
+        "y": 9,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8573afaba0233e250bc1d",
+        "type": "constructedWall",
+        "x": 31,
+        "y": 8,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab857c0e805147aacb9718a",
+        "type": "constructedWall",
+        "x": 32,
+        "y": 8,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab857e45c98fe2c52e7d6b5",
+        "type": "constructedWall",
+        "x": 35,
+        "y": 8,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab857f0956625759be02880",
+        "type": "constructedWall",
+        "x": 36,
+        "y": 8,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85806b765adb2fd63bf5b",
+        "type": "constructedWall",
+        "x": 37,
+        "y": 8,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab858eb067f15c5a661b72b",
+        "type": "constructedWall",
+        "x": 27,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85913eba3da19c764342f",
+        "type": "constructedWall",
+        "x": 28,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8592c91d2f6ac1e0b04ec",
+        "type": "constructedWall",
+        "x": 29,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8596a162753be36aa46c1",
+        "type": "constructedWall",
+        "x": 30,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab859b1c7b3983c92ad5f09",
+        "type": "constructedWall",
+        "x": 31,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab859e3c7bf11178c7bdd88",
+        "type": "constructedWall",
+        "x": 26,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85a9d5c8733a8add988a7",
+        "type": "constructedWall",
+        "x": 14,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85aba5f3b2aa11c336c47",
+        "type": "constructedWall",
+        "x": 14,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85b035f3b2a76be336c60",
+        "type": "constructedWall",
+        "x": 13,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85b215c87331b64d988cb",
+        "type": "constructedWall",
+        "x": 26,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85b528f3760e1e154e35a",
+        "type": "constructedWall",
+        "x": 13,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85bc095662501b2e02950",
+        "type": "constructedWall",
+        "x": 27,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85c1f8f3760114654e38a",
+        "type": "constructedWall",
+        "x": 28,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85ced1627531938aa4791",
+        "type": "constructedWall",
+        "x": 12,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85d2c8f3760cce254e3bf",
+        "type": "constructedWall",
+        "x": 12,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85d4d0339f42a8ff46b07",
+        "type": "constructedWall",
+        "x": 10,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85dbb6f14dedf819c0e9d",
+        "type": "constructedWall",
+        "x": 11,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85e057c0446fe00c868ee",
+        "type": "constructedWall",
+        "x": 11,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85ed3dc512972d8a7e026",
+        "type": "constructedWall",
+        "x": 29,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85f0b34772fc74de45f4e",
+        "type": "constructedWall",
+        "x": 30,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85f8e9e927ee631e22093",
+        "type": "constructedWall",
+        "x": 10,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab85fd57a561200f1850b00",
+        "type": "constructedWall",
+        "x": 9,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab86a4a0fa08653e9a386ee",
+        "type": "constructedWall",
+        "x": 9,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab86aa9b71cd57b7b5e1242",
+        "type": "constructedWall",
+        "x": 8,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab86af68f376018d854e729",
+        "type": "constructedWall",
+        "x": 31,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab86e61eba3da3863643962",
+        "type": "constructedWall",
+        "x": 8,
+        "y": 45,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab86f1524e48fd9d165505c",
+        "type": "constructedWall",
+        "x": 7,
+        "y": 46,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 1,
+        "hitsMax": 300000000
+      },
+      {
+        "id": "6ab8708cfaba0252bf50c25b",
+        "type": "road",
+        "x": 37,
+        "y": 26,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4200,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab870fe47fd63ad28a55b8e",
+        "type": "road",
+        "x": 37,
+        "y": 28,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4500,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab87182c72710454b019959",
+        "type": "road",
+        "x": 34,
+        "y": 24,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4500,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab8901db765ad48e563cd23",
+        "type": "road",
+        "x": 31,
+        "y": 27,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 5000,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab8933dc727102fbb01a169",
+        "type": "road",
+        "x": 37,
+        "y": 23,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4100,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab895aa3936cd83139a5d73",
+        "type": "road",
+        "x": 37,
+        "y": 24,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 5000,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab8962c57ff65abf0407414",
+        "type": "road",
+        "x": 36,
+        "y": 26,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20900,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab897db074bd890e7d1debf",
+        "type": "road",
+        "x": 36,
+        "y": 27,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 21460,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab8995c48b54481a0e07c02",
+        "type": "road",
+        "x": 36,
+        "y": 25,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20300,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab89d3db765ad4f1063d036",
+        "type": "road",
+        "x": 35,
+        "y": 25,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20100,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab8af2324e48f986c655fe2",
+        "type": "road",
+        "x": 37,
+        "y": 25,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab8afa8e1cc157e5143347f",
+        "type": "road",
+        "x": 34,
+        "y": 25,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20500,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab8afe8655c187789db92ae",
+        "type": "road",
+        "x": 33,
+        "y": 26,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20720,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab8b0fe3936cd0d859a63e8",
+        "type": "road",
+        "x": 16,
+        "y": 38,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4300,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab9339f0fa086a5c2a3b66b",
+        "type": "road",
+        "x": 26,
+        "y": 35,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20040,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab93688eba3da640f6468a4",
+        "type": "road",
+        "x": 25,
+        "y": 36,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20100,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab9387d0945d29d791d5500",
+        "type": "road",
+        "x": 24,
+        "y": 37,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 21040,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab93ad4ef472c23a8744bf1",
+        "type": "road",
+        "x": 23,
+        "y": 38,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20640,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ab93df7c7b39842b5ad953b",
+        "type": "road",
+        "x": 22,
+        "y": 39,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 20420,
+        "hitsMax": 25000
+      },
+      {
+        "id": "6ac6fa32e00622522dfd9c19",
+        "type": "road",
+        "x": 32,
+        "y": 26,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ac6fa3ee407d52cdb4fa218",
+        "type": "road",
+        "x": 31,
+        "y": 25,
+        "my": false,
+        "energy": null,
+        "capacity": null,
+        "hits": 4900,
+        "hitsMax": 5000
+      },
+      {
+        "id": "5bbcae399099fc012e63899c",
+        "type": "controller",
+        "x": 17,
+        "y": 37,
+        "my": true,
+        "energy": null,
+        "capacity": null,
+        "hits": 0,
+        "hitsMax": 0
+      },
+      {
+        "id": "6ab52dfe67c06400133c3a40",
+        "type": "spawn",
+        "x": 35,
+        "y": 19,
+        "my": true,
+        "energy": 300,
+        "capacity": 300,
+        "hits": 5000,
+        "hitsMax": 5000
+      },
+      {
+        "id": "6ab7b5270d0891445c99ef4f",
+        "type": "tower",
+        "x": 36,
+        "y": 21,
+        "my": true,
+        "energy": 810,
+        "capacity": 1000,
+        "hits": 3000,
+        "hitsMax": 3000
+      },
+      {
+        "id": "6ab7ca420d6d56a8c90fb9fc",
+        "type": "extension",
+        "x": 35,
+        "y": 21,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab7e40c0832a8838a6e907d",
+        "type": "extension",
+        "x": 33,
+        "y": 19,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab809a8e1cc15bd7c430d27",
+        "type": "extension",
+        "x": 37,
+        "y": 18,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab82603a3233984645c2e0e",
+        "type": "extension",
+        "x": 33,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab8394520367424f8575b58",
+        "type": "extension",
+        "x": 34,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab855e02bb82cd2f3a59860",
+        "type": "extension",
+        "x": 36,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab88dd54f721e57d1ded5ee",
+        "type": "extension",
+        "x": 33,
+        "y": 18,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab8a11d28e699ea085e661a",
+        "type": "extension",
+        "x": 33,
+        "y": 20,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab8a5354f3b274a4acc8fa5",
+        "type": "extension",
+        "x": 37,
+        "y": 20,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ab8ab538ba11ebf35268d55",
+        "type": "extension",
+        "x": 35,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc0ff0d6b1fc682227df67",
+        "type": "extension",
+        "x": 37,
+        "y": 19,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6abc13fb7d817266899e540f",
+        "type": "extension",
+        "x": 37,
+        "y": 17,
+        "my": true,
+        "energy": 50,
+        "capacity": 50,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac497e12dd7984034698c83",
+        "type": "tower",
+        "x": 38,
+        "y": 20,
+        "my": true,
+        "energy": 740,
+        "capacity": 1000,
+        "hits": 3000,
+        "hitsMax": 3000
+      },
+      {
+        "id": "6ac6dad71484db99fc11c993",
+        "type": "rampart",
+        "x": 35,
+        "y": 19,
+        "my": true,
+        "energy": null,
+        "capacity": null,
+        "hits": 101101,
+        "hitsMax": 30000000
+      },
+      {
+        "id": "6ac6dadb5b77c3506f0b2d45",
+        "type": "rampart",
+        "x": 36,
+        "y": 21,
+        "my": true,
+        "energy": null,
+        "capacity": null,
+        "hits": 101101,
+        "hitsMax": 30000000
+      },
+      {
+        "id": "6ac6f94c37bdd2d774d300c1",
+        "type": "link",
+        "x": 39,
+        "y": 19,
+        "my": true,
+        "energy": 0,
+        "capacity": 800,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac6f9bfc7bf11d5237f77c4",
+        "type": "link",
+        "x": 31,
+        "y": 18,
+        "my": true,
+        "energy": 0,
+        "capacity": 800,
+        "hits": 1000,
+        "hitsMax": 1000
+      },
+      {
+        "id": "6ac6fa051a053d47d081a7db",
+        "type": "rampart",
+        "x": 36,
+        "y": 16,
+        "my": true,
+        "energy": null,
+        "capacity": null,
+        "hits": 100701,
+        "hitsMax": 30000000
+      },
+      {
+        "id": "6ac6fa12ea44851ea02948f1",
+        "type": "rampart",
+        "x": 38,
+        "y": 20,
+        "my": true,
+        "energy": null,
+        "capacity": null,
+        "hits": 100701,
+        "hitsMax": 30000000
+      },
+      {
+        "type": "storage",
+        "x": 30,
+        "y": 33,
+        "my": true
+      },
+      {
+        "type": "spawn",
+        "x": 30,
+        "y": 34,
+        "my": true
+      },
+      {
+        "type": "spawn",
+        "x": 31,
+        "y": 35,
+        "my": true
+      },
+      {
+        "type": "link",
+        "x": 29,
+        "y": 24,
+        "my": true
+      },
+      {
+        "type": "link",
+        "x": 38,
+        "y": 26,
+        "my": true
+      },
+      {
+        "type": "link",
+        "x": 31,
+        "y": 33,
+        "my": true
+      },
+      {
+        "type": "link",
+        "x": 16,
+        "y": 39,
+        "my": true
+      },
+      {
+        "type": "road",
+        "x": 29,
+        "y": 32,
+        "my": true
+      },
+      {
+        "type": "road",
+        "x": 29,
+        "y": 33,
+        "my": true
+      },
+      {
+        "type": "road",
+        "x": 31,
+        "y": 34,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 28,
+        "y": 34,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 29,
+        "y": 31,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 32,
+        "y": 35,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 30,
+        "y": 31,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 28,
+        "y": 33,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 28,
+        "y": 35,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 30,
+        "y": 35,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 31,
+        "y": 31,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 29,
+        "y": 35,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 33,
+        "y": 33,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 33,
+        "y": 35,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 33,
+        "y": 34,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 28,
+        "y": 30,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 33,
+        "y": 32,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 29,
+        "y": 29,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 27,
+        "y": 34,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 28,
+        "y": 29,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 30,
+        "y": 30,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 31,
+        "y": 28,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 29,
+        "y": 28,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 27,
+        "y": 35,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 31,
+        "y": 29,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 29,
+        "y": 27,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 26,
+        "y": 36,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 30,
+        "y": 27,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 27,
+        "y": 36,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 25,
+        "y": 37,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 32,
+        "y": 27,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 26,
+        "y": 37,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 31,
+        "y": 26,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 32,
+        "y": 28,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 24,
+        "y": 38,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 29,
+        "y": 26,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 25,
+        "y": 38,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 33,
+        "y": 27,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 23,
+        "y": 39,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 34,
+        "y": 26,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 24,
+        "y": 39,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 34,
+        "y": 27,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 35,
+        "y": 24,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 22,
+        "y": 40,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 28,
+        "y": 26,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 21,
+        "y": 40,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 35,
+        "y": 26,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 23,
+        "y": 40,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 20,
+        "y": 41,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 36,
+        "y": 23,
+        "my": true
+      },
+      {
+        "type": "extension",
+        "x": 36,
+        "y": 24,
+        "my": true
+      }
+    ],
+    "add": [
+      {
+        "type": "extension",
+        "x": 20,
+        "y": 41,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 21,
+        "y": 40,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 22,
+        "y": 40,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 23,
+        "y": 39,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 23,
+        "y": 40,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 24,
+        "y": 38,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 24,
+        "y": 39,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 25,
+        "y": 37,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 25,
+        "y": 38,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 26,
+        "y": 36,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 26,
+        "y": 37,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 27,
+        "y": 34,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 27,
+        "y": 35,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 27,
+        "y": 36,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 28,
+        "y": 26,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 28,
+        "y": 29,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 28,
+        "y": 30,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 28,
+        "y": 33,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 28,
+        "y": 34,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 28,
+        "y": 35,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 29,
+        "y": 26,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 29,
+        "y": 27,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 29,
+        "y": 28,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 29,
+        "y": 29,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 29,
+        "y": 31,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 29,
+        "y": 35,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 30,
+        "y": 27,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 30,
+        "y": 30,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 30,
+        "y": 31,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 30,
+        "y": 35,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 31,
+        "y": 26,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 31,
+        "y": 28,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 31,
+        "y": 29,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 31,
+        "y": 31,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 32,
+        "y": 27,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 32,
+        "y": 28,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 32,
+        "y": 35,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 33,
+        "y": 27,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 33,
+        "y": 32,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 33,
+        "y": 33,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 33,
+        "y": 34,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 33,
+        "y": 35,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 34,
+        "y": 26,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 34,
+        "y": 27,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 35,
+        "y": 24,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 35,
+        "y": 26,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 36,
+        "y": 23,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "extension",
+        "x": 36,
+        "y": 24,
+        "constructionProgress": 3000
+      },
+      {
+        "type": "link",
+        "x": 16,
+        "y": 39,
+        "constructionProgress": 5000
+      },
+      {
+        "type": "link",
+        "x": 29,
+        "y": 24,
+        "constructionProgress": 5000
+      },
+      {
+        "type": "link",
+        "x": 31,
+        "y": 33,
+        "constructionProgress": 5000
+      },
+      {
+        "type": "link",
+        "x": 38,
+        "y": 26,
+        "constructionProgress": 5000
+      },
+      {
+        "type": "road",
+        "x": 29,
+        "y": 32,
+        "constructionProgress": 300
+      },
+      {
+        "type": "road",
+        "x": 29,
+        "y": 33,
+        "constructionProgress": 300
+      },
+      {
+        "type": "road",
+        "x": 31,
+        "y": 34,
+        "constructionProgress": 300
+      },
+      {
+        "type": "spawn",
+        "x": 30,
+        "y": 34,
+        "constructionProgress": 15000
+      },
+      {
+        "type": "spawn",
+        "x": 31,
+        "y": 35,
+        "constructionProgress": 15000
+      },
+      {
+        "type": "storage",
+        "x": 30,
+        "y": 33,
+        "constructionProgress": 30000
+      }
+    ],
+    "remove": [
+      {
+        "type": "extension",
+        "x": 32,
+        "y": 17
+      },
+      {
+        "type": "extension",
+        "x": 32,
+        "y": 18
+      },
+      {
+        "type": "extension",
+        "x": 32,
+        "y": 19
+      },
+      {
+        "type": "extension",
+        "x": 34,
+        "y": 16
+      },
+      {
+        "type": "extension",
+        "x": 35,
+        "y": 16
+      },
+      {
+        "type": "extension",
+        "x": 35,
+        "y": 22
+      },
+      {
+        "type": "extension",
+        "x": 36,
+        "y": 13
+      },
+      {
+        "type": "extension",
+        "x": 36,
+        "y": 14
+      },
+      {
+        "type": "extension",
+        "x": 36,
+        "y": 15
+      },
+      {
+        "type": "extension",
+        "x": 36,
+        "y": 22
+      },
+      {
+        "type": "extension",
+        "x": 37,
+        "y": 16
+      },
+      {
+        "type": "extension",
+        "x": 38,
+        "y": 16
+      },
+      {
+        "type": "extension",
+        "x": 38,
+        "y": 17
+      },
+      {
+        "type": "extension",
+        "x": 38,
+        "y": 18
+      },
+      {
+        "type": "extension",
+        "x": 38,
+        "y": 19
+      },
+      {
+        "type": "extension",
+        "x": 38,
+        "y": 21
+      },
+      {
+        "type": "extension",
+        "x": 38,
+        "y": 22
+      },
+      {
+        "type": "extension",
+        "x": 39,
+        "y": 18
+      },
+      {
+        "type": "storage",
+        "x": 36,
+        "y": 16
+      }
+    ],
+    "cost": 224900,
+    "paths": {
+      "S1 → Storage": {
+        "cost": 8,
+        "tiles": [
+          [
+            30,
+            24
+          ],
+          [
+            31,
+            25
+          ],
+          [
+            32,
+            26
+          ],
+          [
+            31,
+            27
+          ],
+          [
+            30,
+            28
+          ],
+          [
+            30,
+            29
+          ],
+          [
+            29,
+            30
+          ],
+          [
+            28,
+            31
+          ],
+          [
+            29,
+            32
+          ]
+        ]
+      },
+      "S2 → Storage": {
+        "cost": 10,
+        "tiles": [
+          [
+            36,
+            26
+          ],
+          [
+            35,
+            25
+          ],
+          [
+            34,
+            24
+          ],
+          [
+            33,
+            25
+          ],
+          [
+            32,
+            26
+          ],
+          [
+            31,
+            27
+          ],
+          [
+            30,
+            28
+          ],
+          [
+            30,
+            29
+          ],
+          [
+            29,
+            30
+          ],
+          [
+            28,
+            31
+          ],
+          [
+            29,
+            32
+          ]
+        ]
+      },
+      "Storage → Controller": {
+        "cost": 9,
+        "tiles": [
+          [
+            29,
+            32
+          ],
+          [
+            28,
+            32
+          ],
+          [
+            27,
+            33
+          ],
+          [
+            26,
+            34
+          ],
+          [
+            25,
+            35
+          ],
+          [
+            24,
+            36
+          ],
+          [
+            23,
+            37
+          ],
+          [
+            22,
+            38
+          ],
+          [
+            21,
+            39
+          ],
+          [
+            20,
+            40
+          ]
+        ]
+      },
+      "Storage → Spawn (30, 34)": {
+        "cost": 0,
+        "tiles": [
+          [
+            29,
+            33
+          ]
+        ]
+      },
+      "Storage → Spawn (31, 35)": {
+        "cost": 0,
+        "tiles": [
+          [
+            31,
+            34
+          ]
+        ]
+      },
+      "Storage → Spawn (35, 19)": {
+        "cost": 12,
+        "tiles": [
+          [
+            29,
+            32
+          ],
+          [
+            28,
+            31
+          ],
+          [
+            29,
+            30
+          ],
+          [
+            30,
+            29
+          ],
+          [
+            30,
+            28
+          ],
+          [
+            31,
+            27
+          ],
+          [
+            32,
+            26
+          ],
+          [
+            33,
+            25
+          ],
+          [
+            34,
+            24
+          ],
+          [
+            34,
+            23
+          ],
+          [
+            34,
+            22
+          ],
+          [
+            34,
+            21
+          ],
+          [
+            34,
+            20
+          ]
+        ]
+      }
+    },
+    "extensionCosts": [
+      {
+        "tile": [
+          20,
+          41
+        ],
+        "cost": 9
+      },
+      {
+        "tile": [
+          21,
+          40
+        ],
+        "cost": 8
+      },
+      {
+        "tile": [
+          22,
+          40
+        ],
+        "cost": 8
+      },
+      {
+        "tile": [
+          23,
+          39
+        ],
+        "cost": 7
+      },
+      {
+        "tile": [
+          23,
+          40
+        ],
+        "cost": 8
+      },
+      {
+        "tile": [
+          24,
+          38
+        ],
+        "cost": 6
+      },
+      {
+        "tile": [
+          24,
+          39
+        ],
+        "cost": 7
+      },
+      {
+        "tile": [
+          25,
+          37
+        ],
+        "cost": 5
+      },
+      {
+        "tile": [
+          25,
+          38
+        ],
+        "cost": 6
+      },
+      {
+        "tile": [
+          26,
+          36
+        ],
+        "cost": 4
+      },
+      {
+        "tile": [
+          26,
+          37
+        ],
+        "cost": 5
+      },
+      {
+        "tile": [
+          27,
+          34
+        ],
+        "cost": 2
+      },
+      {
+        "tile": [
+          27,
+          35
+        ],
+        "cost": 3
+      },
+      {
+        "tile": [
+          27,
+          36
+        ],
+        "cost": 4
+      },
+      {
+        "tile": [
+          28,
+          26
+        ],
+        "cost": 8
+      },
+      {
+        "tile": [
+          28,
+          29
+        ],
+        "cost": 2
+      },
+      {
+        "tile": [
+          28,
+          30
+        ],
+        "cost": 1
+      },
+      {
+        "tile": [
+          28,
+          33
+        ],
+        "cost": 0
+      },
+      {
+        "tile": [
+          28,
+          34
+        ],
+        "cost": 0
+      },
+      {
+        "tile": [
+          28,
+          35
+        ],
+        "cost": 0
+      },
+      {
+        "tile": [
+          29,
+          26
+        ],
+        "cost": 6
+      },
+      {
+        "tile": [
+          29,
+          27
+        ],
+        "cost": 4
+      },
+      {
+        "tile": [
+          29,
+          28
+        ],
+        "cost": 3
+      },
+      {
+        "tile": [
+          29,
+          29
+        ],
+        "cost": 2
+      },
+      {
+        "tile": [
+          29,
+          31
+        ],
+        "cost": 0
+      },
+      {
+        "tile": [
+          29,
+          35
+        ],
+        "cost": 0
+      },
+      {
+        "tile": [
+          30,
+          27
+        ],
+        "cost": 4
+      },
+      {
+        "tile": [
+          30,
+          30
+        ],
+        "cost": 2
+      },
+      {
+        "tile": [
+          30,
+          31
+        ],
+        "cost": 0
+      },
+      {
+        "tile": [
+          30,
+          35
+        ],
+        "cost": 0
+      },
+      {
+        "tile": [
+          31,
+          26
+        ],
+        "cost": 5
+      },
+      {
+        "tile": [
+          31,
+          28
+        ],
+        "cost": 3
+      },
+      {
+        "tile": [
+          31,
+          29
+        ],
+        "cost": 3
+      },
+      {
+        "tile": [
+          31,
+          31
+        ],
+        "cost": 0
+      },
+      {
+        "tile": [
+          32,
+          27
+        ],
+        "cost": 5
+      },
+      {
+        "tile": [
+          32,
+          28
+        ],
+        "cost": 5
+      },
+      {
+        "tile": [
+          32,
+          35
+        ],
+        "cost": 0
+      },
+      {
+        "tile": [
+          33,
+          17
+        ],
+        "cost": 15
+      },
+      {
+        "tile": [
+          33,
+          18
+        ],
+        "cost": 13
+      },
+      {
+        "tile": [
+          33,
+          19
+        ],
+        "cost": 12
+      },
+      {
+        "tile": [
+          33,
+          20
+        ],
+        "cost": 11
+      },
+      {
+        "tile": [
+          33,
+          27
+        ],
+        "cost": 6
+      },
+      {
+        "tile": [
+          33,
+          32
+        ],
+        "cost": 1
+      },
+      {
+        "tile": [
+          33,
+          33
+        ],
+        "cost": 1
+      },
+      {
+        "tile": [
+          33,
+          34
+        ],
+        "cost": 1
+      },
+      {
+        "tile": [
+          33,
+          35
+        ],
+        "cost": 1
+      },
+      {
+        "tile": [
+          34,
+          17
+        ],
+        "cost": 15
+      },
+      {
+        "tile": [
+          34,
+          26
+        ],
+        "cost": 7
+      },
+      {
+        "tile": [
+          34,
+          27
+        ],
+        "cost": 7
+      },
+      {
+        "tile": [
+          35,
+          17
+        ],
+        "cost": 15
+      },
+      {
+        "tile": [
+          35,
+          21
+        ],
+        "cost": 10
+      },
+      {
+        "tile": [
+          35,
+          24
+        ],
+        "cost": 8
+      },
+      {
+        "tile": [
+          35,
+          26
+        ],
+        "cost": 8
+      },
+      {
+        "tile": [
+          36,
+          17
+        ],
+        "cost": 15
+      },
+      {
+        "tile": [
+          36,
+          23
+        ],
+        "cost": 9
+      },
+      {
+        "tile": [
+          36,
+          24
+        ],
+        "cost": 9
+      },
+      {
+        "tile": [
+          37,
+          17
+        ],
+        "cost": 16
+      },
+      {
+        "tile": [
+          37,
+          18
+        ],
+        "cost": 14
+      },
+      {
+        "tile": [
+          37,
+          19
+        ],
+        "cost": 14
+      },
+      {
+        "tile": [
+          37,
+          20
+        ],
+        "cost": 13
+      }
+    ],
+    "linkNetwork": {
+      "roles": {
+        "S1 feed": [
+          29,
+          24
+        ],
+        "S2 feed": [
+          38,
+          26
+        ],
+        "storage hub": [
+          31,
+          33
+        ],
+        "controller": [
+          16,
+          39
+        ],
+        "east reserve": [
+          39,
+          19
+        ],
+        "west reserve": [
+          31,
+          18
+        ]
+      },
+      "edges": [
+        {
+          "from": "S1 feed",
+          "to": "storage hub",
+          "cooldownTicks": 9,
+          "maxBatch": 800,
+          "modeledNetPerFullBatch": 776,
+          "idealNetPerCooldownTick": 86.22
+        },
+        {
+          "from": "S2 feed",
+          "to": "storage hub",
+          "cooldownTicks": 7,
+          "maxBatch": 800,
+          "modeledNetPerFullBatch": 776,
+          "idealNetPerCooldownTick": 110.86
+        },
+        {
+          "from": "S1 feed",
+          "to": "controller",
+          "cooldownTicks": 15,
+          "maxBatch": 800,
+          "modeledNetPerFullBatch": 776,
+          "idealNetPerCooldownTick": 51.73
+        },
+        {
+          "from": "S2 feed",
+          "to": "controller",
+          "cooldownTicks": 22,
+          "maxBatch": 800,
+          "modeledNetPerFullBatch": 776,
+          "idealNetPerCooldownTick": 35.27
+        },
+        {
+          "from": "storage hub",
+          "to": "controller",
+          "cooldownTicks": 15,
+          "maxBatch": 800,
+          "modeledNetPerFullBatch": 776,
+          "idealNetPerCooldownTick": 51.73
+        }
+      ],
+      "storageHandoff": {
+        "cost": 0,
+        "tiles": [
+          [
+            30,
+            32
+          ]
+        ]
+      },
+      "priority": "On downgrade risk prioritize direct Controller supply. Otherwise fill the Storage hub for Spawn recovery; surplus can feed the Controller directly, then via the hub as a fallback.",
+      "dispatchGuards": {
+        "minimumBatch": 200,
+        "controllerTarget": 400,
+        "requireSenderCooldownZero": true,
+        "reserveReceiverGrossSpace": true,
+        "oneSendPerSenderPerTick": true,
+        "excludeInactiveAndReserveLinks": true
+      }
+    },
+    "meanExtensionCost": 5.93,
+    "sharedRetainedExtensionMean": 13.58
+  }
+}
