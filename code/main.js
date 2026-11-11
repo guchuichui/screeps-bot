@@ -10,6 +10,10 @@ module.exports.loop = function () {
     Memory.expansion.lastError = { tick: Game.time, scope: 'main', reason: String(error.stack || error) };
     throw error;
   } finally {
+    try { require('stage04.autonomy').run(); }
+    catch (error) {
+      (Memory.expansion ||= { tasks: {} }).stage04Error = { tick: Game.time, reason: String(error.stack || error) };
+    }
     try {
       const metrics = require('telemetry.metrics');
       metrics.timing('colonyLoop', Game.cpu.getUsed() - startedAt);

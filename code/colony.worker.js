@@ -20,6 +20,10 @@ exports.run = function (creep) {
       delete creep.memory.harvestSlotUntil;
       return;
     }
+    if (require('stage04.recovery').drain(creep)) {
+      work.releaseHarvest(creep);
+      return;
+    }
     if (creep.memory.role === 'colonyHarvester') work.harvest(creep);
     else work.collect(creep);
     return;

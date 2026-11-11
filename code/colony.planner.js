@@ -13,7 +13,7 @@ exports.run = function (room, colony) {
   const spawn = room.find(FIND_MY_SPAWNS)[0]; if (!spawn) return;
   const structures = room.find(FIND_STRUCTURES), sites = room.find(FIND_CONSTRUCTION_SITES);
   const level = room.controller.level;
-  const count = type => structures.filter(s => s.structureType === type && s.my).length + sites.filter(s => s.structureType === type && s.my).length;
+  const count = type => structures.concat(sites).filter(s => s.structureType === type).length;
   const free = (x, y, allowRoad = false) => x > 1 && x < 48 && y > 1 && y < 48 &&
     room.getTerrain().get(x, y) !== TERRAIN_MASK_WALL && !sites.some(s => s.pos.x === x && s.pos.y === y) &&
     !structures.some(s => s.pos.x === x && s.pos.y === y && !(s.structureType === STRUCTURE_RAMPART && s.my) && !(allowRoad && s.structureType === STRUCTURE_ROAD)) &&

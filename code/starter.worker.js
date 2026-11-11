@@ -11,6 +11,8 @@ module.exports.run = function (creep) {
     creep.memory.working = false;
   }
 
+  if (require('stage04.links').work(creep)) return;
+
   // If sources are temporarily empty, wait and retry while in collection mode.
   if (!creep.memory.working) {
     const source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);

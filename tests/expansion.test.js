@@ -410,4 +410,5 @@ passed += require('./pioneer.salvage.test')();
 passed += require('./link.transition.test')();
 passed += require('./defense.basic.test')();
 passed += require('./container.retirement.test')();
+passed += require('./stage04.autonomy.test')();
 console.log(`${passed} tests passed`);

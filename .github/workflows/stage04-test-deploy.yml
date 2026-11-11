@@ -1,0 +1,36 @@
+name: Stage 04 Screeps test deploy
+
+on:
+  push:
+    branches:
+      - codex/stage04-autonomy
+
+permissions:
+  contents: read
+
+concurrency:
+  group: screeps-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/codex/stage04-autonomy'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install requests
+      - run: node tests/check-syntax.js
+      - run: node tests/expansion.test.js
+      - run: python -m unittest discover -s tests -p 'test_*.py'
+      - name: Upload to the configured Screeps test branch
+        env:
+          SCREEPS_TOKEN: ${{ secrets.SCREEPS_TOKEN }}
+          SCREEPS_BRANCH: agent-test
+        run: python upload.py
