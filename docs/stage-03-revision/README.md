@@ -26,3 +26,21 @@ X39 通道为 y=13–26，y=12/27 为天然墙。X38 在 Tower (38,20) 两侧预
 路径是地形与结构约束下的同口径静态模拟，进入道路/平原/沼泽计 1/2/5，动态会车与实测吞吐仍需验证。施工进度、可补能容量和费用是模拟或理论值。复核每批完成后的 Spawn 进能、Source 站位和通道占用后再继续。
 
     python tools/screeps_stage03_revision.py docs/stage-03/coordinates-and-costs.json --output docs/stage-03-revision/coordinates.json
+
+## Link 退役与后续布局
+
+审计范围为代码仓库全部 Link 引用。主循环使用 starter.worker 与 colony.worker，采集和 Spawn 补能不依赖 Link。移除了无人调用的 role.link.js（包含旧房间硬编码 ID 和未保护的查找结果），移除历史 role.base.js 的优先 Link 补能分支，并从通用规划器移除 Link 自建。现在线上仍是旧版本，旧规划器具备自动补 Link 的逻辑。等待人工审批并确认规划保护已生效后再退役。零 Link、单 Link、双 Link 与 Link 工地模拟均完成 Worker 采集和 Spawn 补能。
+
+| 时点 | 角色 | 坐标 |
+| --- | --- | --- |
+| 全部 10 个 Extension 完工，人工审批后 | 退役两处旧 Link，可同批 | (31,18)、(39,19) |
+| 旧 Link 退役后 | 完成 X39 通道铺路 | (39,19) |
+| RCL6，另行审批 | Storage 接收 Link | (37,14)，共用交接格 (37,15) |
+| RCL6，另行审批 | S1、S2 发送 Link | (29,24)、(38,26) |
+| RCL7，可选另行审批 | Controller 接收 Link | (16,39) |
+
+RCL6 终态占满 3 个 Link 名额，Controller 保持人工运输。今后经审批实现调度时，以 Storage 为默认接收端，预留接收空间、检查发送冷却。S1/S2 距离和理论冷却分别为 10/12 tick，满批 800 到达 776。只有新 Link 建成后才开发和启用自动调度。此次仅给坐标与理论预算。
+
+旧 Link 退役并补齐道路后，零 Link 和三新 Link 的四项路径模拟同为 14、14、30、10，顺序同上表。三新 Link 增加预计建造能量 15,000，RCL6 全部施工理论预算 69,900，不含维修与后续 RCL7 Link。详见 [links.json](links.json)。
+
+    python tools/screeps_stage03_link_plan.py docs/stage-03/coordinates-and-costs.json --output docs/stage-03-revision/links.json

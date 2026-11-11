@@ -37,3 +37,14 @@ class RevisedExtensionPlanTests(unittest.TestCase):
         snapshot = {**self.baseline["snapshot"], "sites": [{"type": "extension", "x": 1, "y": 1}]}
         with self.assertRaisesRegex(ValueError, "10 free"):
             plan_extensions({**self.baseline, "snapshot": snapshot})
+
+    def test_replacement_links_and_zero_link_phase_are_reproducible(self):
+        from screeps_stage03_link_plan import plan_links
+
+        report = plan_links(self.baseline)
+        self.assertEqual(json.loads(json.dumps(report)), read(ROOT / "docs/stage-03-revision/links.json"))
+        self.assertEqual([point(obj) for obj in report["retireAfterTenBuiltAndApproval"]], [(31, 18), (39, 19)])
+        self.assertEqual(len(report["buildAfterRetirementAndApproval"]), 3)
+        self.assertEqual(report["phases"]["zeroLinks"]["spawnCapacityAtRcl6"], 2000)
+        self.assertEqual(report["phases"]["newLink3"]["pathCosts"], report["phases"]["zeroLinks"]["pathCosts"])
+        self.assertEqual(report["storageInteraction"], [(37, 15)])

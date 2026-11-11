@@ -77,15 +77,9 @@ var roleBase = {
                 }
             }
 			else if(creep.memory.state) {
-                var targets = creep.pos.findInRange(FIND_STRUCTURES,1,{
-                    filter: (structure) => {
-                        return ( structure.structureType == STRUCTURE_LINK && structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0 )
-                    }
-                });
-                if(targets.length > 0) {
-                    creep.transfer(targets[0],RESOURCE_ENERGY);
-                }else if(creep.transfer(Game.rooms[roomName].storage,RESOURCE_ENERGY) ==ERR_NOT_IN_RANGE){
-                    creep.moveTo(Game.rooms[roomName].storage, {visualizePathStyle: {stroke: '#ffaa00'}});  
+                const storage = Game.rooms[roomName].storage;
+                if (storage && creep.transfer(storage, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+                    creep.moveTo(storage, {visualizePathStyle: {stroke: '#ffaa00'}});
                 }
             }
             else{

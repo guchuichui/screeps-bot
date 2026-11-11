@@ -1,0 +1,1068 @@
+{
+  "snapshotTick": 84200411,
+  "room": "E22S36",
+  "rcl": 6,
+  "retireAfterTenBuiltAndApproval": [
+    {
+      "type": "link",
+      "x": 31,
+      "y": 18
+    },
+    {
+      "type": "link",
+      "x": 39,
+      "y": 19
+    }
+  ],
+  "buildAfterRetirementAndApproval": [
+    {
+      "type": "link",
+      "role": "S1",
+      "x": 29,
+      "y": 24
+    },
+    {
+      "type": "link",
+      "role": "S2",
+      "x": 38,
+      "y": 26
+    },
+    {
+      "type": "link",
+      "role": "Storage",
+      "x": 37,
+      "y": 14
+    }
+  ],
+  "optionalRcl7": {
+    "type": "link",
+    "role": "Controller",
+    "x": 16,
+    "y": 39
+  },
+  "storageInteraction": [
+    [
+      37,
+      15
+    ]
+  ],
+  "edges": [
+    {
+      "from": "S1",
+      "to": "Storage",
+      "cooldownTicks": 10,
+      "netPer800": 776
+    },
+    {
+      "from": "S2",
+      "to": "Storage",
+      "cooldownTicks": 12,
+      "netPer800": 776
+    }
+  ],
+  "constructionEnergyEstimate": 15000,
+  "rcl6TotalWithExtensionsAndRoads": 69900,
+  "dispatch": "Not implemented. When approved after construction, reserve receiver headroom and favor Storage; Controller stays on hauling at RCL6.",
+  "phases": {
+    "zeroLinks": {
+      "extensions": 34,
+      "spawnCapacityAtRcl6": 2000,
+      "pathCosts": {
+        "S1 → Storage": 14,
+        "S2 → Storage": 14,
+        "Storage → Controller": 30,
+        "Storage → Spawn (35, 19)": 10
+      },
+      "extensionCosts": [
+        {
+          "tile": [
+            30,
+            11
+          ],
+          "cost": 4
+        },
+        {
+          "tile": [
+            32,
+            11
+          ],
+          "cost": 3
+        },
+        {
+          "tile": [
+            33,
+            11
+          ],
+          "cost": 3
+        },
+        {
+          "tile": [
+            33,
+            12
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            33,
+            17
+          ],
+          "cost": 16
+        },
+        {
+          "tile": [
+            33,
+            18
+          ],
+          "cost": 14
+        },
+        {
+          "tile": [
+            33,
+            19
+          ],
+          "cost": 14
+        },
+        {
+          "tile": [
+            33,
+            20
+          ],
+          "cost": 14
+        },
+        {
+          "tile": [
+            34,
+            12
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            34,
+            13
+          ],
+          "cost": 1
+        },
+        {
+          "tile": [
+            34,
+            15
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            34,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            34,
+            17
+          ],
+          "cost": 14
+        },
+        {
+          "tile": [
+            35,
+            13
+          ],
+          "cost": 1
+        },
+        {
+          "tile": [
+            35,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            35,
+            17
+          ],
+          "cost": 14
+        },
+        {
+          "tile": [
+            35,
+            21
+          ],
+          "cost": 11
+        },
+        {
+          "tile": [
+            35,
+            22
+          ],
+          "cost": 11
+        },
+        {
+          "tile": [
+            36,
+            13
+          ],
+          "cost": 1
+        },
+        {
+          "tile": [
+            36,
+            14
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            36,
+            15
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            36,
+            17
+          ],
+          "cost": 14
+        },
+        {
+          "tile": [
+            36,
+            22
+          ],
+          "cost": 10
+        },
+        {
+          "tile": [
+            37,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            37,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            37,
+            17
+          ],
+          "cost": 5
+        },
+        {
+          "tile": [
+            37,
+            18
+          ],
+          "cost": 5
+        },
+        {
+          "tile": [
+            37,
+            19
+          ],
+          "cost": 11
+        },
+        {
+          "tile": [
+            37,
+            20
+          ],
+          "cost": 9
+        },
+        {
+          "tile": [
+            38,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            38,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            38,
+            18
+          ],
+          "cost": 5
+        },
+        {
+          "tile": [
+            38,
+            19
+          ],
+          "cost": 6
+        },
+        {
+          "tile": [
+            38,
+            22
+          ],
+          "cost": 9
+        }
+      ]
+    },
+    "newLink1": {
+      "extensions": 34,
+      "spawnCapacityAtRcl6": 2000,
+      "pathCosts": {
+        "S1 → Storage": 14,
+        "S2 → Storage": 14,
+        "Storage → Controller": 30,
+        "Storage → Spawn (35, 19)": 10
+      },
+      "extensionCosts": [
+        {
+          "tile": [
+            30,
+            11
+          ],
+          "cost": 4
+        },
+        {
+          "tile": [
+            32,
+            11
+          ],
+          "cost": 3
+        },
+        {
+          "tile": [
+            33,
+            11
+          ],
+          "cost": 3
+        },
+        {
+          "tile": [
+            33,
+            12
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            33,
+            17
+          ],
+          "cost": 16
+        },
+        {
+          "tile": [
+            33,
+            18
+          ],
+          "cost": 14
+        },
+        {
+          "tile": [
+            33,
+            19
+          ],
+          "cost": 14
+        },
+        {
+          "tile": [
+            33,
+            20
+          ],
+          "cost": 14
+        },
+        {
+          "tile": [
+            34,
+            12
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            34,
+            13
+          ],
+          "cost": 1
+        },
+        {
+          "tile": [
+            34,
+            15
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            34,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            34,
+            17
+          ],
+          "cost": 14
+        },
+        {
+          "tile": [
+            35,
+            13
+          ],
+          "cost": 1
+        },
+        {
+          "tile": [
+            35,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            35,
+            17
+          ],
+          "cost": 14
+        },
+        {
+          "tile": [
+            35,
+            21
+          ],
+          "cost": 11
+        },
+        {
+          "tile": [
+            35,
+            22
+          ],
+          "cost": 11
+        },
+        {
+          "tile": [
+            36,
+            13
+          ],
+          "cost": 1
+        },
+        {
+          "tile": [
+            36,
+            14
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            36,
+            15
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            36,
+            17
+          ],
+          "cost": 14
+        },
+        {
+          "tile": [
+            36,
+            22
+          ],
+          "cost": 10
+        },
+        {
+          "tile": [
+            37,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            37,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            37,
+            17
+          ],
+          "cost": 5
+        },
+        {
+          "tile": [
+            37,
+            18
+          ],
+          "cost": 5
+        },
+        {
+          "tile": [
+            37,
+            19
+          ],
+          "cost": 11
+        },
+        {
+          "tile": [
+            37,
+            20
+          ],
+          "cost": 9
+        },
+        {
+          "tile": [
+            38,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            38,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            38,
+            18
+          ],
+          "cost": 5
+        },
+        {
+          "tile": [
+            38,
+            19
+          ],
+          "cost": 6
+        },
+        {
+          "tile": [
+            38,
+            22
+          ],
+          "cost": 9
+        }
+      ]
+    },
+    "newLink2": {
+      "extensions": 34,
+      "spawnCapacityAtRcl6": 2000,
+      "pathCosts": {
+        "S1 → Storage": 14,
+        "S2 → Storage": 14,
+        "Storage → Controller": 30,
+        "Storage → Spawn (35, 19)": 10
+      },
+      "extensionCosts": [
+        {
+          "tile": [
+            30,
+            11
+          ],
+          "cost": 4
+        },
+        {
+          "tile": [
+            32,
+            11
+          ],
+          "cost": 3
+        },
+        {
+          "tile": [
+            33,
+            11
+          ],
+          "cost": 3
+        },
+        {
+          "tile": [
+            33,
+            12
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            33,
+            17
+          ],
+          "cost": 16
+        },
+        {
+          "tile": [
+            33,
+            18
+          ],
+          "cost": 14
+        },
+        {
+          "tile": [
+            33,
+            19
+          ],
+          "cost": 14
+        },
+        {
+          "tile": [
+            33,
+            20
+          ],
+          "cost": 14
+        },
+        {
+          "tile": [
+            34,
+            12
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            34,
+            13
+          ],
+          "cost": 1
+        },
+        {
+          "tile": [
+            34,
+            15
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            34,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            34,
+            17
+          ],
+          "cost": 14
+        },
+        {
+          "tile": [
+            35,
+            13
+          ],
+          "cost": 1
+        },
+        {
+          "tile": [
+            35,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            35,
+            17
+          ],
+          "cost": 14
+        },
+        {
+          "tile": [
+            35,
+            21
+          ],
+          "cost": 11
+        },
+        {
+          "tile": [
+            35,
+            22
+          ],
+          "cost": 11
+        },
+        {
+          "tile": [
+            36,
+            13
+          ],
+          "cost": 1
+        },
+        {
+          "tile": [
+            36,
+            14
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            36,
+            15
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            36,
+            17
+          ],
+          "cost": 14
+        },
+        {
+          "tile": [
+            36,
+            22
+          ],
+          "cost": 10
+        },
+        {
+          "tile": [
+            37,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            37,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            37,
+            17
+          ],
+          "cost": 5
+        },
+        {
+          "tile": [
+            37,
+            18
+          ],
+          "cost": 5
+        },
+        {
+          "tile": [
+            37,
+            19
+          ],
+          "cost": 11
+        },
+        {
+          "tile": [
+            37,
+            20
+          ],
+          "cost": 9
+        },
+        {
+          "tile": [
+            38,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            38,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            38,
+            18
+          ],
+          "cost": 5
+        },
+        {
+          "tile": [
+            38,
+            19
+          ],
+          "cost": 6
+        },
+        {
+          "tile": [
+            38,
+            22
+          ],
+          "cost": 9
+        }
+      ]
+    },
+    "newLink3": {
+      "extensions": 34,
+      "spawnCapacityAtRcl6": 2000,
+      "pathCosts": {
+        "S1 → Storage": 14,
+        "S2 → Storage": 14,
+        "Storage → Controller": 30,
+        "Storage → Spawn (35, 19)": 10
+      },
+      "extensionCosts": [
+        {
+          "tile": [
+            30,
+            11
+          ],
+          "cost": 4
+        },
+        {
+          "tile": [
+            32,
+            11
+          ],
+          "cost": 3
+        },
+        {
+          "tile": [
+            33,
+            11
+          ],
+          "cost": 3
+        },
+        {
+          "tile": [
+            33,
+            12
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            33,
+            17
+          ],
+          "cost": 16
+        },
+        {
+          "tile": [
+            33,
+            18
+          ],
+          "cost": 14
+        },
+        {
+          "tile": [
+            33,
+            19
+          ],
+          "cost": 14
+        },
+        {
+          "tile": [
+            33,
+            20
+          ],
+          "cost": 14
+        },
+        {
+          "tile": [
+            34,
+            12
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            34,
+            13
+          ],
+          "cost": 1
+        },
+        {
+          "tile": [
+            34,
+            15
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            34,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            34,
+            17
+          ],
+          "cost": 14
+        },
+        {
+          "tile": [
+            35,
+            13
+          ],
+          "cost": 1
+        },
+        {
+          "tile": [
+            35,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            35,
+            17
+          ],
+          "cost": 14
+        },
+        {
+          "tile": [
+            35,
+            21
+          ],
+          "cost": 11
+        },
+        {
+          "tile": [
+            35,
+            22
+          ],
+          "cost": 11
+        },
+        {
+          "tile": [
+            36,
+            13
+          ],
+          "cost": 1
+        },
+        {
+          "tile": [
+            36,
+            14
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            36,
+            15
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            36,
+            17
+          ],
+          "cost": 14
+        },
+        {
+          "tile": [
+            36,
+            22
+          ],
+          "cost": 10
+        },
+        {
+          "tile": [
+            37,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            37,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            37,
+            17
+          ],
+          "cost": 5
+        },
+        {
+          "tile": [
+            37,
+            18
+          ],
+          "cost": 5
+        },
+        {
+          "tile": [
+            37,
+            19
+          ],
+          "cost": 11
+        },
+        {
+          "tile": [
+            37,
+            20
+          ],
+          "cost": 9
+        },
+        {
+          "tile": [
+            38,
+            13
+          ],
+          "cost": 2
+        },
+        {
+          "tile": [
+            38,
+            16
+          ],
+          "cost": 0
+        },
+        {
+          "tile": [
+            38,
+            18
+          ],
+          "cost": 5
+        },
+        {
+          "tile": [
+            38,
+            19
+          ],
+          "cost": 6
+        },
+        {
+          "tile": [
+            38,
+            22
+          ],
+          "cost": 9
+        }
+      ]
+    }
+  }
+}
