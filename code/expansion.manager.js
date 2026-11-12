@@ -160,7 +160,7 @@ module.exports.trySupport = function (spawn, counts, targets) {
     delete memory.supportEnergyWindow;
     return wait('HOME_CRITICAL_WORKFORCE_WAIT');
   }
-  const tasks = config.targetRooms.map(r => memory.tasks[taskId(r)]).filter(eligible);
+  const tasks = config.targetRooms.map(r => memory.tasks[taskId(r)]).filter(task => eligible(task) || needsOwnedRecoverySupport(task));
   const spawned = pioneer.trySpawn(spawn, tasks, config.maxEmergencyPioneerBodyCost);
   if (spawned) {
     delete memory.supportEnergyWindow;
@@ -274,6 +274,14 @@ function block(task, reason) {
   task.lastFailure = { tick: Game.time, reason };
   control.transition(task, 'BLOCKED', reason);
   report(task, reason);
+}
+function needsOwnedRecoverySupport(task) {
+  const recovery = Memory.expansion.stage04?.rooms?.[task.targetRoom];
+  const room = Game.rooms[task.targetRoom];
+  // An already-owned colony approaching downgrade needs bounded aid even while
+  // an earlier colony replaces its local workers. Claim ordering is separate.
+  return Boolean(recovery?.recoveryResetAt && room?.controller?.my &&
+    room.controller.ticksToDowngrade < 3000 && !room.find(FIND_MY_SPAWNS).length);
 }
 function eligible(task) {
   const i = config.targetRooms.indexOf(task.targetRoom);

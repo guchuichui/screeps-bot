@@ -18,6 +18,8 @@ function slots(room, source, structures) {
 }
 exports.snapshot = function () {
   const dynamic = { available: true, schema: 2, tick: Game.time, rooms: {}, counters: Memory.expansion && Memory.expansion.telemetryCounters || null,
+    autonomy: Memory.expansion?.stage04 || null, autonomyError: Memory.expansion?.stage04Error || null,
+    gcl: { level: Game.gcl?.level, ownedVisible: Object.values(Game.rooms).filter(room => room.controller?.my).length },
     errorCountKind: 'Unique persisted error records, not every exception throw',
     eventMetricSemantics: { harvest: 'EVENT_HARVEST amounts for Source targets, all actors; owned amounts separate',
       energyMovement: 'Gross EVENT_TRANSFER amounts including transfer/withdraw/Link; not net delivery',

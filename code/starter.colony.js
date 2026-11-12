@@ -71,7 +71,7 @@ module.exports.run = function () {
     if (role !== 'defender' && room.energyAvailable < 250) continue;
     const body = role === 'defender' ? defender.body(room.energyAvailable) : workerBody(room.energyAvailable);
     if (!body.length) continue;
-    const name = `${role}-${room.name}-${Game.time}`;
+    const name = `${role}-${room.name}-${spawn.name}-${Game.time}`;
     const result = spawn.spawnCreep(body, name, { memory: { role, home: room.name } });
     try { require('telemetry.metrics').spawn(spawn, result, role, body); } catch (error) { if (Game.time % 25 === 0) console.log(`Spawn telemetry error: ${error}`); }
     if (result === OK) { c[role]++; console.log(`Spawning ${role} (${body.length} parts) in ${room.name}`); }
@@ -123,6 +123,8 @@ function workerBody(energy) {
   }
   return body;
 }
+module.exports.workerBody = workerBody;
+
 function runDefense(room) {
   const hostiles = room.find(FIND_HOSTILE_CREEPS);
   const towers = room.find(FIND_MY_STRUCTURES, { filter: s => s.structureType === STRUCTURE_TOWER });
