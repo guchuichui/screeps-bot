@@ -19,8 +19,8 @@ module.exports = function () {
   const manager = w.load('colony.manager');
   const colony = manager.register(room, { id: 'room-growth' });
   for (let i = 0; i < 12; i++) { w.Game.time++; manager.trySpawn(spawn); }
-  assert.equal(w.calls.length, 9);
-  assert.equal(w.calls.filter(call => call.memory.role === 'colonyUpgrader').length, 7);
+  assert.equal(w.calls.length, 4);
+  assert.equal(w.calls.filter(call => call.memory.role === 'colonyUpgrader').length, 2);
   assert.equal(w.calls.filter(call => call.memory.role === 'colonyHauler').length, 0);
 
   room.controller.level = 4;
@@ -40,10 +40,10 @@ module.exports = function () {
   const nearby = { id: 'not-the-target', pos: pos(14, 23), store: store(1000, 0) };
   const find = room.find.bind(room);
   room.find = kind => kind === w.constants.FIND_RUINS ? [ruin, nearby] : find(kind);
-  for (const creep of Object.values(w.Game.creeps).filter(c => c.memory.role === 'colonyUpgrader').slice(0, 2)) delete w.Game.creeps[creep.name];
+  for (const creep of Object.values(w.Game.creeps).filter(c => c.memory.role === 'colonyUpgrader').slice(0, 1)) delete w.Game.creeps[creep.name];
   for (let i = 0; i < 3; i++) { w.Game.time++; manager.trySpawn(spawn); }
   const haulers = w.calls.filter(call => call.memory?.role === 'colonyHauler');
-  assert.equal(haulers.length, 2);
+  assert.equal(haulers.length, 1);
   assert(haulers.every(call => call.body.includes('carry') && call.body.includes('move') && !call.body.includes('work')));
 
   const hauler = Object.values(w.Game.creeps).find(c => c.memory.role === 'colonyHauler');
@@ -59,6 +59,30 @@ module.exports = function () {
   w.Game.time++;
   worker.run(hauler);
   assert.equal(hauler.memory.lastAction.code, 'TRANSFER');
-  console.log('PASS E22S37 maintains nine workers, builds Storage first and hauls exact-tile salvage');
-  return 3;
+  // A legacy nine-creep population with only upgraders should reuse its workers.
+  for (const [name, creep] of Object.entries(w.Game.creeps)) if (creep.memory.colony === room.name) delete w.Game.creeps[name];
+  for (let i = 0; i < 9; i++) {
+    const name = `legacy-${i}`;
+    w.Game.creeps[name] = { name, room, ticksToLive: 500 + i,
+      memory: { role: 'colonyUpgrader', home: room.name, colony: room.name },
+      getActiveBodyparts: () => 1 };
+  }
+  room.sites.push({ my: true, structureType: 'extension', pos: pos(7, 16) });
+  w.Game.time++;
+  colony.nextPlanAt = w.Game.time + 25;
+  manager.run();
+  assert.equal(colony.targets.colonyHarvester, 2);
+  assert.equal(colony.targets.colonyBuilder, 1);
+  assert.equal(colony.targets.colonyUpgrader, 1);
+  assert.equal(colony.targets.colonyHauler, 1);
+  assert.equal(colony.counts.colonyHarvester, 2);
+  assert.equal(colony.counts.colonyBuilder, 1);
+  const spawnCalls = w.calls.length;
+  manager.trySpawn(spawn);
+  assert.equal(w.calls.length, spawnCalls);
+  assert.equal(colony.waitReason, 'LOCAL_ECONOMY_DOWNSIZING');
+  assert.equal(Object.values(w.Game.creeps).filter(c => c.memory.colony === room.name).length, 9);
+
+  console.log('PASS E22S37 runs a four-creep base economy, builds Storage first and hauls exact-tile salvage');
+  return 4;
 };

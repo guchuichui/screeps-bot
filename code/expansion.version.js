@@ -1,2 +1,2 @@
 // A runtime marker, not a claim that this code is deployed or active.
-module.exports = { buildId: 'stage04-plan-b-construction-v4' };
+module.exports = { buildId: 'stage04-e22s37-compact-v5' };

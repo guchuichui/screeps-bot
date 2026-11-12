@@ -5,6 +5,7 @@ const worker = require('colony.worker');
 const defender = require('starter.defender');
 const planner = require('colony.planner');
 const salvage = require('expansion.salvage');
+const work = require('colony.work');
 const economicRoles = ['colonyHarvester', 'colonyBuilder', 'colonyUpgrader', 'colonyHauler'];
 const roles = [...economicRoles, 'colonyDefender'];
 
@@ -35,7 +36,8 @@ exports.run = function () {
       const demand = population(room);
       const count = counts(creeps, config.localReplacementTtl);
       // Adopted Pioneers start as harvesters; surplus workers can fill other roles.
-      for (const c of creeps) {
+      if (compactEconomy(room)) rebalance(creeps, demand, count);
+      else for (const c of creeps) {
         if (c.memory.role !== 'colonyHarvester' || count.colonyHarvester <= demand.colonyHarvester || c.spawning) continue;
         const role = ['colonyUpgrader', 'colonyBuilder'].find(r => count[r] < demand[r]);
         if (role) { count.colonyHarvester--; count[role]++; c.memory.role = role; delete c.memory.sourceId; delete c.memory.sourceSlot; }
@@ -71,21 +73,27 @@ exports.trySpawn = function (spawn) {
   const task = Memory.expansion && Memory.expansion.tasks[colony.originTask];
   if (task && task.paused) return true;
   if (!spawn.room.controller || !spawn.room.controller.my) return true;
+  const creeps = members(spawn.room.name);
   const pendingPopulation = (colony.spawnIntents || []).filter(i => i.tick === Game.time && !Game.creeps[i.name]).length;
-  if (members(spawn.room.name).length + pendingPopulation >= config.maxLocalPopulation) {
+  if (creeps.length + pendingPopulation >= config.maxLocalPopulation) {
     colony.waitReason = 'LOCAL_POPULATION_CAP'; return true;
   }
   if (Game.time < (colony.nextSpawnAt || 0) || (colony.spawnErrors || 0) >= config.maxSpawnErrors) return true;
-  const count = counts(members(spawn.room.name), config.localReplacementTtl);
+  const count = counts(creeps, config.localReplacementTtl);
   colony.spawnIntents = (colony.spawnIntents || []).filter(intent => intent.tick === Game.time);
   for (const intent of colony.spawnIntents) if (!Game.creeps[intent.name]) count[intent.role]++;
   const demand = population(spawn.room);
   const priority = count.colonyHarvester === 0 ? roles :
     demand.colonyDefender ? ['colonyDefender', ...economicRoles] : economicRoles;
-  const economicTargetReached = config.e22s37Growth && spawn.room.name === 'E22S37' &&
-    economicRoles.reduce((n, key) => n + count[key], 0) >= 9;
-  const role = priority.find(r => count[r] < demand[r] && (r === 'colonyDefender' || !economicTargetReached));
+  const role = priority.find(r => count[r] < demand[r]);
   if (!role) return true;
+  if (compactEconomy(spawn.room) && role !== 'colonyDefender' &&
+      !(role === 'colonyHarvester' && count.colonyHarvester === 0)) {
+    const target = economicRoles.reduce((n, r) => n + demand[r], 0);
+    const living = creeps.filter(c => economicRoles.includes(c.memory.role)).length +
+      colony.spawnIntents.filter(i => i.role !== 'colonyDefender' && !Game.creeps[i.name]).length;
+    if (living >= target) { colony.waitReason = 'LOCAL_ECONOMY_DOWNSIZING'; return true; }
+  }
   let body;
   if (role === 'colonyDefender') body = defender.body(spawn.room.energyAvailable);
   else if (role === 'colonyHauler') {
@@ -132,17 +140,40 @@ function counts(creeps, ttl) {
   }
   return count;
 }
+function compactEconomy(room) {
+  return config.e22s37Growth && room.name === 'E22S37';
+}
+
+function rebalance(creeps, demand, count) {
+  const candidates = creeps.filter(c => !c.spawning && c.ticksToLive > config.localReplacementTtl &&
+    c.getActiveBodyparts(WORK) && c.getActiveBodyparts(CARRY) && c.getActiveBodyparts(MOVE))
+    .sort((a, b) => b.ticksToLive - a.ticksToLive);
+  for (const role of ['colonyHarvester', 'colonyBuilder', 'colonyUpgrader']) {
+    while (count[role] < demand[role]) {
+      const creep = candidates.find(c => c.memory.role !== 'colonyDefender' && c.memory.role !== 'colonyHauler' &&
+        count[c.memory.role] > demand[c.memory.role]);
+      if (!creep) break;
+      count[creep.memory.role]--;
+      creep.memory.role = role;
+      count[role]++;
+      work.releaseHarvest(creep);
+    }
+  }
+}
+
 function population(room) {
-  const sources = require('colony.work').sources(room);
+  const sources = work.sources(room);
   const harvesters = Math.max(1, Math.min(4, sources.reduce((n, s) => n + Math.min(2, s.slots.length), 0)));
   const sites = containerPolicy.buildSites(room);
-  const grows = config.e22s37Growth && room.name === 'E22S37';
-  const haulers = grows && room.controller.level >= 4 && room.storage?.my && salvage.hasStoredEnergy(room) ? 2 : 0;
-  const builders = sites.some(site => site.structureType === STRUCTURE_STORAGE) && grows ? 2 : sites.length ? 1 : 0;
+  const compact = compactEconomy(room);
+  const haulers = compact && room.controller.level >= 4 && room.storage?.my &&
+    room.storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0 && salvage.hasStoredEnergy(room) ? 1 : 0;
+  const builders = sites.length ? 1 : 0;
+  const localHarvesters = compact ? Math.min(2, harvesters) : harvesters;
   return {
-    colonyHarvester: harvesters,
+    colonyHarvester: localHarvesters,
     colonyBuilder: builders,
-    colonyUpgrader: grows ? 9 - harvesters - builders - haulers : 1,
+    colonyUpgrader: compact ? Math.max(1, 4 - localHarvesters - builders - haulers) : 1,
     colonyHauler: haulers,
     colonyDefender: defender.needsDefense(room.find(FIND_HOSTILE_CREEPS)) ? 1 : 0
   };
