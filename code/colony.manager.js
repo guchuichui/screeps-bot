@@ -4,10 +4,9 @@ const control = require('expansion.control');
 const worker = require('colony.worker');
 const defender = require('starter.defender');
 const planner = require('colony.planner');
-const salvage = require('expansion.salvage');
 const work = require('colony.work');
-const economicRoles = ['colonyHarvester', 'colonyBuilder', 'colonyUpgrader', 'colonyHauler'];
-const roles = [...economicRoles, 'colonyDefender'];
+const economicRoles = ['colonyHarvester', 'colonyBuilder', 'colonyUpgrader'];
+const roles = [...economicRoles, 'colonyDefender', 'colonyHauler'];
 
 exports.register = function (room, task) {
   if (!Memory.colonies) Memory.colonies = {};
@@ -96,10 +95,7 @@ exports.trySpawn = function (spawn) {
   }
   let body;
   if (role === 'colonyDefender') body = defender.body(spawn.room.energyAvailable);
-  else if (role === 'colonyHauler') {
-    const units = Math.floor(Math.min(config.maxLocalBodyCost, spawn.room.energyAvailable) / 100);
-    body = Array.from({ length: units }, () => [CARRY, MOVE]).flat();
-  } else {
+  else {
     const budget = count.colonyHarvester === 0 ? 200 : Math.min(config.maxLocalBodyCost, spawn.room.energyAvailable);
     const units = Math.min(5, Math.floor(budget / 200));
     body = [];
@@ -166,15 +162,12 @@ function population(room) {
   const harvesters = Math.max(1, Math.min(4, sources.reduce((n, s) => n + Math.min(2, s.slots.length), 0)));
   const sites = containerPolicy.buildSites(room);
   const compact = compactEconomy(room);
-  const haulers = compact && room.controller.level >= 4 && room.storage?.my &&
-    room.storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0 && salvage.hasStoredEnergy(room) ? 1 : 0;
   const builders = sites.length ? 1 : 0;
   const localHarvesters = compact ? Math.min(2, harvesters) : harvesters;
   return {
     colonyHarvester: localHarvesters,
     colonyBuilder: builders,
-    colonyUpgrader: compact ? Math.max(1, 4 - localHarvesters - builders - haulers) : 1,
-    colonyHauler: haulers,
+    colonyUpgrader: compact ? Math.max(1, 4 - localHarvesters - builders) : 1,
     colonyDefender: defender.needsDefense(room.find(FIND_HOSTILE_CREEPS)) ? 1 : 0
   };
 }

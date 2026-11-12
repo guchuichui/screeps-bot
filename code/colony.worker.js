@@ -72,12 +72,10 @@ function haul(creep) {
     return;
   }
   delete creep.memory.haulRefill;
-  if (storage.store.getFreeCapacity(RESOURCE_ENERGY) > 0 &&
-      salvage.collect(creep, { withdrawOnly: true, exactTile: true })) return;
   if (creep.room.energyAvailable < creep.room.energyCapacityAvailable && storage.store[RESOURCE_ENERGY] > 0) {
     const result = work.action(creep, 'withdraw', storage, 1, RESOURCE_ENERGY);
     if (result.code === 'WITHDRAW' && result.apiCode === OK) creep.memory.haulRefill = true;
     return;
   }
-  travel.record(creep, 'HAUL_SALVAGE_WAIT');
+  travel.record(creep, 'HAUL_REFILL_WAIT');
 }

@@ -40,6 +40,6 @@ The old Storage at (36,16) is drained first. Both the original and the first sou
 
 ## E22S37 compact economy
 
-At RCL3, the live colony had one Source, three walkable harvest stations and twelve local creeps, including ten Upgraders. The new target is four economic creeps in normal operation: two Harvesters and two Upgraders. Construction trades one Upgrader position for a Builder. After Storage is built, one Hauler is requested only while the (13,23) stash remains and Storage can accept energy. If hauling and construction overlap, five economic creeps can be useful. A Defender remains threat-driven.
+At RCL3, the live colony had one Source, three walkable harvest stations and twelve local creeps, including ten Upgraders. The new target is four economic creeps in normal operation: two Harvesters and two Upgraders. Construction trades one Upgrader position for a Builder. The (13,23) stash is depleted and the dedicated Hauler quota is retired. Existing Haulers can deposit remaining cargo and refill production from Storage until they expire. A Defender remains threat-driven.
 
 Healthy existing workers can be reassigned into vacant critical roles. Surplus creeps age out, and regular production waits for a free population slot. A missing healthy Harvester still permits emergency recovery. Other rooms keep their existing policies.
